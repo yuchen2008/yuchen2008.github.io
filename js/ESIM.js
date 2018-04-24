@@ -452,8 +452,10 @@ function fnAjaxAPDU_c1_c4(A_id,A_data,A_valueid,A_num) {
 }
 
 function fnListReaders(){
+    alert(123);
     //此处为获取系统中所安装读卡器名称的借口
     try {
+        alert(1);
         s=new String(myScc.ListReaders());
          cars=s.split("||");
         return cars[0]
