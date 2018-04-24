@@ -452,15 +452,15 @@ function fnAjaxAPDU_c1_c4(A_id,A_data,A_valueid,A_num) {
 }
 
 function fnListReaders(){
-    alert(123);
+    // alert(123);
     //此处为获取系统中所安装读卡器名称的借口
     try {
-        alert(1);
-        console.log(JSON.stringify(myScc));
-        alert(myScc.ListReaders())
+        // alert(1);
+        // console.log(JSON.stringify(myScc));
+        // alert(myScc.ListReaders())
         s=new String(myScc.ListReaders());
          cars=s.split("||");
-         alert(2);
+         // alert(2);
         return cars[0]
     }
     catch(err){
