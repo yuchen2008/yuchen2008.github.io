@@ -456,6 +456,7 @@ function fnListReaders(){
     //此处为获取系统中所安装读卡器名称的借口
     try {
         alert(1);
+        alert(myScc + '--');
         s=new String(myScc.ListReaders());
          cars=s.split("||");
          alert(2);
