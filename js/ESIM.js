@@ -458,6 +458,7 @@ function fnListReaders(){
         alert(1);
         s=new String(myScc.ListReaders());
          cars=s.split("||");
+         alert(2);
         return cars[0]
     }
     catch(err){
