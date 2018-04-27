@@ -453,7 +453,7 @@ function fnListReaders(){
                 var objOption = document.createElement("OPTION");
                 objOption.text = cars[i];
                 objOption.value = i;
-                ChooseReaders.option.add(objOption);
+                ChooseReaders.options.add(objOption);
             }
          }
          console.log(ChooseReaders.value);
