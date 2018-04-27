@@ -38,17 +38,7 @@ function fnGetEid(){
         return;
     }else{
        fnGetDP_iccid();
-    }
-    // fnCheckICCID();
-    // var checkValue = fnCheckICCID();
-    // if(checkValue)
-    // console.log(fnCheckICCID());
-    // fnGetDP_iccid();
-  
-// fnAjaxAPDU()
-    // fnAjaxAPDU_id('03'+EID_val);
-    // fnRunAPDU_back(APDU_a);
-  
+    }  
 }
 
 function fnCheckICCID(){
@@ -236,18 +226,6 @@ function fnGetDP_iccid(){
         })
 }
 
-function fnRunAPDU_back(value){
-    lReturn = myScc.RunAPDU(value);
-    if(lReturn!=0)
-        console.log("CardOn err:"+lReturn);
-    // 获取命令返回状态字
-    fnGetSW();
-    // 获取返回数据
-    fnGetRetData_value();
-    console.log(fnGetRetData_value() + '-------');
-}
-
-
 
 function fnRunAPDUBACK(A_id,A_value,A_num) {
     // body...
@@ -262,7 +240,7 @@ function fnRunAPDUBACK(A_id,A_value,A_num) {
     lReturn = myScc.RunAPDU(A_valueback);
       console.log("CardOn----------- err:"+lReturn);
     if(lReturn!=0)
-        alert("CardOn err:"+lReturn);
+        alert("CardOn err:卡片 发 a 回 b"+"status:"+lReturn);
     // 获取命令返回状态字
     fnGetSW();
     // 获取返回数据
@@ -319,6 +297,7 @@ function fnRunAPDU_C(A_id,A_value) {
             success:function(msg){
                 // document.getElementById(A_id).innerHTML = msg.responseText;
                 console.log(msg.responseText+ '------msg.responseText');
+                alert("ok")
                 hiddenLoading();
 
                 // console.log(msg.response+ '------msg.response');
@@ -475,7 +454,7 @@ function fnListReaders(){
 function fnSetReader(val){
     lReturn = myScc.SetReader(val);
     if(lReturn!=0)
-        alert("CardOn err:"+lReturn);
+        alert("CardOn err:"+"设置所使用的读卡器名称.state:"+lReturn + ".");
     console.log(lReturn + '-------lReturn ---------设置所使用的读卡器名称')
 
 }
@@ -483,7 +462,7 @@ function fnSetReader(val){
 function fnCardOn(event) {
     lReturn = myScc.CardOn();
     if(lReturn!=0)
-        alert("CardOn err:"+lReturn);
+        alert("CardOn err:"+"连接智能卡.state:"+lReturn + ".");
 }
 //重置读卡器获取atr值
 function fnGetATR() {
@@ -495,7 +474,7 @@ function fnRunAPDU(val){
     lReturn = myScc.RunAPDU(val);
     console.log(val + '-------fnRunAPDU ---------执行apdu命令')
     if(lReturn!=0)
-        alert("CardOn err:"+lReturn);
+        alert("CardOn err:"+"执行apdu命令"+val+".state:"+lReturn + ".");
     console.log(lReturn + '-------lReturn ---------执行apdu命令')
 }
 //获取命令返回状态字
