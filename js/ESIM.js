@@ -456,7 +456,7 @@ function fnListReaders(){
                 ChooseReaders.options.add(objOption);
             }
          }
-         console.log(ChooseReaders.value);
+         // console.log(ChooseReaders.value);
         return ChooseReaders.value;
    
    
@@ -476,7 +476,7 @@ function fnSetReader(val){
     lReturn = myScc.SetReader(val);
     if(lReturn!=0)
         alert("CardOn err:"+"设置所使用的读卡器名称.state:"+lReturn + ".");
-    console.log(lReturn + '-------lReturn ---------设置所使用的读卡器名称')
+    // console.log(lReturn + '-------lReturn ---------设置所使用的读卡器名称')
 
 }
 //连接智能卡
@@ -490,7 +490,7 @@ function fnCardOn(event) {
 //重置读卡器获取atr值
 function fnGetATR() {
     sATR = myScc.GetATR();
-    console.log(sATR + '-------sATR ---------重置读卡器获取atr值')
+    // console.log(sATR + '-------sATR ---------重置读卡器获取atr值')
 }
 //执行apdu命令
 function fnRunAPDU(val){
@@ -500,7 +500,7 @@ function fnRunAPDU(val){
         alert("CardOn err:"+"执行apdu命令"+val+".state:"+lReturn + ".");
         // return;
     }
-    console.log(lReturn + '-------lReturn ---------执行apdu命令')
+    // console.log(lReturn + '-------lReturn ---------执行apdu命令')
 }
 //获取命令返回状态字
 function fnGetSW() {
