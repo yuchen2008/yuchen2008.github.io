@@ -459,7 +459,7 @@ function fnListReaders(){
             for(var i = 0;i<cars.length-1;i++){
                 var objOption = document.createElement("OPTION");
                 objOption.text = cars[i];
-                objOption.value = i;
+                objOption.value = cars[i];
                 ChooseReaders.options.add(objOption);
             }
          }
