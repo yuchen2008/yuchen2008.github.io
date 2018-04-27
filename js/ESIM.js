@@ -362,14 +362,14 @@ function fnGetICCID(){
                 fnCardOff();
                 // 将读卡器释放
                 fnFreeReader();
-        return ICCID_list;
+        alert(ICCID_list);
     }else{
         // 断开卡片
                 fnCardOff();
                 // 将读卡器释放
                 fnFreeReader();
         alert(ICCID_val);
-        return;
+        // return;
     }
 }
 
