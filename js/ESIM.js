@@ -439,6 +439,11 @@ function fnListReaders(){
     ChooseReaders.innerHTML = '';
     try {
         s=new String(myScc.ListReaders());
+         }
+    catch(err){
+         alert(err) // 可执行
+         return;
+    }
          cars=s.split("||");
          if(cars.length==1){
             alert("没有检测到读卡器");
@@ -453,10 +458,7 @@ function fnListReaders(){
          }
          console.log(ChooseReaders.value);
         return ChooseReaders.value;
-    }
-    catch(err){
-         alert(err) // 可执行
-    }
+   
    
    
     // // cars = cars.split(",")
