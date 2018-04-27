@@ -482,8 +482,10 @@ function fnSetReader(val){
 //连接智能卡
 function fnCardOn(event) {
     lReturn = myScc.CardOn();
-    if(lReturn!=0)
+    if(lReturn!=0){
         alert("CardOn err:"+"连接智能卡.state:"+lReturn + ".");
+        // return;
+    }
 }
 //重置读卡器获取atr值
 function fnGetATR() {
@@ -494,8 +496,10 @@ function fnGetATR() {
 function fnRunAPDU(val){
     lReturn = myScc.RunAPDU(val);
     console.log(val + '-------fnRunAPDU ---------执行apdu命令')
-    if(lReturn!=0)
+    if(lReturn!=0){
         alert("CardOn err:"+"执行apdu命令"+val+".state:"+lReturn + ".");
+        // return;
+    }
     console.log(lReturn + '-------lReturn ---------执行apdu命令')
 }
 //获取命令返回状态字
