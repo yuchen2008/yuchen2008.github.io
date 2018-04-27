@@ -11,34 +11,41 @@ var DP_d = ''; //DP POST: DP POST: data= d
 function fnGetEid(){
     
     // 获取系统中所安装读卡器名称
-    fnListReaders();
+    // fnListReaders();
     // 设置所使用的读卡器名称
-    fnSetReader(fnListReaders());
-    // 连接智能卡
-    fnCardOn();
-    // 重置读卡器获取atr值
-    fnGetATR();
-    // 执行apdu命令
-    fnRunAPDU('00a4040409676F74656C6C417070');
-    fnGetSW();
-     fnRunAPDU('001A000010');
-     // lReturn = myScc.RunAPDU('00150000569321E1F57E6036E0D05F3022951457C63044022067CBB0F75707A43E1043636DF342699FD6163F9CE3B7A4BEF45CB49E051D340602203BCFFEC7945EF359031224ACFEC8C124D193B687894CE8AD658CA8C658264D92');
-    console.log(lReturn + '----0015');
-    // 获取命令返回状态字
-    fnGetSW();
-    // 获取EID
-    fnGetRetData('EID');
-    // return EID_val;
-    console.log(EID_val);
-    showloading();
-    var checkValue_ = fnCheckICCID();
-    console.log(typeof checkValue_);
-    console.log('==='+ checkValue_);
-    if(checkValue_=="false"){
-        return;
-    }else{
-       fnGetDP_iccid();
-    }  
+    if(document.getElementById("ChooseReader").value == ""){
+        alert("请先插入读卡器");
+    } else{
+        fnSetReader(document.getElementById("ChooseReader").value);
+        // 连接智能卡
+        fnCardOn();
+        // 重置读卡器获取atr值
+        fnGetATR();
+        // 执行apdu命令
+        fnRunAPDU('00a4040409676F74656C6C417070');
+        fnGetSW();
+         fnRunAPDU('001A000010');
+         // lReturn = myScc.RunAPDU('00150000569321E1F57E6036E0D05F3022951457C63044022067CBB0F75707A43E1043636DF342699FD6163F9CE3B7A4BEF45CB49E051D340602203BCFFEC7945EF359031224ACFEC8C124D193B687894CE8AD658CA8C658264D92');
+        // console.log(lReturn + '----0015');
+        // 获取命令返回状态字
+        fnGetSW();
+        // 获取EID
+        fnGetRetData('EID');
+        // return EID_val;
+        console.log(EID_val);
+        showloading();
+        var checkValue_ = fnCheckICCID();
+        // console.log(typeof checkValue_);
+        // console.log('==='+ checkValue_);
+        if(checkValue_=="false"){
+            return;
+        }else{
+           fnGetDP_iccid();
+        }  
+
+    }
+
+    
 }
 
 function fnCheckICCID(){
@@ -56,7 +63,7 @@ function fnCheckICCID(){
          var ICCID_list = []
         for(var i = 0; i< I_length ;i++){
               ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
-              console.log( typeof ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2)));
+              // console.log( typeof ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2)));
               if(document.getElementById("ChooseSIMCard").value ==ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2)) ){
                 hiddenLoading();
                 alert("Same profile has been downloaded in the SIM card, cannot be download again.");
@@ -64,7 +71,7 @@ function fnCheckICCID(){
                 return "false";
               }
         }
-        console.log(ICCID_list + '-------')
+        // console.log(ICCID_list + '-------')
         // 断开卡片
                 // fnCardOff();
                 // // 将读卡器释放
@@ -104,7 +111,7 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
         }
 
     }
-    console.log(A_value + '-----A_value')
+    // console.log(A_value + '-----A_value')
     ajax({
         type:"POST",
         url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es9plus/m2m/sendRes",
@@ -330,7 +337,7 @@ function fninputAPDU(A_id){
 // 获取iccid
 function fnGetICCID(){
     // 获取系统中所安装读卡器名称
-    fnListReaders();
+    // fnListReaders();
     if(document.getElementById("ChooseReader").value == ""){
         alert("请先插入读卡器");
     } else{
@@ -526,7 +533,7 @@ function fnGetSW() {
 //获取返回数据
 function fnGetRetData(val) {
     sRes = myScc.GetRetData();
-    console.log(sRes + '-------sRes ---------获取返回数据')
+    // console.log(sRes + '-------sRes ---------获取返回数据')
     if(val == 'EID'){
         EID_val = sRes
         return EID_val;
@@ -541,7 +548,7 @@ function fnGetRetData(val) {
     }
     if(val == 'APDU_d'){
         APDU_d = sRes
-        console.log(APDU_d + '------APDU_d----');
+        // console.log(APDU_d + '------APDU_d----');
         return APDU_d;
     }  
 }
@@ -549,7 +556,7 @@ function fnGetRetData(val) {
 //获取返回数据
 function fnGetRetData_value() {
     sRes = myScc.GetRetData();
-    console.log(sRes + '-------sRes ---------获取返回数据')
+    // console.log(sRes + '-------sRes ---------获取返回数据')
     return sRes;
 }
 
@@ -557,14 +564,14 @@ function fnCardOff(){
     lReturn = myScc.CardOff();
     if(lReturn!=0)
         alert("CardOff return "+lReturn);
-    console.log(lReturn + '-------lReturn ---------断开卡片')
+    // console.log(lReturn + '-------lReturn ---------断开卡片')
 }
 function fnFreeReader(){
     lReturn = myScc.FreeReader();
 
     if(lReturn!=0)
         alert("FreeReader return "+lReturn);
-    console.log(lReturn + '-------lReturn ---------将读卡器释放');
+    // console.log(lReturn + '-------lReturn ---------将读卡器释放');
 }
 
 // 使用原生js 封装ajax

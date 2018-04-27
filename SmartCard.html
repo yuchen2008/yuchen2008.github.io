@@ -243,38 +243,6 @@
     });
 
 
-
-  // var iTimeEid = 120;
-  // var AccountEid;
-  // function RemainTimeEid(){
-  //     document.getElementById('download-btn').disabled = true;
-  //     var iSecond,sSecond="",sTime="";
-  //     if (iTimeEid >= 0){
-  //         iSecond = parseInt(iTimeEid%60);
-  //         iMinute = parseInt(iTimeEid/60);
-  //         if (iSecond >= 0){
-  //             if(iMinute>0){
-  //                 sSecond = iMinute + "分" + iSecond + "秒";
-  //             }else{
-  //                 sSecond = iSecond + "秒";
-  //             }
-  //         }
-  //         sTime=sSecond;
-  //         if(iTimeEid==0){
-  //             clearTimeout(AccountEid);
-  //             sTime='Download';
-  //             iTimeEid = 5;
-  //             document.getElementById('download-btn').disabled = false;
-  //         }else{
-  //             AccountEid = setTimeout("RemainTimeEid()",1000);
-  //             iTimeEid=iTimeEid-1;
-  //         }
-  //     }else{
-  //         sTime='No Time';
-  //     }
-  //     document.getElementById('download-btn').value = 'Download...';
-  // }
-
   var iTime = 5;
   var Account;
   function RemainTime(){
