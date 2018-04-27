@@ -136,7 +136,13 @@
   <div class="login-box">
 
     <form class="bs-docs-example form-horizontal">
-
+      <div class="control-group">
+        <label class="control-label">Choose CardReader</label>
+        <div class="controls">
+          <select class="form-control" id="ChooseReader">
+          </select>
+        </div>
+      </div>
       <div class="control-group">
         <label class="control-label" for="inputCustomerName">Customer Name</label>
         <div class="controls">
@@ -149,13 +155,7 @@
           <input type="text" id="inputCustomerPassportNo"  class="control-input" placeholder="Customer Passport No">
         </div>
       </div>
-      <!-- <div class="control-group">
-        <label class="control-label" for="inputICCID">GetICCID</label>
-        <div class="controls">
-          <input type="text" id="inputICCID" class="control-input inputICCID" placeholder="ICCID">
-          <input type="button"  value="获取ICCID" id="get_mobile_code" onclick="RemainTime()" class=" btn btn-default">
-        </div>
-      </div> -->
+    
       <div class="control-group">
         <label class="control-label">Choose Product</label>
         <div class="controls">
@@ -194,55 +194,7 @@
 
   </div>
 </div>
-<a href="#myModal" role="button" class="btn" id="ChooseSIMCard-btn" style="visibility: hidden;" data-toggle="modal">ChooseSIMCard</a>
-<!-- Modal -->
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="myModalLabel">Modal header</h3>
-  </div>
-  <div class="modal-body">
-   <table class="table table-hover">
-  <thead>
-    <tr class="success">
-    
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@TwBootstrap</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-  
-  </tbody>
-</table>
 
-<div class="bs-docs-example">
-  <div class="pagination pagination-centered">
-    <ul>
-      <li><a href="#">«</a></li>
-      <li><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="#">5</a></li>
-      <li><a href="#">»</a></li>
-    </ul>
-  </div>
-</div>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    <button class="btn btn-primary">Save changes</button>
-  </div>
-</div>
 
 
 <div id="modal-loading"> </div>
@@ -270,6 +222,7 @@
           }
   
     $(document).ready(function () {
+        fnListReaders();
         $("#inputChooseSIMCard").click(function () {
            $('#ChooseSIMCard-btn').click();
         });

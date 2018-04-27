@@ -331,46 +331,51 @@ function fninputAPDU(A_id){
 function fnGetICCID(){
     // 获取系统中所安装读卡器名称
     fnListReaders();
+    if(document.getElementById("ChooseReader").value == ""){
+        alert("请先插入读卡器");
+    } else{
     // 设置所使用的读卡器名称
-    fnSetReader(fnListReaders());
-    // 连接智能卡
-    fnCardOn();
-    // 重置读卡器获取atr值
-    fnGetATR();
-    // 执行apdu命令
-    fnRunAPDU('00a4040409676F74656C6C417070');
-     // 获取命令返回状态字
-    fnGetSW();
-    fnRunAPDU('80E2900002BF2D');
-    // 获取命令返回状态字
-    fnGetSW();
-    // 获取EID
-    fnGetRetData('ICCID');
-    if(ICCID_val.length >= 22){
-        var I_length = ICCID_val.length / 22 ;
-        console.log(I_length + '------')
-         console.log(typeof I_length + '------')
-         var ICCID_list = []
-        for(var i = 0; i< I_length ;i++){
-              console.log(i);
-              console.log(i*22 +'----'+ 22*(1+i))  
-              console.log(ICCID_val.substring(i*22,(i+1)*22).substring(2) +'-----')
-              ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
+        fnSetReader(document.getElementById("ChooseReader").value);
+        // 连接智能卡
+        fnCardOn();
+        // 重置读卡器获取atr值
+        fnGetATR();
+        // 执行apdu命令
+        fnRunAPDU('00a4040409676F74656C6C417070');
+         // 获取命令返回状态字
+        fnGetSW();
+        fnRunAPDU('80E2900002BF2D');
+        // 获取命令返回状态字
+        fnGetSW();
+        // 获取EID
+        fnGetRetData('ICCID');
+        if(ICCID_val.length >= 22){
+            var I_length = ICCID_val.length / 22 ;
+            console.log(I_length + '------')
+             console.log(typeof I_length + '------')
+             var ICCID_list = []
+            for(var i = 0; i< I_length ;i++){
+                  console.log(i);
+                  console.log(i*22 +'----'+ 22*(1+i))  
+                  console.log(ICCID_val.substring(i*22,(i+1)*22).substring(2) +'-----')
+                  ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
+            }
+            console.log(ICCID_list + '-------')
+            // 断开卡片
+                    fnCardOff();
+                    // 将读卡器释放
+                    fnFreeReader();
+            alert(ICCID_list);
+        }else{
+            // 断开卡片
+                    fnCardOff();
+                    // 将读卡器释放
+                    fnFreeReader();
+            alert(ICCID_val);
+            // return;
         }
-        console.log(ICCID_list + '-------')
-        // 断开卡片
-                fnCardOff();
-                // 将读卡器释放
-                fnFreeReader();
-        alert(ICCID_list);
-    }else{
-        // 断开卡片
-                fnCardOff();
-                // 将读卡器释放
-                fnFreeReader();
-        alert(ICCID_val);
-        // return;
     }
+    
 }
 
 
@@ -430,10 +435,24 @@ function fnAjaxAPDU_c1_c4(A_id,A_data,A_valueid,A_num) {
 
 function fnListReaders(){
     //此处为获取系统中所安装读卡器名称的借口
+    var ChooseReaders = document.getElementById("ChooseReader");
+    ChooseReaders.innerHTML = '';
     try {
         s=new String(myScc.ListReaders());
          cars=s.split("||");
-        return cars[0]
+         if(cars.length==1){
+            alert("没有检测到读卡器");
+            return;
+         } else{
+            for(var i = 0;i<cars.length-1;i++){
+                var objOption = document.createElement("OPTION");
+                objOption.text = cars[i];
+                objOption.value = i;
+                ChooseReaders.option.add(objOption);
+            }
+         }
+         console.log(ChooseReaders.value);
+        return ChooseReaders.value;
     }
     catch(err){
          alert(err) // 可执行
