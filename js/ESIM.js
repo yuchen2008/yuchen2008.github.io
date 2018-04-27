@@ -1,4 +1,3 @@
-//98446445000010130130,98446445000010130130,98446445000010130130,98446445000010130130,98446445000010130130,98446445000010130130,98446445000010130093,98446445000010130093,98446445000010130130,98446445000010130130
 var EID_val = '';
 var ICCID_val = '';
 var APDU_a = '1'; // 03+eid 返回APDU，a
@@ -22,7 +21,6 @@ function fnGetEid(){
     // 执行apdu命令
     fnRunAPDU('00a4040409676F74656C6C417070');
     fnGetSW();
-    // fnRunAPDU('00150000569321E1F57E6036E0D05F3022951457C63044022008E7A8F96E9D09CAE8ED42B6C515AAB0B1AEE01A6CEEE3960CA615CC05BDEFB902205F2F958181A82D0FB713E59C561A0F4802049ACBD60510B289D5EC3A46E3BAE5');
      fnRunAPDU('001A000010');
      // lReturn = myScc.RunAPDU('00150000569321E1F57E6036E0D05F3022951457C63044022067CBB0F75707A43E1043636DF342699FD6163F9CE3B7A4BEF45CB49E051D340602203BCFFEC7945EF359031224ACFEC8C124D193B687894CE8AD658CA8C658264D92');
     console.log(lReturn + '----0015');
@@ -452,15 +450,10 @@ function fnAjaxAPDU_c1_c4(A_id,A_data,A_valueid,A_num) {
 }
 
 function fnListReaders(){
-    // alert(123);
     //此处为获取系统中所安装读卡器名称的借口
     try {
-        // alert(1);
-        // console.log(JSON.stringify(myScc));
-        // alert(myScc.ListReaders())
         s=new String(myScc.ListReaders());
          cars=s.split("||");
-         // alert(2);
         return cars[0]
     }
     catch(err){
@@ -602,11 +595,70 @@ function ajax(){
 }
 
 function createxmlHttpRequest() {
-    if (window.ActiveXObject) {
-        return new ActiveXObject("Microsoft.XMLHTTP");
-    } else if (window.XMLHttpRequest) {
-        return new XMLHttpRequest();
-    }
+
+    // if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE6.0") 
+    // { 
+    // alert("IE 6.0"); 
+    // } 
+    // else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE7.0") 
+    // { 
+    // alert("IE 7.0"); 
+    // } 
+    // else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE8.0") 
+    // { 
+    // alert("IE 8.0"); 
+    // } 
+    // else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE9.0") 
+    // { 
+    // alert("IE 9.0"); 
+    // } else{
+
+    // }
+          
+
+        var mf_change=false;   
+         try   
+         {   
+             
+          mf_change = new ActiveXObject("Msxml2.XMLHTTP");   
+          
+         }   
+         catch (e)   
+         {   
+            try   
+            {   
+              mf_change = new ActiveXObject("Microsoft.XMLHTTP");   
+            }   
+            catch (E)   
+            {   
+              mf_change = false;   
+            }   
+         }  
+         if (!mf_change && typeof XMLHttpRequest!='undefined')   
+         {   
+           mf_change = new XMLHttpRequest();   
+         }   
+         // alert(JSON.stringify(mf_change));
+         return mf_change;  
+
+
+    // if (window.ActiveXObject) {
+    //     return new ActiveXObject("Microsoft.XMLHTTP");
+    //      // xmlhttp = new ActiveXObject("Microsoft.XMLHTTP"); 
+    // } else if (window.XMLHttpRequest) {
+    //     return new XMLHttpRequest();
+    // }
+
+    // if(window.ActiveXObject){
+    //     var ieArr=["Msxml2.XMLHTTP.6.0","Msxml2.XMLHTTP.3.0", "Msxml2.XMLHTTP","Microsoft.XMLHTTP"]; 
+    //     for(var i=0;i<ieArr.length;i++)
+    //     {
+    //         var xmlhttp= new ActiveXObject(ieArr[i]);
+    //     }
+    //     return xmlhttp;
+    //     } else if(window.XMLHttpRequest){
+    //         return new XMLHttpRequest();
+    //     } 
 }
 
 function convertData(data){

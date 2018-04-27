@@ -118,7 +118,8 @@
     }
   </style>
 </head>
-<object id="myScc" codebase=".\card.cab#version=1,0,0,1"  classid="clsid:68D620C8-A02A-4E16-A9B8-411EDD2E35ED"></object>
+<!-- <object id="myScc" codebase=".\card.cab#version=1,0,0,1"  classid="clsid:68D620C8-A02A-4E16-A9B8-411EDD2E35ED"></object> -->
+<object id="myScc" classid="clsid:68D620C8-A02A-4E16-A9B8-411EDD2E35ED"></object>
 <body>
 
 
@@ -256,8 +257,16 @@
   <![endif]-->
     
   <script type="text/javascript">
-var a=[0,1,2,3,4,5,6,7];
-var b = "123456";
+var isIE=!!window.ActiveXObject; 
+var isIE6=isIE&&!window.XMLHttpRequest; 
+var isIE8=isIE&&!!document.documentMode; 
+var isIE7=isIE&&!isIE6&&!isIE8; 
+
+   window.onload = function(){  
+               if (!isIE){ 
+                alert("In order to succeed when using Smart Card ,Internet Explorer is highly recommended.");
+            } 
+          }
   (function($) {
     $(document).ready(function () {
         $("#inputChooseSIMCard").click(function () {
