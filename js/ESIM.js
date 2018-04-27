@@ -75,7 +75,7 @@ function fnCheckICCID(){
                 // fnCardOff();
                 // // 将读卡器释放
                 // fnFreeReader();
-        alert(ICCID_val);
+        alert("No Data");
         return "true";
     }
 }
