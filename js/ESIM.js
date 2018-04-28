@@ -481,8 +481,10 @@ function fnListReaders(){
 //设置所使用的读卡器名称
 function fnSetReader(val){
     lReturn = myScc.SetReader(val);
-    if(lReturn!=0)
+    if(lReturn!=0){
         alert("CardOn err:"+"设置所使用的读卡器名称.state:"+lReturn + ".");
+        return;
+    }
     // console.log(lReturn + '-------lReturn ---------设置所使用的读卡器名称')
 
 }
@@ -491,7 +493,7 @@ function fnCardOn(event) {
     lReturn = myScc.CardOn();
     if(lReturn!=0){
         alert("CardOn err:"+"连接智能卡.state:"+lReturn + ".");
-        // return;
+        return;
     }
 }
 //重置读卡器获取atr值
