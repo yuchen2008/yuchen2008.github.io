@@ -17,9 +17,8 @@ function fnGetEid(){
         fnListReaders();
         // alert("请先插入读卡器");
     } else{
-        if(fnSetReader(document.getElementById("ChooseReader").value)){
-            // 连接智能卡
-            fnCardOn();
+        // 连接智能卡
+        if(fnConnect_Card()){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
@@ -42,12 +41,9 @@ function fnGetEid(){
                 return;
             }else{
                fnGetDP_iccid();
-            }  
-        }else{
-            alert("设置读卡器名称失败");
+            }   
         }
-        
-
+          
     }
 
     
@@ -481,7 +477,24 @@ function fnSetReader(val){
     }
     return true;
     // console.log(lReturn + '-------lReturn ---------设置所使用的读卡器名称')
+}
+function fnConnect_Card() {
+    // body...
+    lReturn = myScc.SetReader(val);
+    if(lReturn!=0){
+        // alert("CardOn err:"+"设置所使用的读卡器名称.state:"+lReturn + ".");
+        alert("设置所使用的读卡器名称出错.");
+        return;
+    }
+    lReturn = myScc.CardOn();
+    if(lReturn!=0){
+        // alert("CardOn err:"+"连接智能卡.state:"+lReturn + ".");
+        alert("连接智能卡出错.");
+        return;
+    }
+    return true;
 
+    
 }
 //连接智能卡
 function fnCardOn(event) {
@@ -502,7 +515,7 @@ function fnRunAPDU(val){
     console.log(val + '-------fnRunAPDU ---------执行apdu命令')
     if(lReturn!=0){
         alert("CardOn err:"+"执行apdu命令"+val+".state:"+lReturn + ".");
-        // return;
+        return;
     }
     // console.log(lReturn + '-------lReturn ---------执行apdu命令')
 }
@@ -559,15 +572,19 @@ function fnGetRetData_value() {
 
 function fnCardOff(){
     lReturn = myScc.CardOff();
-    if(lReturn!=0)
-        alert("CardOff return "+lReturn);
+    if(lReturn!=0){
+        console.log("CardOff return "+lReturn);
+        alert("断开卡片出错")；
+    }
     // console.log(lReturn + '-------lReturn ---------断开卡片')
 }
 function fnFreeReader(){
     lReturn = myScc.FreeReader();
 
-    if(lReturn!=0)
-        alert("FreeReader return "+lReturn);
+    if(lReturn!=0){
+        console.log("FreeReader return "+lReturn);
+        alert("释放读卡器出错");
+    }
     // console.log(lReturn + '-------lReturn ---------将读卡器释放');
 }
 
@@ -602,27 +619,7 @@ function ajax(){
     }
 }
 
-function createxmlHttpRequest() {
-
-    // if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE6.0") 
-    // { 
-    // alert("IE 6.0"); 
-    // } 
-    // else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE7.0") 
-    // { 
-    // alert("IE 7.0"); 
-    // } 
-    // else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE8.0") 
-    // { 
-    // alert("IE 8.0"); 
-    // } 
-    // else if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE9.0") 
-    // { 
-    // alert("IE 9.0"); 
-    // } else{
-
-    // }
-          
+function createxmlHttpRequest() {     
 
         var mf_change=false;   
          try   
