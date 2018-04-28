@@ -18,7 +18,7 @@ function fnGetEid(){
         // alert("请先插入读卡器");
     } else{
         // 连接智能卡
-        if(fnConnect_Card()){
+        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
@@ -344,7 +344,7 @@ function fnGetICCID(){
         // alert("请先插入读卡器");
     } else{
         // 连接智能卡
-        if(fnConnect_Card()){
+        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
@@ -478,7 +478,7 @@ function fnSetReader(val){
     return true;
     // console.log(lReturn + '-------lReturn ---------设置所使用的读卡器名称')
 }
-function fnConnect_Card() {
+function fnConnect_Card(val) {
     // body...
     lReturn = myScc.SetReader(val);
     if(lReturn!=0){
