@@ -343,46 +343,46 @@ function fnGetICCID(){
         fnListReaders();
         // alert("请先插入读卡器");
     } else{
-    // 设置所使用的读卡器名称
-        fnSetReader(document.getElementById("ChooseReader").value);
         // 连接智能卡
-        fnCardOn();
-        // 重置读卡器获取atr值
-        fnGetATR();
-        // 执行apdu命令
-        fnRunAPDU('00a4040409676F74656C6C417070');
-         // 获取命令返回状态字
-        fnGetSW();
-        fnRunAPDU('80E2900002BF2D');
-        // 获取命令返回状态字
-        fnGetSW();
-        // 获取EID
-        fnGetRetData('ICCID');
-        if(ICCID_val.length >= 22){
-            var I_length = ICCID_val.length / 22 ;
-            console.log(I_length + '------')
-             console.log(typeof I_length + '------')
-             var ICCID_list = []
-            for(var i = 0; i< I_length ;i++){
-                  console.log(i);
-                  console.log(i*22 +'----'+ 22*(1+i))  
-                  console.log(ICCID_val.substring(i*22,(i+1)*22).substring(2) +'-----')
-                  ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
+        if(fnConnect_Card()){
+            // 重置读卡器获取atr值
+            fnGetATR();
+            // 执行apdu命令
+            fnRunAPDU('00a4040409676F74656C6C417070');
+             // 获取命令返回状态字
+            fnGetSW();
+            fnRunAPDU('80E2900002BF2D');
+            // 获取命令返回状态字
+            fnGetSW();
+            // 获取EID
+            fnGetRetData('ICCID');
+            if(ICCID_val.length >= 22){
+                var I_length = ICCID_val.length / 22 ;
+                console.log(I_length + '------')
+                 console.log(typeof I_length + '------')
+                 var ICCID_list = []
+                for(var i = 0; i< I_length ;i++){
+                      console.log(i);
+                      console.log(i*22 +'----'+ 22*(1+i))  
+                      console.log(ICCID_val.substring(i*22,(i+1)*22).substring(2) +'-----')
+                      ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
+                }
+                console.log(ICCID_list + '-------')
+                // 断开卡片
+                        fnCardOff();
+                        // 将读卡器释放
+                        fnFreeReader();
+                alert(ICCID_list);
+            }else{
+                // 断开卡片
+                        fnCardOff();
+                        // 将读卡器释放
+                        fnFreeReader();
+                alert(ICCID_val);
+                // return;
             }
-            console.log(ICCID_list + '-------')
-            // 断开卡片
-                    fnCardOff();
-                    // 将读卡器释放
-                    fnFreeReader();
-            alert(ICCID_list);
-        }else{
-            // 断开卡片
-                    fnCardOff();
-                    // 将读卡器释放
-                    fnFreeReader();
-            alert(ICCID_val);
-            // return;
         }
+     
     }
     
 }
