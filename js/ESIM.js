@@ -17,32 +17,36 @@ function fnGetEid(){
         fnListReaders();
         // alert("请先插入读卡器");
     } else{
-        fnSetReader(document.getElementById("ChooseReader").value);
-        // 连接智能卡
-        fnCardOn();
-        // 重置读卡器获取atr值
-        fnGetATR();
-        // 执行apdu命令
-        fnRunAPDU('00a4040409676F74656C6C417070');
-        fnGetSW();
-         fnRunAPDU('001A000010');
-         // lReturn = myScc.RunAPDU('00150000569321E1F57E6036E0D05F3022951457C63044022067CBB0F75707A43E1043636DF342699FD6163F9CE3B7A4BEF45CB49E051D340602203BCFFEC7945EF359031224ACFEC8C124D193B687894CE8AD658CA8C658264D92');
-        // console.log(lReturn + '----0015');
-        // 获取命令返回状态字
-        fnGetSW();
-        // 获取EID
-        fnGetRetData('EID');
-        // return EID_val;
-        console.log(EID_val);
-        showloading();
-        var checkValue_ = fnCheckICCID();
-        // console.log(typeof checkValue_);
-        // console.log('==='+ checkValue_);
-        if(checkValue_=="false"){
-            return;
+        if(fnSetReader(document.getElementById("ChooseReader").value)){
+            // 连接智能卡
+            fnCardOn();
+            // 重置读卡器获取atr值
+            fnGetATR();
+            // 执行apdu命令
+            fnRunAPDU('00a4040409676F74656C6C417070');
+            fnGetSW();
+             fnRunAPDU('001A000010');
+             // lReturn = myScc.RunAPDU('00150000569321E1F57E6036E0D05F3022951457C63044022067CBB0F75707A43E1043636DF342699FD6163F9CE3B7A4BEF45CB49E051D340602203BCFFEC7945EF359031224ACFEC8C124D193B687894CE8AD658CA8C658264D92');
+            // console.log(lReturn + '----0015');
+            // 获取命令返回状态字
+            fnGetSW();
+            // 获取EID
+            fnGetRetData('EID');
+            // return EID_val;
+            console.log(EID_val);
+            showloading();
+            var checkValue_ = fnCheckICCID();
+            // console.log(typeof checkValue_);
+            // console.log('==='+ checkValue_);
+            if(checkValue_=="false"){
+                return;
+            }else{
+               fnGetDP_iccid();
+            }  
         }else{
-           fnGetDP_iccid();
-        }  
+            alert("设置读卡器名称失败");
+        }
+        
 
     }
 
@@ -326,7 +330,7 @@ function fninputAPDU(A_id){
         return;
     }
     lReturn = myScc.RunAPDU(inputvalue);
-    document.getElementById("SetReader").innerHTML ="状态：0是成功----" + lReturn;
+    // document.getElementById("SetReader").innerHTML ="状态：0是成功----" + lReturn;
     if(lReturn!=0)
         alert("CardOn err:"+lReturn);
     // console.log(lReturn + '-------lReturn ---------执行apdu命令');
@@ -473,8 +477,9 @@ function fnSetReader(val){
     lReturn = myScc.SetReader(val);
     if(lReturn!=0){
         alert("CardOn err:"+"设置所使用的读卡器名称.state:"+lReturn + ".");
-        return;
+        return false;
     }
+    return true;
     // console.log(lReturn + '-------lReturn ---------设置所使用的读卡器名称')
 
 }
