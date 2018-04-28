@@ -574,7 +574,7 @@ function fnCardOff(){
     lReturn = myScc.CardOff();
     if(lReturn!=0){
         console.log("CardOff return "+lReturn);
-        alert("断开卡片出错")；
+        alert("断开卡片出错");
     }
     // console.log(lReturn + '-------lReturn ---------断开卡片')
 }
