@@ -14,7 +14,8 @@ function fnGetEid(){
     // fnListReaders();
     // 设置所使用的读卡器名称
     if(document.getElementById("ChooseReader").value == ""){
-        alert("请先插入读卡器");
+        fnListReaders();
+        // alert("请先插入读卡器");
     } else{
         fnSetReader(document.getElementById("ChooseReader").value);
         // 连接智能卡
