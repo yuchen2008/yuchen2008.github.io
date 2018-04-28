@@ -13,10 +13,7 @@ function fnGetEid(){
     // 获取系统中所安装读卡器名称
     // fnListReaders();
     // 设置所使用的读卡器名称
-    if(document.getElementById("ChooseReader").value == ""){
-        fnListReaders();
-        // alert("请先插入读卡器");
-    } else{
+    if(fnListReaders() == "OK"){
         // 连接智能卡
         if(fnConnect_Card(document.getElementById("ChooseReader").value)){
             // 重置读卡器获取atr值
@@ -43,10 +40,7 @@ function fnGetEid(){
                fnGetDP_iccid();
             }   
         }
-          
     }
-
-    
 }
 
 function fnCheckICCID(){
@@ -339,10 +333,7 @@ function fninputAPDU(A_id){
 function fnGetICCID(){
     // 获取系统中所安装读卡器名称
     // fnListReaders();
-    if(document.getElementById("ChooseReader").value == ""){
-        fnListReaders();
-        // alert("请先插入读卡器");
-    } else{
+    if(fnListReaders() == "OK"){
         // 连接智能卡
         if(fnConnect_Card(document.getElementById("ChooseReader").value)){
             // 重置读卡器获取atr值
@@ -382,9 +373,7 @@ function fnGetICCID(){
                 // return;
             }
         }
-     
     }
-    
 }
 
 
@@ -466,7 +455,7 @@ function fnListReaders(){
             }
          }
          // console.log(ChooseReaders.value);
-        return ChooseReaders.value;
+        return "OK";
 }
 //设置所使用的读卡器名称
 function fnSetReader(val){
