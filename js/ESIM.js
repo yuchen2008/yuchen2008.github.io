@@ -439,7 +439,8 @@ function fnListReaders(){
         s=new String(myScc.ListReaders());
          }
     catch(err){
-         alert(err) // 可执行
+         console.log(err); // 可执行
+         alert("插件出错，请安装插件并允许ActiveX控件,使用IE浏览器打开");
          return;
     }
          cars=s.split("||");
