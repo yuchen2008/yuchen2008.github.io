@@ -339,7 +339,8 @@ function fnGetICCID(){
     // 获取系统中所安装读卡器名称
     // fnListReaders();
     if(document.getElementById("ChooseReader").value == ""){
-        alert("请先插入读卡器");
+        fnListReaders();
+        // alert("请先插入读卡器");
     } else{
     // 设置所使用的读卡器名称
         fnSetReader(document.getElementById("ChooseReader").value);
@@ -465,18 +466,6 @@ function fnListReaders(){
          }
          // console.log(ChooseReaders.value);
         return ChooseReaders.value;
-   
-   
-   
-    // // cars = cars.split(",")
-    // for (var i=0;i<cars.length-1;i++)
-    // {
-    //     var b = document.createElement("OPTION");
-    //     b.setAttribute("value", cars[i]);
-    //     // checkField(cars[i])
-    //     // document.getElementById("myReaderslist").appendChild(b);
-    //     // document.getElementById("myReaderslist").append(b);
-    // }
 }
 //设置所使用的读卡器名称
 function fnSetReader(val){
