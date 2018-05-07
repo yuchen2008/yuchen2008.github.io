@@ -76,6 +76,18 @@
       border-radius: 0;
       margin-left:8px;
     }
+  #provisioning{
+      width: 140px;
+      height: 36px;
+      font-family: 'Arial Normal', 'Arial';
+      font-weight: 400;
+      font-style: normal;
+      text-decoration: none;
+      color: #000000;
+      text-align: center;
+      border-radius: 0;
+      margin-left:8px;
+    }
     .btn {
       display: inline-block;
       padding: 6px 12px;
@@ -178,11 +190,12 @@
       </div>
 
       <div class="control-group">
-        <div class="" style="margin-left: 40px;">
+        <div class="" style="margin-left: 0px;">
           Insert eSIM and &nbsp;
           <!-- <button type="button" class="btn btn-primary" onclick="fnGetEid()" id="download-btn">Download</button> -->
           <input type="button"  value="Download" id="download-btn" class=" btn btn-primary ">
-           <input type="button"  value="View Profile(s)" id="get_mobile_code" onclick="RemainTime()" class=" btn btn-default">
+           <input type="button"  value="View Profile(s)" id="get_mobile_code" class=" btn btn-default">
+            <input type="button"  value="provisioning profile" id="provisioning" class=" btn btn-default">
           <!-- <span class="help-block">Version: Retail</span> -->
         </div>
       </div>
@@ -234,9 +247,12 @@
         $('#get_mobile_code').click(function(){
           RemainTime();
           fnGetICCID();
-          // alert(fnGetICCID())
-          // if()
         });
+
+         $('#provisioning').click(function(){
+          RemainTime("provisioning","provisioning profile");
+          // fnGetProvisioning();
+        })
         
         
 
@@ -245,8 +261,9 @@
 
   var iTime = 5;
   var Account;
-  function RemainTime(){
-      document.getElementById('get_mobile_code').disabled = true;
+  function RemainTime(valueid,valueinfo){
+      console.log(valueid + '---')
+      document.getElementById(valueid).disabled = true;
       var iSecond,sSecond="",sTime="";
       if (iTime >= 0){
           iSecond = parseInt(iTime%60);
@@ -261,18 +278,19 @@
           sTime=sSecond;
           if(iTime==0){
               clearTimeout(Account);
-              sTime='View Profile(s)';
+              sTime=""+valueinfo;
               iTime = 5;
-              document.getElementById('get_mobile_code').disabled = false;
+              document.getElementById(valueid).disabled = false;
           }else{
-              Account = setTimeout("RemainTime()",1000);
+              Account = setTimeout(function(){RemainTime(valueid,valueinfo)},1000);
               iTime=iTime-1;
           }
       }else{
           sTime='No Time';
       }
-      document.getElementById('get_mobile_code').value = sTime;
+      document.getElementById(valueid).value = sTime;
   }
+
 
   </script>
 </body>
