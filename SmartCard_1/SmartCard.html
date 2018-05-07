@@ -229,9 +229,10 @@
             success:function (response) {
                 console.log(response);
                 console.log(JSON.stringify(response));
+                alert(response.readyState + '----111');
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.readyState);
+                alert(XMLHttpRequest.readyState+'error');
                 console.log(JSON.stringify(XMLHttpRequest));
 
                 console.log(JSON.stringify(textStatus));
