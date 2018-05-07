@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>roam2free</title>
+<!--   <link rel="stylesheet/less" type="text/css" href="bootstrap/less/bootstrap.less">
+  <script src="less.min.js" type="text/javascript"></script>
+ -->
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
+  <!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css"> -->
+
+  <!--[if lte IE 6]>
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+  <![endif]-->
+  <!--[if lte IE 7]>
+  <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+  <![endif]-->
+  <style>
+    .login-box{
+      width: 500px;
+      margin: auto;
+    }
+    .logo{
+      margin: auto;
+      text-align: center;
+    }
+    .login-title{
+      text-align: center;
+      white-space: nowrap;
+      font-size: 18px;
+      font-family: 'Arial Normal', 'Arial';
+      font-weight: 400;
+      font-style: normal;
+      color: #333333;
+      line-height: normal;
+      margin: 30px;
+    }
+
+    .login-box .controls .control-input, .login-box .controls select{
+      width: 300px;
+      height: 36px;
+      font-family: 'Arial Normal', 'Arial';
+      font-weight: 400;
+      font-style: normal;
+      font-size: 13px;
+      text-decoration: none;
+      color: #000000;
+      text-align: left;
+      border-radius: 0;
+    }
+    .control-input, select {
+      padding: 1px 0px 1px 0px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+    }
+
+    .text-center{
+      text-align: center;
+    }
+    .help-block{
+      margin: 30px auto;
+    }
+
+    .inputICCID{
+      width: 200px !important;
+    }
+    #get_mobile_code{
+      width: 120px;
+      height: 36px;
+      font-family: 'Arial Normal', 'Arial';
+      font-weight: 400;
+      font-style: normal;
+      text-decoration: none;
+      color: #000000;
+      text-align: center;
+      border-radius: 0;
+      margin-left:8px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 6px 12px;
+      margin-bottom: 0;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.42857143;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      -ms-touch-action: manipulation;
+      touch-action: manipulation;
+      cursor: pointer;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      background-image: none;
+      border: 1px solid transparent;
+      width:150px;
+      border-radius: 0px;
+    }
+    .btn-default {
+      color: #333;
+      background-color: #fff;
+      border-color: #ccc;
+    }
+    .btn-primarys{
+       color: #ffffff;
+      background-color: #0044cc !important;
+      }   
+    .progress {
+      overflow: hidden;
+      height: 20px;
+      margin-bottom: 20px;
+      background-image: linear-gradient(to bottom, #f5f5f5, #524c4c) !important;
+    }
+    select {
+    line-height: 20px /9;
+    }
+  </style>
+</head>
+<object id="myScc" codebase=".\card.cab#version=1,0,0,1" CODEBASE="card.cab" classid="clsid:68D620C8-A02A-4E16-A9B8-411EDD2E35ED"></object>
+<body>
+
+
+
+<div class="container">
+  <div class="logo">
+    <img src="img/u6.png" style="margin-left: 120px;" alt="">
+    <img src="img/u7.png" alt="">
+  <img src="img/u8.png" style="width: 227px;" alt="">
+  </div>
+  <div class="login-title">
+   &nbsp;&nbsp;&nbsp;Travelwin Remotely  Programmable eSIM
+  </div>
+  <div class="login-box">
+
+    <form class="bs-docs-example form-horizontal">
+
+      <div class="control-group">
+        <label class="control-label" for="inputCustomerName">Customer Name</label>
+        <div class="controls">
+          <input type="text" id="inputCustomerName" class="control-input" placeholder="Customer Name">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="inputCustomerPassportNo">Customer Passport No</label>
+        <div class="controls">
+          <input type="text" id="inputCustomerPassportNo"  class="control-input" placeholder="Customer Passport No">
+        </div>
+      </div>
+      <!-- <div class="control-group">
+        <label class="control-label" for="inputICCID">GetICCID</label>
+        <div class="controls">
+          <input type="text" id="inputICCID" class="control-input inputICCID" placeholder="ICCID">
+          <input type="button"  value="获取ICCID" id="get_mobile_code" onclick="RemainTime()" class=" btn btn-default">
+        </div>
+      </div> -->
+      <div class="control-group">
+        <label class="control-label">Choose Product</label>
+        <div class="controls">
+          <select class="form-control" id="ChooseProduct">
+            <option selected="" value="1">Global Plus</option>
+            <option value="2">Global</option>
+            <option value="3">Prime</option>
+            <option value="4">Ultra</option>
+          </select>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="inputChooseSIMCard">Choose SIMCard</label>
+        <div class="controls">
+          <!-- <input type="text" id="inputChooseSIMCard"  class="control-input" placeholder="Choose SIMCard"> -->
+           <select class="form-control"  id="ChooseSIMCard">
+          </select>
+        </div>
+
+      </div>
+
+      <div class="control-group">
+        <div class="" style="margin-left: 40px;">
+          Insert eSIM and &nbsp;
+          <!-- <button type="button" class="btn btn-primary" onclick="fnGetEid()" id="download-btn">Download</button> -->
+          <input type="button"  value="Download" id="download-btn" class=" btn btn-primary ">
+           <input type="button"  value="View Profile(s)" id="get_mobile_code" onclick="RemainTime()" class=" btn btn-default">
+          <!-- <span class="help-block">Version: Retail</span> -->
+        </div>
+      </div>
+   <!--    <div class="progress progress-striped active">
+        <div class="bar" style="width: 45%"></div>
+      </div> -->
+
+    </form>
+
+  </div>
+</div>
+<a href="#myModal" role="button" class="btn" id="ChooseSIMCard-btn" style="visibility: hidden;" data-toggle="modal">ChooseSIMCard</a>
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+   <table class="table table-hover">
+  <thead>
+    <tr class="success">
+    
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Mark</td>
+      <td>Otto</td>
+      <td>@TwBootstrap</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
+    </tr>
+  
+  </tbody>
+</table>
+
+<div class="bs-docs-example">
+  <div class="pagination pagination-centered">
+    <ul>
+      <li><a href="#">«</a></li>
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li><a href="#">»</a></li>
+    </ul>
+  </div>
+</div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
+</div>
+
+
+<div id="modal-loading"> </div>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/base-loading.js"></script>
+  
+  <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+  <script type="text/javascript" src="js/ESIM.js"></script>
+  <script type="text/javascript" src="js/data.js"></script>
+  <!--[if lte IE 6]>
+  <script type="text/javascript" src="js/bootstrap-ie.js"></script>
+  <![endif]-->
+    
+  <script type="text/javascript">
+var a=[0,1,2,3,4,5,6,7];
+var b = "123456";
+  (function($) {
+    $(document).ready(function () {
+        $("#inputChooseSIMCard").click(function () {
+           $('#ChooseSIMCard-btn').click();
+        });
+        $('#download-btn').click(function () {
+            // location.href =''
+            // RemainTimeEid();
+            fnGetEid();
+        });
+        $('#get_mobile_code').click(function(){
+          RemainTime();
+          fnGetICCID();
+          alert(fnGetICCID())
+          // if()
+        })
+        
+        
+
+    });
+  })(jQuery);
+
+
+  // var iTimeEid = 120;
+  // var AccountEid;
+  // function RemainTimeEid(){
+  //     document.getElementById('download-btn').disabled = true;
+  //     var iSecond,sSecond="",sTime="";
+  //     if (iTimeEid >= 0){
+  //         iSecond = parseInt(iTimeEid%60);
+  //         iMinute = parseInt(iTimeEid/60);
+  //         if (iSecond >= 0){
+  //             if(iMinute>0){
+  //                 sSecond = iMinute + "分" + iSecond + "秒";
+  //             }else{
+  //                 sSecond = iSecond + "秒";
+  //             }
+  //         }
+  //         sTime=sSecond;
+  //         if(iTimeEid==0){
+  //             clearTimeout(AccountEid);
+  //             sTime='Download';
+  //             iTimeEid = 5;
+  //             document.getElementById('download-btn').disabled = false;
+  //         }else{
+  //             AccountEid = setTimeout("RemainTimeEid()",1000);
+  //             iTimeEid=iTimeEid-1;
+  //         }
+  //     }else{
+  //         sTime='No Time';
+  //     }
+  //     document.getElementById('download-btn').value = 'Download...';
+  // }
+
+  var iTime = 5;
+  var Account;
+  function RemainTime(){
+      document.getElementById('get_mobile_code').disabled = true;
+      var iSecond,sSecond="",sTime="";
+      if (iTime >= 0){
+          iSecond = parseInt(iTime%60);
+          iMinute = parseInt(iTime/60);
+          if (iSecond >= 0){
+              if(iMinute>0){
+                  sSecond = iMinute + "分" + iSecond + "秒";
+              }else{
+                  sSecond = iSecond + "秒";
+              }
+          }
+          sTime=sSecond;
+          if(iTime==0){
+              clearTimeout(Account);
+              sTime='View Profile(s)';
+              iTime = 5;
+              document.getElementById('get_mobile_code').disabled = false;
+          }else{
+              Account = setTimeout("RemainTime()",1000);
+              iTime=iTime-1;
+          }
+      }else{
+          sTime='No Time';
+      }
+      document.getElementById('get_mobile_code').value = sTime;
+  }
+
+  </script>
+</body>
+</html>
