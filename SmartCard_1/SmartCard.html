@@ -220,27 +220,27 @@
  
     
   <script type="text/javascript">
-    jQuery.support.cors = true;
-     $.ajax({
-            type: "POST",
-            async: false,
-            url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es9plus/m2m/sendRes",
-            contentType:"application/x-www-form-urlencoded;",
-            data: {'data': '0389086113930080000000000000000042'},
-            success:function (response) {
-                console.log(response);
-                console.log(JSON.stringify(response));
-                alert(response.readyState + '----111');
-            },
-            error:function (XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.readyState+'error');
-                console.log(JSON.stringify(XMLHttpRequest));
+    // jQuery.support.cors = true;
+    //  $.ajax({
+    //         type: "POST",
+    //         async: false,
+    //         url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es9plus/m2m/sendRes",
+    //         contentType:"application/x-www-form-urlencoded;",
+    //         data: {'data': '0389086113930080000000000000000042'},
+    //         success:function (response) {
+    //             console.log(response);
+    //             console.log(JSON.stringify(response));
+    //             alert(response.readyState + '----111');
+    //         },
+    //         error:function (XMLHttpRequest, textStatus, errorThrown) {
+    //             alert(XMLHttpRequest.readyState+'error');
+    //             console.log(JSON.stringify(XMLHttpRequest));
 
-                console.log(JSON.stringify(textStatus));
-                console.log(JSON.stringify(errorThrown));
+    //             console.log(JSON.stringify(textStatus));
+    //             console.log(JSON.stringify(errorThrown));
 
-            }
-        });
+    //         }
+    //     });
 var a=[0,1,2,3,4,5,6,7];
 var b = "123456";
   (function($) {
