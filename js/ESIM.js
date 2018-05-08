@@ -44,7 +44,7 @@ function fnGetEid(){
 }
 //provisioning
 function fnGetProvisioning() {
-    var Provisioning = document.getElementById("Provisioning");
+    var Provisioning = document.getElementById("provisioning_select");
     Provisioning.innerHTML = '';
     // body...
     // 获取系统中所安装读卡器名称
