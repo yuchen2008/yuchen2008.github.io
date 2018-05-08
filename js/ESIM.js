@@ -640,6 +640,17 @@ function ajax(){
     var xhr = createxmlHttpRequest();
     //xhr.responseType=ajaxData.dataType;
     xhr.open(ajaxData.type,ajaxData.url,ajaxData.async);
+
+    // header
+    xhr.withCredentials = true;
+    xhr.setRequestHeader("Access-Control-Allow-Credentials", "true");
+    xhr.setRequestHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+    xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, PUT, POST");
+    xhr.setRequestHeader("Access-Control-Allow-Origin", "https://c9dp.roam2free.com:8443");
+    xhr.setRequestHeader("Access-Control-Max-Age","86400");
+
+
+
     xhr.setRequestHeader("Content-Type",ajaxData.contentType);
     xhr.send(convertData(ajaxData.data));
     // xhr.send(ajaxData.data);
