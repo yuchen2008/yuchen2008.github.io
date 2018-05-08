@@ -242,14 +242,18 @@
             fnGetEid();
         });
         $('#get_mobile_code').click(function(){
-          RemainTime();
+          RemainTime("get_mobile_code","View Profile(s)");
           fnGetICCID();
-        });
-
-         $('#provisioning').click(function(){
-          RemainTime("provisioning","provisioning profile");
-          // fnGetProvisioning();
+          alert(fnGetICCID())
         })
+        $('#provisioning').click(function(){
+          RemainTime("provisioning","provisioning profile");
+          // fnGetICCID();
+          // alert(fnGetICCID())
+          // if()
+        })
+        
+        
         
         
 
