@@ -186,7 +186,14 @@
            <select class="form-control"  id="ChooseSIMCard">
           </select>
         </div>
+      </div>
 
+      <div class="control-group">
+        <label class="control-label">Choose provisioning</label>
+        <div class="controls">
+          <select class="form-control" id="provisioning">
+          </select>
+        </div>
       </div>
 
       <div class="control-group">
@@ -210,9 +217,9 @@
 <div id="modal-loading"> </div>
   <!-- loading -->
   <script type="text/javascript" src="js/base-loading.js"></script>
-  <!-- 核心代码 -->
+  <!-- main -->
   <script type="text/javascript" src="js/ESIM.js"></script>
-  <!-- ICCID数据源 -->
+  <!-- ICCID data -->
   <script type="text/javascript" src="js/data.js"></script>
 
     
@@ -246,9 +253,7 @@
         })
         $('#provisioning').click(function(){
           RemainTime("provisioning","provisioning profile");
-          // fnGetICCID();
-          // alert(fnGetICCID())
-          // if()
+          fnGetProvisioning();
         })
         
         
@@ -269,9 +274,9 @@
           iMinute = parseInt(iTime/60);
           if (iSecond >= 0){
               if(iMinute>0){
-                  sSecond = iMinute + "分" + iSecond + "秒";
+                  sSecond = iMinute + "minute" + iSecond + "second";
               }else{
-                  sSecond = iSecond + "秒";
+                  sSecond = iSecond + "second";
               }
           }
           sTime=sSecond;

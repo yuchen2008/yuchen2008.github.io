@@ -44,6 +44,8 @@ function fnGetEid(){
 }
 //provisioning
 function fnGetProvisioning() {
+    var Provisioning = document.getElementById("Provisioning");
+    Provisioning.innerHTML = '';
     // body...
     // 获取系统中所安装读卡器名称
     fnListReaders();
@@ -71,20 +73,26 @@ function fnGetProvisioning() {
               console.log(i);
               console.log(i*22 +'----'+ 22*(1+i))  
               console.log(ICCID_val.substring(i*22,(i+1)*22).substring(2) +'-----')
-              ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
+              ICCID_list[i] = ICCID_val.substring(i*22,(i+1)*22).substring(2);
+
+              var objOption = document.createElement("OPTION");
+              objOption.text = ICCID_val.substring(i*22,(i+1)*22).substring(2)[i];
+              objOption.value = ICCID_val.substring(i*22,(i+1)*22).substring(2)[i];
+              Provisioning.options.add(objOption);
         }
         console.log(ICCID_list + '-------')
         // 断开卡片
-                fnCardOff();
-                // 将读卡器释放
-                fnFreeReader();
+        fnCardOff();
+        // 将读卡器释放
+        fnFreeReader();
         return ICCID_list;
     }else{
         // 断开卡片
-                fnCardOff();
-                // 将读卡器释放
-                fnFreeReader();
-        alert(ICCID_val);
+        alert("No Data");
+        fnCardOff();
+        // 将读卡器释放
+        fnFreeReader();
+        // alert(ICCID_val);
         return;
     }
 }
@@ -414,7 +422,7 @@ function fnGetICCID(){
                         fnCardOff();
                         // 将读卡器释放
                         fnFreeReader();
-                alert(ICCID_val);
+                // alert(ICCID_val);
                 // return;
             }
         }
