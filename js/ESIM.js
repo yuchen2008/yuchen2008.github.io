@@ -433,12 +433,11 @@ function fnGetICCID(){
                  console.log(typeof I_length + '------')
                  var ICCID_list = []
                 for(var i = 0; i< I_length ;i++){
-                      console.log(i);
-                      console.log(i*22 +'----'+ 22*(1+i))  
+                
                       console.log(ICCID_val.substring(i*22,(i+1)*22).substring(2) +'-----')
                       var objOption = document.createElement("OPTION");
-                      objOption.text = ICCID_val.substring(i*22,(i+1)*22).substring(2)[i];
-                      objOption.value = ICCID_val.substring(i*22,(i+1)*22).substring(2)[i];
+                      objOption.text = ICCID_val.substring(i*22,(i+1)*22).substring(2);
+                      objOption.value = ICCID_val.substring(i*22,(i+1)*22).substring(2);
                       provisioning_select.options.add(objOption);
                       ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
                 }
