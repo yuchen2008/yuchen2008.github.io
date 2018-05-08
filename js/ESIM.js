@@ -642,7 +642,7 @@ function ajax(){
     
 
     // header
-    xhr.withCredentials = true;
+    // xhr.withCredentials = true;
     xhr.setRequestHeader("Access-Control-Allow-Credentials", "true");
     xhr.setRequestHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
     xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, PUT, POST");
