@@ -644,10 +644,10 @@ function ajax(){
     // header
     // xhr.withCredentials = true;
     // xhr.setRequestHeader("Access-Control-Allow-Credentials", "true");
-    xhr.setRequestHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
-    xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, PUT, POST");
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "https://c9dp.roam2free.com:8443");
-    xhr.setRequestHeader("Access-Control-Max-Age","86400");
+    // xhr.setRequestHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
+    // xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, PUT, POST");
+    // xhr.setRequestHeader("Access-Control-Allow-Origin", "https://c9dp.roam2free.com:8443");
+    // xhr.setRequestHeader("Access-Control-Max-Age","86400");
 
     xhr.open(ajaxData.type,ajaxData.url,ajaxData.async);
 
@@ -666,31 +666,31 @@ function ajax(){
 }
 
 function createxmlHttpRequest() {     
-
-        var mf_change=false;   
-         try   
-         {   
+return new XMLHttpRequest()
+        // var mf_change=false;   
+        //  try   
+        //  {   
              
-          mf_change = new ActiveXObject("Msxml2.XMLHTTP");   
+        //   mf_change = new ActiveXObject("Msxml2.XMLHTTP");   
           
-         }   
-         catch (e)   
-         {   
-            try   
-            {   
-              mf_change = new ActiveXObject("Microsoft.XMLHTTP");   
-            }   
-            catch (E)   
-            {   
-              mf_change = false;   
-            }   
-         }  
-         if (!mf_change && typeof XMLHttpRequest!='undefined')   
-         {   
-           mf_change = new XMLHttpRequest();   
-         }   
-         // alert(JSON.stringify(mf_change));
-         return mf_change;  
+        //  }   
+        //  catch (e)   
+        //  {   
+        //     try   
+        //     {   
+        //       mf_change = new ActiveXObject("Microsoft.XMLHTTP");   
+        //     }   
+        //     catch (E)   
+        //     {   
+        //       mf_change = false;   
+        //     }   
+        //  }  
+        //  if (!mf_change && typeof XMLHttpRequest!='undefined')   
+        //  {   
+        //    mf_change = new XMLHttpRequest();   
+        //  }   
+        //  // alert(JSON.stringify(mf_change));
+        //  return mf_change;  
 
 
     // if (window.ActiveXObject) {
