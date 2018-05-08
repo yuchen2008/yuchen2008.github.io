@@ -643,7 +643,7 @@ function ajax(){
 
     // header
     // xhr.withCredentials = true;
-    xhr.setRequestHeader("Access-Control-Allow-Credentials", "true");
+    // xhr.setRequestHeader("Access-Control-Allow-Credentials", "true");
     xhr.setRequestHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
     xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, PUT, POST");
     xhr.setRequestHeader("Access-Control-Allow-Origin", "https://c9dp.roam2free.com:8443");
