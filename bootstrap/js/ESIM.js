@@ -296,25 +296,27 @@ function fnGetDP_iccid(){
                                 // console.log(APDU_a + '------APDU_000000a---data=03 + eid 返回 APDU,a');
                          
                             }else{
-                                alert("There are problems in download profile from server (3)");
+                                alert("There are problems in download profile from server (2)");
                                 hiddenLoading();
                             }
                             // console.log(msg.responseText+ '------msg.responseText');
                             // console.log(msg.response+ '------msg.response');
                         },
                         error:function(e){
-                            // console.log("error" + "--" + e);
+                            alert("There are problems in download profile from server (2.1)");
+                            hiddenLoading();
+                            console.log("error" + "--" + e);
 
                         }
                     })
                 }else{
-                    alert("There are problems in download profile from server (3)");
+                    alert("There are problems in download profile from server (1)");
                     hiddenLoading();
                 }
             },
             error:function(e){
                 // console.log("error" + "--" + e);
-                alert("There are problems in download profile from server (3)");
+                alert("There are problems in download profile from server (1.1)");
                 hiddenLoading();
 
             }
