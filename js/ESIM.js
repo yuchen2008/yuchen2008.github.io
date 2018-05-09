@@ -6,7 +6,7 @@ var UPDATA_OK = ''; // DP POST: data=04 + b(去掉前2字符) 回 UPDATA_OK
 var APDU_c = ''; // DP POST: data=05 + b(去掉前2字符) 回 APDU,c1,c2,c3,c4
 var APDU_d = ''; // 卡片 顺序发 c1~c4 回 d
 var DP_d = ''; //DP POST: DP POST: data= d
-
+var provisioning_id = '';
 
 function fnGetEid(){
     
@@ -58,7 +58,7 @@ function fnGetProvisioning() {
             // 获取命令返回状态字
             fnGetSW();
             // 获取EID
-            fnGetRetData('ICCID');
+            fnGetRetData('provisioning_id');
             // fnRunAPDU('80E2900002BF2D');
             // if(ICCID_val.length >= 22){
             //     var I_length = ICCID_val.length / 22 ;
@@ -633,7 +633,13 @@ function fnGetRetData(val) {
         APDU_d = sRes
         // console.log(APDU_d + '------APDU_d----');
         return APDU_d;
+    } 
+    if(val == 'provisioning_id'){
+        provisioning_id = sRes
+        console.log(provisioning_id + '------provisioning_id----');
+        return provisioning_id;
     }  
+    
 }
 
 //获取返回数据
