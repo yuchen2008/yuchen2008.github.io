@@ -709,7 +709,7 @@ function ajax(){
         xhr.open(ajaxData.type,ajaxData.url,ajaxData.async);
          }
     catch(err){
-         // console.log(err); 
+         console.log(err); 
          alert("There are problems in download profile from server (0).");
          hiddenLoading();
          return;
