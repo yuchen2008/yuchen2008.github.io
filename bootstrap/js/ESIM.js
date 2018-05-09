@@ -36,6 +36,7 @@ function fnGetEid(){
             // console.log(typeof checkValue_);
             // console.log('==='+ checkValue_);
             if(checkValue_=="false"){
+                hiddenLoading();
                 return;
             }else{
                fnGetDP_iccid();
@@ -57,7 +58,7 @@ function fnViewProvisioning(){
             fnRunAPDU('00a4040409676F74656C6C417070');
              // 获取命令返回状态字
             fnGetSW();
-            fnRunAPDU('80E2900002BF2D');
+            fnRunAPDU('00A9000000');
             // 获取命令返回状态字
             fnGetSW();
             // 获取EID
@@ -148,9 +149,8 @@ function fnCheckICCID(){
               ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
               // console.log( typeof ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2)));
               if(document.getElementById("ChooseSIMCard").value ==ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2)) ){
-                hiddenLoading();
                 alert("Same profile has been downloaded in the SIM card, cannot be download again.");
-
+                hiddenLoading();
                 return "false";
               }
         }
@@ -244,6 +244,8 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
             // console.log(msg.response+ '------msg.response');
         },
         error:function(e){
+            alert("There are problems in download profile from server (3)");
+            hiddenLoading();
             // console.log("error--"+ e);
             // console.log("error-e-"+ JSON.stringify(e));
         }
@@ -252,10 +254,7 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
 
 function fnGetDP_iccid(){
     var data_val = new Date().getTime();
-    // console.log("twtest_"+ data_val);
-    // console.log(EID_val + '----EID_val');
-    // console.log(document.getElementById("ChooseSIMCard").value+'---iccid');
-    // console.log(typeof document.getElementById("ChooseSIMCard").value+'---document.getElementById("ChooseSIMCard").value');
+   
     ajax({
             type:"POST",
             url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es2plus/downloadOrder",
@@ -296,6 +295,9 @@ function fnGetDP_iccid(){
                                 fnAjaxAPDU('APDU_a','03',EID_val);
                                 // console.log(APDU_a + '------APDU_000000a---data=03 + eid 返回 APDU,a');
                          
+                            }else{
+                                alert("There are problems in download profile from server (3)");
+                                hiddenLoading();
                             }
                             // console.log(msg.responseText+ '------msg.responseText');
                             // console.log(msg.response+ '------msg.response');
@@ -305,12 +307,15 @@ function fnGetDP_iccid(){
 
                         }
                     })
+                }else{
+                    alert("There are problems in download profile from server (3)");
+                    hiddenLoading();
                 }
-                // console.log(msg.responseText+ '------msg.responseText');
-                // console.log(msg.response+ '------msg.response');
             },
             error:function(e){
                 // console.log("error" + "--" + e);
+                alert("There are problems in download profile from server (3)");
+                hiddenLoading();
 
             }
         })
@@ -330,8 +335,7 @@ function fnRunAPDUBACK(A_id,A_value,A_num) {
     lReturn = myScc.RunAPDU(A_valueback);
       // console.log("CardOn----------- err:"+lReturn);
     if(lReturn!=0){
-
-        alert("CardOn err:卡片 发 a 回 b"+"status:"+lReturn);
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
         return;
     }
     // 获取命令返回状态字
@@ -406,6 +410,7 @@ function fnRunAPDU_C(A_id,A_value) {
             },
             error:function(e){
                 alert("There are problems in download profile from server (3)");
+                hiddenLoading();
             }
         })
 
@@ -511,8 +516,16 @@ function fnAjaxAPDU_c1_c4(A_id,A_data,A_valueid,A_num) {
         success:function(msg){
             // document.getElementById(A_id).innerHTML = msg.responseText;
             // console.log(msg.responseText+ '------msg.responseText');
-            APDU_c = msg.responseText;
-            fnRunAPDU_C('APDU_d',APDU_c);
+
+             if(msg.status == 200){
+                APDU_c = msg.responseText;
+                fnRunAPDU_C('APDU_d',APDU_c);
+            }else{
+                alert("There are problems in download profile from server (3)");
+                hiddenLoading();
+            }
+
+            
             // fnRunAPDU_C()
 
             
@@ -536,11 +549,13 @@ function fnListReaders(){
     catch(err){
          // console.log(err); 
          alert("Please use IE browser, install and activate LPA plugin.");
+         hiddenLoading();
          return;
     }
          cars=s.split("||");
          if(cars.length==1){
             alert("There is no SIM card reader found.");
+            hiddenLoading();
             return;
          } else{
             for(var i = 0;i<cars.length-1;i++){
@@ -558,6 +573,7 @@ function fnSetReader(val){
     lReturn = myScc.SetReader(val);
     if(lReturn!=0){
         alert("There are problems reading SIM card reader.");
+        hiddenLoading();
         return false;
     }
     return true;
@@ -568,11 +584,13 @@ function fnConnect_Card(val) {
     if(lReturn!=0){
         // alert("CardOn err:"+"设置所使用的读卡器名称.state:"+lReturn + ".");
         alert("There are problems reading SIM card reader.");
+        hiddenLoading();
         return;
     }
     lReturn = myScc.CardOn();
     if(lReturn!=0){
         alert("There are problems connected to SIM card reader.");
+        hiddenLoading();
         return;
     }
     return true;
@@ -584,6 +602,7 @@ function fnCardOn(event) {
     lReturn = myScc.CardOn();
     if(lReturn!=0){
         alert("There are problems connected to SIM card reader.");
+        hiddenLoading();
         return;
     }
 }
@@ -597,6 +616,7 @@ function fnRunAPDU(val){
     lReturn = myScc.RunAPDU(val);
     if(lReturn!=0){
         alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        hiddenLoading();
         return;
     }
 }
@@ -612,6 +632,7 @@ function fnGetSW() {
         }
         if(sSW == "6A84"){
             alert("Cannot download profile to SIM card. There are already 10 profiles in SIM card. ");
+            hiddenLoading();
         }
     }
 }
@@ -652,6 +673,7 @@ function fnCardOff(){
     if(lReturn!=0){
         // console.log("CardOff return "+lReturn);
         alert("There are problems ejecting SIM card / card reader");
+        hiddenLoading();
         return;
     }
 }
@@ -661,6 +683,7 @@ function fnFreeReader(){
     if(lReturn!=0){
         // console.log("FreeReader return "+lReturn);
         alert("There are problems ejecting SIM card reader");
+        hiddenLoading();
         return
     }
     // console.log(lReturn + '-------lReturn ---------将读卡器释放');
@@ -688,6 +711,7 @@ function ajax(){
     catch(err){
          // console.log(err); 
          alert("There are problems in download profile from server (0).");
+         hiddenLoading();
          return;
     }
     
