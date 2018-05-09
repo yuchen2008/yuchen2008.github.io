@@ -43,7 +43,7 @@ function hiddenLoading() {
   var iTime = 5;
   var Account;
   function RemainTime(valueid,valueinfo){
-      console.log(valueid + '---')
+      // console.log(valueid + '---')
       document.getElementById(valueid).disabled = true;
       var iSecond,sSecond="",sTime="";
       if (iTime >= 0){
@@ -75,7 +75,7 @@ function hiddenLoading() {
   var iTimes = 5;
   var Accounts;
   function RemainTimes(valueid,valueinfo){
-      console.log(valueid + '---')
+      // console.log(valueid + '---')
       document.getElementById(valueid).disabled = true;
       var iSecond,sSecond="",sTime="";
       if (iTimes >= 0){
