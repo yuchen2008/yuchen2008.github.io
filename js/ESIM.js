@@ -231,7 +231,7 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
             }
 
             if(A_id=='DP_d'){
-console.log('----DP_d');
+    console.log('----DP_d');
                                 // hiddenLoading();
                                        // 断开卡片
                                     // fnCardOff();

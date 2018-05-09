@@ -79,8 +79,8 @@ function hiddenLoading() {
       document.getElementById(valueid).disabled = true;
       var iSecond,sSecond="",sTime="";
       if (iTimes >= 0){
-          iSecond = parseInt(iTime%60);
-          iMinute = parseInt(iTime/60);
+          iSecond = parseInt(iTimes%60);
+          iMinute = parseInt(iTimes/60);
           if (iSecond >= 0){
               if(iMinute>0){
                   sSecond = iMinute + "minute" + iSecond + "second";
