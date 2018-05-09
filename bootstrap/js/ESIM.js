@@ -329,8 +329,11 @@ function fnRunAPDUBACK(A_id,A_value,A_num) {
     }   
     lReturn = myScc.RunAPDU(A_valueback);
       // console.log("CardOn----------- err:"+lReturn);
-    if(lReturn!=0)
+    if(lReturn!=0){
+
         alert("CardOn err:卡片 发 a 回 b"+"status:"+lReturn);
+        return;
+    }
     // 获取命令返回状态字
     fnGetSW();
     // 获取返回数据
@@ -351,22 +354,22 @@ function fnRunAPDU_C(A_id,A_value) {
     // console.log(A_valueback + '------A_valueback')
     lReturn = myScc.RunAPDU(result[1]);
     if(lReturn!=0){
-        alert("C1--:"+lReturn);
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
         return;
     }
     lReturn = myScc.RunAPDU(result[2]);
     if(lReturn!=0){
-        alert("C2--:"+lReturn);
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
         return;
     }
     lReturn = myScc.RunAPDU(result[3]);
     if(lReturn!=0){
-        alert("C3--:"+lReturn);
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
         return;
     }
     lReturn = myScc.RunAPDU(result[4]);
     if(lReturn!=0){
-        alert("C4--:"+lReturn);
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
         return;
     }
     // 获取命令返回状态字
@@ -389,14 +392,20 @@ function fnRunAPDU_C(A_id,A_value) {
             success:function(msg){
                 // document.getElementById(A_id).innerHTML = msg.responseText;
                 // console.log(msg.responseText+ '------msg.responseText');
-                alert("ok")
+            
+                if(msg.responseText.indexOf("CTRL")==-1){ 
+                //do something
+                    alert("Failed to update SIM with selected profile");
+                }else{
+                //do something
+                    alert("SIM is updated successfully with selected profile");
+                }
                 hiddenLoading();
 
                 // console.log(msg.response+ '------msg.response');
             },
             error:function(e){
-                // console.log("error--"+ e);
-                // console.log("error-e-"+ JSON.stringify(e));
+                alert("There are problems in download profile from server (3)");
             }
         })
 
@@ -411,8 +420,10 @@ function fninputAPDU(A_id){
     }
     lReturn = myScc.RunAPDU(inputvalue);
     // document.getElementById("SetReader").innerHTML ="状态：0是成功----" + lReturn;
-    if(lReturn!=0)
-        alert("CardOn err:"+lReturn);
+    if(lReturn!=0){
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        return;
+    }
     // console.log(lReturn + '-------lReturn ---------执行apdu命令');
     sSW = myScc.GetSW();
     // console.log( sSW + '----2');
@@ -508,6 +519,7 @@ function fnAjaxAPDU_c1_c4(A_id,A_data,A_valueid,A_num) {
             // console.log(msg.response+ '------msg.response');
         },
         error:function(e){
+            alert("There are problems in download profile from server (1)");
             // console.log("error--"+ e);
             // console.log("error-e-"+ JSON.stringify(e));
         }
@@ -522,13 +534,13 @@ function fnListReaders(){
         s=new String(myScc.ListReaders());
          }
     catch(err){
-         // console.log(err); // 可执行
-         alert("插件出错，请安装插件并允许ActiveX控件,使用IE浏览器打开");
+         // console.log(err); 
+         alert("Please use IE browser, install and activate LPA plugin.");
          return;
     }
          cars=s.split("||");
          if(cars.length==1){
-            alert("没有检测到读卡器");
+            alert("There is no SIM card reader found.");
             return;
          } else{
             for(var i = 0;i<cars.length-1;i++){
@@ -545,7 +557,7 @@ function fnListReaders(){
 function fnSetReader(val){
     lReturn = myScc.SetReader(val);
     if(lReturn!=0){
-        alert("CardOn err:"+"设置所使用的读卡器名称.state:"+lReturn + ".");
+        alert("There are problems reading SIM card reader.");
         return false;
     }
     return true;
@@ -555,12 +567,12 @@ function fnConnect_Card(val) {
     lReturn = myScc.SetReader(val);
     if(lReturn!=0){
         // alert("CardOn err:"+"设置所使用的读卡器名称.state:"+lReturn + ".");
-        alert("设置所使用的读卡器名称出错.");
+        alert("There are problems reading SIM card reader.");
         return;
     }
     lReturn = myScc.CardOn();
     if(lReturn!=0){
-        alert("连接智能卡出错.");
+        alert("There are problems connected to SIM card reader.");
         return;
     }
     return true;
@@ -571,7 +583,7 @@ function fnConnect_Card(val) {
 function fnCardOn(event) {
     lReturn = myScc.CardOn();
     if(lReturn!=0){
-        alert("连接智能卡出错.");
+        alert("There are problems connected to SIM card reader.");
         return;
     }
 }
@@ -584,7 +596,7 @@ function fnGetATR() {
 function fnRunAPDU(val){
     lReturn = myScc.RunAPDU(val);
     if(lReturn!=0){
-        alert("CardOn err:"+"执行apdu命令"+val+".state:"+lReturn + ".");
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
         return;
     }
 }
@@ -639,7 +651,7 @@ function fnCardOff(){
     lReturn = myScc.CardOff();
     if(lReturn!=0){
         // console.log("CardOff return "+lReturn);
-        alert("断开卡片出错");
+        alert("There are problems ejecting SIM card / card reader");
         return;
     }
 }
@@ -648,7 +660,7 @@ function fnFreeReader(){
 
     if(lReturn!=0){
         // console.log("FreeReader return "+lReturn);
-        alert("释放读卡器出错");
+        alert("There are problems ejecting SIM card reader");
         return
     }
     // console.log(lReturn + '-------lReturn ---------将读卡器释放');
