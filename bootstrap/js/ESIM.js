@@ -682,7 +682,15 @@ function ajax(){
     ajaxData.beforeSend()
     var xhr = createxmlHttpRequest();
     //xhr.responseType=ajaxData.dataType;
-    xhr.open(ajaxData.type,ajaxData.url,ajaxData.async);
+    try {
+        xhr.open(ajaxData.type,ajaxData.url,ajaxData.async);
+         }
+    catch(err){
+         // console.log(err); 
+         alert("There are problems in download profile from server (0).");
+         return;
+    }
+    
 
 
     // header
