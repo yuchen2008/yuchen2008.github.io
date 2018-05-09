@@ -254,8 +254,9 @@
          
         })
         $('#provisioning').click(function(){
-          RemainTime("provisioning","provisioning profile");
-          fnGetProvisioning();
+          RemainTimes("provisioning","provisioning profile");
+          fnViewProvisioning();
+          // fnGetProvisioning();
         })
         
         
@@ -265,37 +266,7 @@
     });
 
 
-  var iTime = 5;
-  var Account;
-  function RemainTime(valueid,valueinfo){
-      console.log(valueid + '---')
-      document.getElementById(valueid).disabled = true;
-      var iSecond,sSecond="",sTime="";
-      if (iTime >= 0){
-          iSecond = parseInt(iTime%60);
-          iMinute = parseInt(iTime/60);
-          if (iSecond >= 0){
-              if(iMinute>0){
-                  sSecond = iMinute + "minute" + iSecond + "second";
-              }else{
-                  sSecond = iSecond + "second";
-              }
-          }
-          sTime=sSecond;
-          if(iTime==0){
-              clearTimeout(Account);
-              sTime=""+valueinfo;
-              iTime = 5;
-              document.getElementById(valueid).disabled = false;
-          }else{
-              Account = setTimeout(function(){RemainTime(valueid,valueinfo)},1000);
-              iTime=iTime-1;
-          }
-      }else{
-          sTime='No Time';
-      }
-      document.getElementById(valueid).value = sTime;
-  }
+  
 
 
   </script>

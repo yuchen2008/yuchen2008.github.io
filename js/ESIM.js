@@ -5,8 +5,9 @@ var APDU_b = ''; // 卡片 发 a 回 b
 var UPDATA_OK = ''; // DP POST: data=04 + b(去掉前2字符) 回 UPDATA_OK
 var APDU_c = ''; // DP POST: data=05 + b(去掉前2字符) 回 APDU,c1,c2,c3,c4
 var APDU_d = ''; // 卡片 顺序发 c1~c4 回 d
-var DP_d = ''; //DP POST: DP POST: data= d
-var provisioning_id = '';
+var DP_d = ''; // DP POST: DP POST: data= d
+var provisioning_id = ''; // fnViewProvisioning
+var view_provisioning = '';
 
 function fnGetEid(){
     
@@ -39,6 +40,48 @@ function fnGetEid(){
             }else{
                fnGetDP_iccid();
             }   
+        }
+    }
+}
+
+// 获取ViewProvisioning
+function fnViewProvisioning(){
+    // 获取系统中所安装读卡器名称
+    // fnListReaders();
+    if(fnListReaders() == "OK"){
+        // 连接智能卡
+        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
+            // 重置读卡器获取atr值
+            fnGetATR();
+            // 执行apdu命令
+            fnRunAPDU('00a4040409676F74656C6C417070');
+             // 获取命令返回状态字
+            fnGetSW();
+            fnRunAPDU('80E2900002BF2D');
+            // 获取命令返回状态字
+            fnGetSW();
+            // 获取EID
+            fnGetRetData('provisioning_id');
+            if(provisioning_id.length >= 22){
+                var I_length = provisioning_id.length / 22 ;
+                 var provisioning_list = []
+                for(var i = 0; i< I_length ;i++){
+                      provisioning_list[i] = ChangeNums(provisioning_id.substring(i*22,(i+1)*22).substring(2));
+                }
+                // console.log(provisioning_list + '-------')
+                // 断开卡片
+                        fnCardOff();
+                        // 将读卡器释放
+                        fnFreeReader();
+                alert(provisioning_list);
+            }else{
+                // 断开卡片
+                        fnCardOff();
+                        // 将读卡器释放
+                        fnFreeReader();
+                // alert(ICCID_val);
+                // return;
+            }
         }
     }
 }

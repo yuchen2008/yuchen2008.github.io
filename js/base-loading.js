@@ -37,3 +37,69 @@ function hiddenLoading() {
         var loadingMask = document.getElementById('loadingDiv');
         loadingMask.parentNode.removeChild(loadingMask);
 }
+
+
+// loading btn
+  var iTime = 5;
+  var Account;
+  function RemainTime(valueid,valueinfo){
+      console.log(valueid + '---')
+      document.getElementById(valueid).disabled = true;
+      var iSecond,sSecond="",sTime="";
+      if (iTime >= 0){
+          iSecond = parseInt(iTime%60);
+          iMinute = parseInt(iTime/60);
+          if (iSecond >= 0){
+              if(iMinute>0){
+                  sSecond = iMinute + "minute" + iSecond + "second";
+              }else{
+                  sSecond = iSecond + "second";
+              }
+          }
+          sTime=sSecond;
+          if(iTime==0){
+              clearTimeout(Account);
+              sTime=""+valueinfo;
+              iTime = 5;
+              document.getElementById(valueid).disabled = false;
+          }else{
+              Account = setTimeout(function(){RemainTime(valueid,valueinfo)},1000);
+              iTime=iTime-1;
+          }
+      }else{
+          sTime='No Time';
+      }
+      document.getElementById(valueid).value = sTime;
+  }
+
+  var iTimes = 5;
+  var Accounts;
+  function RemainTimes(valueid,valueinfo){
+      console.log(valueid + '---')
+      document.getElementById(valueid).disabled = true;
+      var iSecond,sSecond="",sTime="";
+      if (iTimes >= 0){
+          iSecond = parseInt(iTime%60);
+          iMinute = parseInt(iTime/60);
+          if (iSecond >= 0){
+              if(iMinute>0){
+                  sSecond = iMinute + "minute" + iSecond + "second";
+              }else{
+                  sSecond = iSecond + "second";
+              }
+          }
+          sTime=sSecond;
+          if(iTimes==0){
+              clearTimeout(Accounts);
+              sTime=""+valueinfo;
+              iTimes = 5;
+              document.getElementById(valueid).disabled = false;
+          }else{
+              Accounts = setTimeout(function(){RemainTimes(valueid,valueinfo)},1000);
+              iTimes=iTimes-1;
+          }
+      }else{
+          sTime='No Time';
+      }
+      document.getElementById(valueid).value = sTime;
+  }
