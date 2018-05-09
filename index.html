@@ -4,7 +4,6 @@
   <meta charset="utf-8" />
   <title>roam2free</title>
   <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.css">
-  <!-- <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css"> -->
 
   <!--[if lte IE 6]>
   <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
@@ -110,32 +109,21 @@
 
 
 
-   <script type="text/javascript" src="js/jquery.min.js"></script>
+   <script type="text/javascript" src="bootstrap/js/jquery-1.7.2.min.js"></script>
  
     
   <script type="text/javascript">
-
-
-   window.onload = function(){  
-        var isIE=!!window.ActiveXObject; 
-        var isIE6=isIE&&!window.XMLHttpRequest; 
-        var isIE8=isIE&&!!document.documentMode; 
-        var isIE7=isIE&&!isIE6&&!isIE8; 
-               if (!isIE){ 
-                // alert("In order to succeed when using Smart Card ,Internet Explorer is highly recommended.");
-            } 
-          }
   
     $(document).ready(function () {
         $('#login-btn').click(function () {
           if($('#inputUsername').val() == ""){
-            alert("用户名不能为空");
+            alert("The username can not be empty.");
             
           }else{
             location.href = "SmartCard.html"
           }
+           // location.href = "SmartCard.html"
         });
-        // location.href = "SmartCard.html"
     });
 
 
