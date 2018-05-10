@@ -63,11 +63,11 @@ function fnViewProvisioning(){
             fnGetSW();
             // 获取EID
             fnGetRetData('provisioning_id');
-            if(provisioning_id.length >= 22){
-                var I_length = provisioning_id.length / 22 ;
+            if(provisioning_id.length >= 20){
+                var I_length = provisioning_id.length / 20 ;
                  var provisioning_list = []
                 for(var i = 0; i< I_length ;i++){
-                      provisioning_list[i] = ChangeNums(provisioning_id.substring(i*22,(i+1)*22).substring(2));
+                      provisioning_list[i] = provisioning_id.substring(i*20,(i+1)*20).substring(2);
                 }
                 // console.log(provisioning_list + '-------')
                 // 断开卡片
