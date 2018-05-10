@@ -80,7 +80,6 @@ function fnViewProvisioning(){
                         fnCardOff();
                         // 将读卡器释放
                         fnFreeReader();
-                        alert(provisioning_list);
                 // alert(ICCID_val);
                 // return;
             }
@@ -472,7 +471,6 @@ function fnGetICCID(){
                         fnCardOff();
                         // 将读卡器释放
                         fnFreeReader();
-                        alert(ICCID_list);
                 // alert(ICCID_val);
                 // return;
             }
