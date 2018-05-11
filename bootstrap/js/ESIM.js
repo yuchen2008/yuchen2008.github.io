@@ -98,8 +98,10 @@ function fnDelProvisioning() {
             fnRunAPDU('00a4040409676F74656C6C417070');
              // 获取命令返回状态字
             fnGetSW();
+            var apdu_value = '00E290000CBF33'+document.getElementById("provisioning_select").value;
 console.log(document.getElementById("provisioning_select").value +'-----document.getElementById("provisioning_select").value');
             fnRunAPDU('00E290000CBF33'+document.getElementById("provisioning_select").value);
+            console.log(apdu_value+'---apdu_value');
             // 获取命令返回状态字
             fnGetSW();
             // 获取EID
