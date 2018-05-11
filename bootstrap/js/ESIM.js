@@ -666,7 +666,7 @@ function fnRunAPDU(val){
 function fnGetSW() {
     //获取命令返回状态字
     sSW = myScc.GetSW();
-
+    console.log(sSW + '----sSW');
     if(sSW!=9000){
         if(sSW.substring(0,2)=="61" || sSW.substring(0,2)=="91"){
             fnRunAPDU("00C00000"+sSW.substring(2));
@@ -675,6 +675,7 @@ function fnGetSW() {
         if(sSW == "6A84"){
             alert("Cannot download profile to SIM card. There are already 10 profiles in SIM card. ");
             hiddenLoading();
+            return;
         }
     }
 }
