@@ -493,6 +493,8 @@ function fnGetICCID_select(){
                       provisioning_select.options.add(objOption);
                       // ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
                 }
+
+    console.log(document.getElementById("provisioning_select").value +'---1--("provisioning_select")');
                         // 断开卡片
                         fnCardOff();
                         // 将读卡器释放
@@ -507,6 +509,8 @@ function fnGetICCID_select(){
                 // alert(ICCID_val);
                 // return;
             }
+
+    console.log(document.getElementById("provisioning_select").value +'---2--("provisioning_select")');
         }
     }
 }
