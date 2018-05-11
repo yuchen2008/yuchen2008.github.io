@@ -466,6 +466,7 @@ function fnGetICCID_select(){
     // 获取系统中所安装读卡器名称
     // fnListReaders();
     var provisioning_select = document.getElementById("provisioning_select");
+    provisioning_select.innerHTML = '';
     if(fnListReaders() == "OK"){
         // 连接智能卡
         if(fnConnect_Card(document.getElementById("ChooseReader").value)){
