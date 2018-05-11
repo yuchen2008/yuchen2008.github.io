@@ -219,7 +219,7 @@
 
 <!-- modal -->
 <!-- Button to trigger modal -->
-<a href="#myModal" role="button" style="visibility: hidden;" class="btn" data-toggle="modal">hidden</a>
+<a href="#myModal" id="myModalbtn" role="button" style="visibility: hidden;" class="btn" data-toggle="modal">hidden</a>
  
 <!-- Modal -->
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -281,7 +281,7 @@
           // fnGetProvisioning();
         })
         $('#Delete_provisioning').click(function(){
-          $("#myModal").click();
+          $("#myModalbtn").click();
           fnGetICCID_select();
           // fnGetProvisioning();
         })
