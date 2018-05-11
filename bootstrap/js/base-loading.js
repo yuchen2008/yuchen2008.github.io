@@ -34,8 +34,10 @@ dom.innerHTML +=_LoadingHtml;
 
 //加载状态为complete时移除loading效果
 function hiddenLoading() {
+        var dom = document.querySelector("#modal-loading");
         var loadingMask = document.getElementById('loadingDiv');
-        loadingMask.parentNode.removeChild(loadingMask);
+        // dom.innerHTML = '';
+        $('#modal-loading').html("");
 }
 
 

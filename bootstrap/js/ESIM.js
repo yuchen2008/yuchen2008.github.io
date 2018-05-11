@@ -88,7 +88,7 @@ function fnViewProvisioning(){
     }
 }
 //provisioning
-function fnGetProvisioning() {
+function fnDelProvisioning() {
      if(fnListReaders() == "OK"){
         // 连接智能卡
         if(fnConnect_Card(document.getElementById("ChooseReader").value)){
@@ -104,32 +104,12 @@ function fnGetProvisioning() {
             fnGetSW();
             // 获取EID
             fnGetRetData('provisioning_id');
-            // fnRunAPDU('80E2900002BF2D');
-            // if(ICCID_val.length >= 22){
-            //     var I_length = ICCID_val.length / 22 ;
-            //     console.log(I_length + '------')
-            //      console.log(typeof I_length + '------')
-            //      var ICCID_list = []
-            //     for(var i = 0; i< I_length ;i++){
-            //           console.log(i);
-            //           console.log(i*22 +'----'+ 22*(1+i))  
-            //           console.log(ICCID_val.substring(i*22,(i+1)*22).substring(2) +'-----')
-            //           ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
-            //     }
-            //     console.log(ICCID_list + '-------')
-            //     // 断开卡片
-            //             fnCardOff();
-            //             // 将读卡器释放
-            //             fnFreeReader();
-            //     alert(ICCID_list);
-            // }else{
-            //     // 断开卡片
-            //             fnCardOff();
-            //             // 将读卡器释放
-            //             fnFreeReader();
-            //     // alert(ICCID_val);
-            //     // return;
-            // }
+
+            var delprovisioning = provisioning_id;
+            alert(delprovisioning);
+            fnCardOff();
+            // 将读卡器释放
+            fnFreeReader();
             }
         }
 }
@@ -473,6 +453,53 @@ function fnGetICCID(){
                         // 将读卡器释放
                         fnFreeReader();
                         alert(ICCID_list);
+                // alert(ICCID_val);
+                // return;
+            }
+        }
+    }
+}
+
+// 获取iccid-modal
+function fnGetICCID_select(){
+    // 获取系统中所安装读卡器名称
+    // fnListReaders();
+    var provisioning_select = document.getElementById("provisioning_select");
+    if(fnListReaders() == "OK"){
+        // 连接智能卡
+        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
+            // 重置读卡器获取atr值
+            fnGetATR();
+            // 执行apdu命令
+            fnRunAPDU('00a4040409676F74656C6C417070');
+             // 获取命令返回状态字
+            fnGetSW();
+            fnRunAPDU('80E2900002BF2D');
+            // 获取命令返回状态字
+            fnGetSW();
+            // 获取EID
+            fnGetRetData('ICCID');
+            if(ICCID_val.length >= 22){
+                var I_length = ICCID_val.length / 22 ;
+                 var ICCID_list = []
+                for(var i = 0; i< I_length ;i++){
+                      var objOption = document.createElement("OPTION");
+                      objOption.text = ICCID_val.substring(i*22,(i+1)*22).substring(2);
+                      objOption.value = ICCID_val.substring(i*22,(i+1)*22).substring(2);
+                      provisioning_select.options.add(objOption);
+                      // ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
+                }
+                        // 断开卡片
+                        fnCardOff();
+                        // 将读卡器释放
+                        fnFreeReader();
+                        // alert(ICCID_list);
+            }else{
+                        // 断开卡片
+                        fnCardOff();
+                        // 将读卡器释放
+                        fnFreeReader();
+                        // alert(ICCID_list);
                 // alert(ICCID_val);
                 // return;
             }
