@@ -486,7 +486,7 @@ function fnGetICCID_select(){
                  var ICCID_list = []
                 for(var i = 0; i< I_length ;i++){
                       var objOption = document.createElement("OPTION");
-                      objOption.text = ICCID_val.substring(i*22,(i+1)*22).substring(2);
+                      objOption.text = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
                       objOption.value = ICCID_val.substring(i*22,(i+1)*22).substring(2);
                       provisioning_select.options.add(objOption);
                       // ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
