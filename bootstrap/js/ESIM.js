@@ -442,7 +442,8 @@ function fnGetICCID(){
             if(ICCID_val.length >= 22){
                 var I_length = ICCID_val.length / 22 ;
                  var ICCID_list = []
-                for(var i = 0; i< I_length ;i++){
+                // for(var i = 0; i< I_length ;i++){
+                for(var i = I_length-1; i>= 0 ;i--){
                       ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
                 }
                         // 断开卡片
