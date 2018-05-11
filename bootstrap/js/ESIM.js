@@ -110,6 +110,7 @@ function fnDelProvisioning() {
             fnCardOff();
             // 将读卡器释放
             fnFreeReader();
+            fnGetICCID_select();
             }
         }
 }
