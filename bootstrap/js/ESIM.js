@@ -262,10 +262,11 @@ function fnGetDP_iccid(){
                 // console.log(msg.iccid + '----iccid');
                 // if()
                 // document.getElementById(A_id).innerHTML = msg.responseText;
-                console.log(msg);
-                console.log(JSON.stringify(msg));
+                // console.log(msg);
+                // console.log(JSON.stringify(msg));
                 console.log("--msg-1--");
-                console.log(msg.responseText.iccid);
+                console.log(typeof msg.responseText);
+                console.log(msg.responseText);
                 if(msg.responseText.iccid==""){
                     alert(1);
                 }else{
