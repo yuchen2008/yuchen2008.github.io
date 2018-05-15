@@ -251,12 +251,12 @@ function fnGetDP_iccid(){
             dataType:"json",
             data: JSON.stringify({
                 "orderId":"twtest_",
-                "eid":EID_val+"111",
-                "iccid":document.getElementById("ChooseSIMCard").value
+                "eid":EID_val+"111"
             }),
             beforeSend:function(){
                 //some js code
                 // "orderId":"twtest_"+ data_val,
+                 // "iccid":document.getElementById("ChooseSIMCard").value
             },
             success:function(msg){
                 // console.log(msg.responseText.iccid + '----msg');
