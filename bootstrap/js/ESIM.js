@@ -257,12 +257,10 @@ function fnGetDP_iccid(){
                 "iccid":document.getElementById("ChooseSIMCard").value
             }),
             beforeSend:function(){
-                //some js code
-                
-                
+                //some js code      
             },
             success:function(msg){
-
+                console.log(msg);
                 if(msg.responseText.indexOf("iccid")==-1){ 
                 //do something
                     alert("There are problems in download profile from server (1)");
@@ -284,7 +282,7 @@ function fnGetDP_iccid(){
                             //some js code
                         },
                         success:function(msg){
-
+                            console.log(msg);
                             if(msg.responseText.indexOf("iccid")==-1){ 
                             //do something
                                 alert("There are problems in download profile from server (2)");
