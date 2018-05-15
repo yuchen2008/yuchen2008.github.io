@@ -112,7 +112,7 @@ function fnDelProvisioning() {
             fnGetRetData('provisioning_id');
 
             var delprovisioning = provisioning_id;
-            // alert(delprovisioning);
+            alert("SIM is deleted successfully with selected profile");
             fnCardOff();
             // 将读卡器释放
             fnFreeReader();
