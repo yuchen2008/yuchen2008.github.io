@@ -103,7 +103,7 @@ function fnDelProvisioning() {
                 return;
             }
             var apdu_value = '00E290000CBF33'+document.getElementById("provisioning_select").value;
-console.log(document.getElementById("provisioning_select").value +'-----document.getElementById("provisioning_select").value');
+            console.log(document.getElementById("provisioning_select").value +'-----document.getElementById("provisioning_select").value');
             fnRunAPDU('00E290000CBF33'+document.getElementById("provisioning_select").value);
             console.log(apdu_value+'---apdu_value');
             // 获取命令返回状态字
@@ -460,7 +460,7 @@ function fnGetICCID(){
                         fnCardOff();
                         // 将读卡器释放
                         fnFreeReader();
-                        alert(ICCID_list);
+                        alert("No Profile");
                 // alert(ICCID_val);
                 // return;
             }
