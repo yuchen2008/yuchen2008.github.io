@@ -663,6 +663,7 @@ function fnGetATR() {
 //执行apdu命令
 function fnRunAPDU(val,err){
     lReturn = myScc.RunAPDU(val);
+    console.log("___lreturn__"+ lReturn);
     if(lReturn!=0){
         alert("There are problems in communicating with SIM card（"+lReturn+err+"）.");
         hiddenLoading();
@@ -673,6 +674,7 @@ function fnRunAPDU(val,err){
 function fnGetSW() {
     //获取命令返回状态字
     sSW = myScc.GetSW();
+    console.log(sSW + "----sSW");
     if(sSW!=9000){
         if(sSW.substring(0,2)=="61" || sSW.substring(0,2)=="91"){
             fnRunAPDU("00C00000"+sSW.substring(2),"_14");
