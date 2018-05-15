@@ -1,23 +1,573 @@
-var EID_val="",ICCID_val="",APDU_a="1",APDU_b="",UPDATA_OK="",APDU_c="",APDU_d="",DP_d="",provisioning_id="",view_provisioning="";function fnGetEid(){"OK"==fnListReaders()&&fnConnect_Card(document.getElementById("ChooseReader").value)&&(fnGetATR(),fnRunAPDU("00a4040409676F74656C6C417070"),fnGetSW(),fnRunAPDU("001A000010"),fnGetSW(),fnGetRetData("EID"),showloading(),"false"==fnCheckICCID()?hiddenLoading():fnGetDP_iccid())}
-function fnViewProvisioning(){if("OK"==fnListReaders()&&fnConnect_Card(document.getElementById("ChooseReader").value))if(fnGetATR(),fnRunAPDU("00a4040409676F74656C6C417070"),fnGetSW(),fnRunAPDU("00A9000000"),fnGetSW(),fnGetRetData("provisioning_id"),22<=provisioning_id.length){for(var a=provisioning_id.length/22,b=[],c=0;c<a;c++)b[c]=ChangeNums(provisioning_id.substring(22*c,22*(c+1)).substring(2));fnCardOff();fnFreeReader();alert(b)}else fnCardOff(),fnFreeReader()}
-function fnGetProvisioning(){"OK"==fnListReaders()&&fnConnect_Card(document.getElementById("ChooseReader").value)&&(fnGetATR(),fnRunAPDU("00a4040409676F74656C6C417070"),fnGetSW(),fnRunAPDU("00E290000CBF33"+document.getElementById("provisioning_select").value),fnGetSW(),fnGetRetData("provisioning_id"),console.log(ICCID_val.substring(22*i,22*(i+1)).substring(2)+"-----"))}
-function fnCheckICCID(){fnRunAPDU("00a4040409676F74656C6C417070");fnGetSW();fnRunAPDU("80E2900002BF2D");fnGetSW();fnGetRetData("ICCID");if(22<=ICCID_val.length)for(var a=ICCID_val.length/22,b=0;b<a;b++){if(ChangeNums(ICCID_val.substring(22*b,22*(b+1)).substring(2)),document.getElementById("ChooseSIMCard").value==ChangeNums(ICCID_val.substring(22*b,22*(b+1)).substring(2)))return alert("Same profile has been downloaded in the SIM card, cannot be download again."),hiddenLoading(),"false"}else alert("No Data");
-return"true"}
-function fnAjaxAPDU(a,b,c,d){var e="",e=""==b?d?c.substring(d):c:d?b+c.substring(d):b+c;ajax({type:"POST",url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es9plus/m2m/sendRes",contentType:"application/x-www-form-urlencoded;",async:!1,data:{data:e},beforeSend:function(){},success:function(b){"APDU_a"==a&&(APDU_a=b.responseText,fnRunAPDUBACK("APDU_b",APDU_a,5));"UPDATA_OK"==a&&(UPDATA_OK=b.responseText,fnAjaxAPDU_c1_c4("APDU_c","05",APDU_b,2));"APDU_d"==a&&fnAjaxAPDU("DP_d","",APDU_c)},
-error:function(a){alert("There are problems in download profile from server (3)");hiddenLoading()}})}
-function fnGetDP_iccid(){var a=(new Date).getTime();ajax({type:"POST",url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es2plus/downloadOrder",contentType:"application/json;",async:!1,dataType:"json",data:JSON.stringify({orderId:"twtest_"+a,eid:EID_val+"",iccid:document.getElementById("ChooseSIMCard").value}),beforeSend:function(){},success:function(a){200==a.status?ajax({type:"POST",url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es2plus/confirmOrder",contentType:"application/json;",
-async:!1,data:JSON.stringify({eid:EID_val,iccid:document.getElementById("ChooseSIMCard").value,releaseFlag:!0}),beforeSend:function(){},success:function(a){200==a.status?fnAjaxAPDU("APDU_a","03",EID_val):(alert("There are problems in download profile from server (2)"),hiddenLoading())},error:function(a){alert("There are problems in download profile from server (2.1)");hiddenLoading();console.log("error--"+a)}}):(alert("There are problems in download profile from server (1)"),hiddenLoading())},error:function(a){alert("There are problems in download profile from server (1.1)");
-hiddenLoading()}})}function fnRunAPDUBACK(a,b,c){b=c?b.substring(c):b;lReturn=myScc.RunAPDU(b);0!=lReturn?alert("There are problems in communicating with SIM card\uff08"+lReturn+"\uff09."):(fnGetSW(),fnGetRetData(a),fnAjaxAPDU("UPDATA_OK","04",APDU_b,2))}
-function fnRunAPDU_C(a,b){b=b.split(",");lReturn=myScc.RunAPDU(b[1]);0!=lReturn?alert("There are problems in communicating with SIM card\uff08"+lReturn+"\uff09."):(lReturn=myScc.RunAPDU(b[2]),0!=lReturn?alert("There are problems in communicating with SIM card\uff08"+lReturn+"\uff09."):(lReturn=myScc.RunAPDU(b[3]),0!=lReturn?alert("There are problems in communicating with SIM card\uff08"+lReturn+"\uff09."):(lReturn=myScc.RunAPDU(b[4]),0!=lReturn?alert("There are problems in communicating with SIM card\uff08"+
-lReturn+"\uff09."):(fnGetSW(),fnGetRetData(a),sRes=myScc.GetRetData(),ajax({type:"POST",url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es9plus/m2m/sendRes",contentType:"application/x-www-form-urlencoded;",async:!1,data:{data:sRes},beforeSend:function(){},success:function(a){-1==a.responseText.indexOf("CTRL")?alert("Failed to update SIM with selected profile"):alert("SIM is updated successfully with selected profile");hiddenLoading()},error:function(a){alert("There are problems in download profile from server (3)");
-hiddenLoading()}})))))}function fninputAPDU(a){(a=document.getElementById(a).value)?(lReturn=myScc.RunAPDU(a),0!=lReturn?alert("There are problems in communicating with SIM card\uff08"+lReturn+"\uff09."):(sSW=myScc.GetSW(),fnGetRetData("GetRetData"))):alert("\u8bf7\u8f93\u5165\u6307\u4ee4")}
-function fnGetICCID(){if("OK"==fnListReaders()&&fnConnect_Card(document.getElementById("ChooseReader").value))if(fnGetATR(),fnRunAPDU("00a4040409676F74656C6C417070"),fnGetSW(),fnRunAPDU("80E2900002BF2D"),fnGetSW(),fnGetRetData("ICCID"),22<=ICCID_val.length){for(var a=ICCID_val.length/22,b=[],c=0;c<a;c++)b[c]=ChangeNums(ICCID_val.substring(22*c,22*(c+1)).substring(2));fnCardOff();fnFreeReader();alert(b)}else fnCardOff(),fnFreeReader()}
-function fnAjaxAPDU_c1_c4(a,b,c,d){a="";a=""==b?d?c.substring(d):c:d?b+c.substring(d):b+c;ajax({type:"POST",url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es9plus/m2m/sendRes",contentType:"application/x-www-form-urlencoded;",async:!1,data:{data:a},beforeSend:function(){},success:function(a){200==a.status?(APDU_c=a.responseText,fnRunAPDU_C("APDU_d",APDU_c)):(alert("There are problems in download profile from server (3)"),hiddenLoading())},error:function(a){alert("There are problems in download profile from server (1)")}})}
-function fnListReaders(){var a=document.getElementById("ChooseReader");a.innerHTML="";try{s=new String(myScc.ListReaders())}catch(d){alert("Please use IE browser, install and activate LPA plugin.");hiddenLoading();return}cars=s.split("||");if(1==cars.length)alert("There is no SIM card reader found."),hiddenLoading();else{for(var b=0;b<cars.length-1;b++){var c=document.createElement("OPTION");c.text=cars[b];c.value=cars[b];a.options.add(c)}return"OK"}}
-function fnSetReader(a){lReturn=myScc.SetReader(a);return 0!=lReturn?(alert("There are problems reading SIM card reader."),hiddenLoading(),!1):!0}function fnConnect_Card(a){lReturn=myScc.SetReader(a);if(0!=lReturn)alert("There are problems reading SIM card reader."),hiddenLoading();else if(lReturn=myScc.CardOn(),0!=lReturn)alert("There are problems connected to SIM card reader."),hiddenLoading();else return!0}
-function fnCardOn(a){lReturn=myScc.CardOn();0!=lReturn&&(alert("There are problems connected to SIM card reader."),hiddenLoading())}function fnGetATR(){sATR=myScc.GetATR()}function fnRunAPDU(a){lReturn=myScc.RunAPDU(a);0!=lReturn&&(alert("There are problems in communicating with SIM card\uff08"+lReturn+"\uff09."),hiddenLoading())}
-function fnGetSW(){sSW=myScc.GetSW();if(9E3!=sSW){if("61"==sSW.substring(0,2)||"91"==sSW.substring(0,2))fnRunAPDU("00C00000"+sSW.substring(2)),fnGetSW();"6A84"==sSW&&(alert("Cannot download profile to SIM card. There are already 10 profiles in SIM card. "),hiddenLoading())}}
-function fnGetRetData(a){sRes=myScc.GetRetData();if("EID"==a)return EID_val=sRes;if("ICCID"==a)return ICCID_val=sRes;if("APDU_b"==a)return APDU_b=sRes;if("APDU_d"==a)return APDU_d=sRes;if("provisioning_id"==a)return provisioning_id=sRes}function fnGetRetData_value(){return sRes=myScc.GetRetData()}function fnCardOff(){lReturn=myScc.CardOff();0!=lReturn&&(alert("There are problems ejecting SIM card / card reader"),hiddenLoading())}
-function fnFreeReader(){lReturn=myScc.FreeReader();0!=lReturn&&(alert("There are problems ejecting SIM card reader"),hiddenLoading())}
-function ajax(a){var b={type:a.type||"GET",url:a.url||"",async:a.async||"true",data:a.data||null,dataType:a.dataType||"text",contentType:a.contentType||"application/x-www-form-urlencoded",beforeSend:a.beforeSend||function(){},success:a.success||function(){},error:a.error||function(){}};b.beforeSend();var c=createxmlHttpRequest();try{c.open(b.type,b.url,b.async)}catch(d){console.log(d);alert("There are problems in download profile from server (0).");hiddenLoading();return}c.setRequestHeader("Content-Type",
-b.contentType);c.send(convertData(b.data));c.onreadystatechange=function(){4==c.readyState&&(200==c.status?b.success(c):b.error(c))}}function createxmlHttpRequest(){return new XMLHttpRequest}function convertData(a){if("object"===typeof a){var b="",c;for(c in a)b+=c+"="+a[c]+"&";return b=b.substring(0,b.length-1)}return a}function ChangeNums(a){a=a.split("");for(var b=[],c=0;c<a.length;c++)b[c]=0!=c%2?a[c-1]:a[c+1];return b.join("")};
+var EID_val = '';
+var ICCID_val = '';
+var APDU_a = '1'; 
+var APDU_b = ''; 
+var UPDATA_OK = ''; 
+var APDU_c = ''; 
+var APDU_d = ''; 
+var DP_d = ''; 
+var provisioning_id = ''; 
+var view_provisioning = '';
+
+function fnGetEid(){
+   
+    if(fnListReaders() == "OK"){
+        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
+            fnGetATR();
+            fnRunAPDU('00a4040409676F74656C6C417070');
+            fnGetSW();
+             fnRunAPDU('001A000010');
+            fnGetSW();
+            fnGetRetData('EID');
+            showloading();
+            var checkValue_ = fnCheckICCID();
+            if(checkValue_=="false"){
+                hiddenLoading();
+                return;
+            }else{
+               fnGetDP_iccid();
+            }   
+        }
+    }
+}
+
+function fnViewProvisioning(){
+    if(fnListReaders() == "OK"){
+        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
+            fnGetATR();
+            fnRunAPDU('00a4040409676F74656C6C417070');
+            fnGetSW();
+            fnRunAPDU('00A9000000');
+            fnGetSW();
+            fnGetRetData('provisioning_id');
+            if(provisioning_id.length >= 22){
+                var I_length = provisioning_id.length / 22 ;
+                 var provisioning_list = []
+                for(var i = 0; i< I_length ;i++){
+                      provisioning_list[i] = ChangeNums(provisioning_id.substring(i*22,(i+1)*22).substring(2));
+                }
+                        fnCardOff();
+                        fnFreeReader();
+                alert(provisioning_list);
+            }else{
+                        fnCardOff();
+                        fnFreeReader();
+            }
+        }
+    }
+}
+function fnGetProvisioning() {
+     if(fnListReaders() == "OK"){
+        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
+            fnGetATR();
+            fnRunAPDU('00a4040409676F74656C6C417070');
+            fnGetSW();
+
+            fnRunAPDU('00E290000CBF33'+document.getElementById("provisioning_select").value);
+            fnGetSW();
+            fnGetRetData('provisioning_id');
+                console.log(ICCID_val.substring(i*22,(i+1)*22).substring(2) +'-----')
+           
+            }
+        }
+}
+function fnCheckICCID(){
+    fnRunAPDU('00a4040409676F74656C6C417070');
+    fnGetSW();
+    fnRunAPDU('80E2900002BF2D');
+    fnGetSW();
+    fnGetRetData('ICCID');
+    if(ICCID_val.length >= 22){
+        var I_length = ICCID_val.length / 22 ;
+         var ICCID_list = []
+        for(var i = 0; i< I_length ;i++){
+              ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
+              if(document.getElementById("ChooseSIMCard").value ==ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2)) ){
+                alert("Same profile has been downloaded in the SIM card, cannot be download again.");
+                hiddenLoading();
+                return "false";
+              }
+        }
+        return "true";
+    }else{
+        alert("No Data");
+        return "true";
+    }
+}
+function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
+    var data_value = A_valueid;
+    var A_value = '';
+    if(A_data == ''){
+        if(!A_num){
+            A_value = data_value;
+        }else{
+            A_value = data_value.substring(A_num);
+        }
+    }else{
+        if(!A_num){
+            A_value = A_data + data_value;
+        }else{
+            A_value = A_data + data_value.substring(A_num);
+        }
+
+    }
+    ajax({
+        type:"POST",
+        url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es9plus/m2m/sendRes",
+        contentType:"application/x-www-form-urlencoded;",
+        async : false,
+        data: {'data': A_value},
+        beforeSend:function(){
+        },
+        success:function(msg){
+            if(A_id == 'APDU_a'){
+                APDU_a = msg.responseText;
+                fnRunAPDUBACK('APDU_b',APDU_a,5);
+            }
+            if(A_id == 'UPDATA_OK'){
+                UPDATA_OK = msg.responseText;
+                fnAjaxAPDU_c1_c4('APDU_c','05',APDU_b,2);
+                 
+            }
+        
+            if(A_id == 'APDU_d'){
+                 fnAjaxAPDU('DP_d','',APDU_c);
+            }
+
+            if(A_id=='DP_d'){
+            }
+
+            
+        },
+        error:function(e){
+            alert("There are problems in download profile from server (3)");
+            hiddenLoading();
+        }
+    })
+}
+
+function fnGetDP_iccid(){
+    var data_val = new Date().getTime();
+   
+    ajax({
+            type:"POST",
+            url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es2plus/downloadOrder",
+            contentType:"application/json;",
+            async : false,
+            dataType:"json",
+            data: JSON.stringify({
+                "orderId":"twtest_"+ data_val,
+                "eid":EID_val+"",
+                "iccid":document.getElementById("ChooseSIMCard").value
+            }),
+            beforeSend:function(){
+            },
+            success:function(msg){
+                if(msg.status == 200){
+                    ajax({
+                        type:"POST",
+                        url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es2plus/confirmOrder",
+                        contentType:"application/json;",
+                        async : false,
+                        data: JSON.stringify({
+                            'eid':EID_val,
+                            'iccid':document.getElementById('ChooseSIMCard').value,
+                            'releaseFlag': true 
+                        }),
+                        beforeSend:function(){
+                        },
+                        success:function(msg){
+                            if(msg.status == 200){
+                                fnAjaxAPDU('APDU_a','03',EID_val);
+                         
+                            }else{
+                                alert("There are problems in download profile from server (2)");
+                                hiddenLoading();
+                            }
+                        },
+                        error:function(e){
+                            alert("There are problems in download profile from server (2.1)");
+                            hiddenLoading();
+                            console.log("error" + "--" + e);
+
+                        }
+                    })
+                }else{
+                    alert("There are problems in download profile from server (1)");
+                    hiddenLoading();
+                }
+            },
+            error:function(e){
+                alert("There are problems in download profile from server (1.1)");
+                hiddenLoading();
+
+            }
+        })
+}
+
+
+function fnRunAPDUBACK(A_id,A_value,A_num) {
+    var data_value = A_value;
+    var A_valueback = '';
+    if(!A_num){
+        A_valueback = data_value;
+    }else{
+        A_valueback = data_value.substring(A_num);
+    }   
+    lReturn = myScc.RunAPDU(A_valueback);
+    if(lReturn!=0){
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        return;
+    }
+    fnGetSW();
+    fnGetRetData(A_id);
+    fnAjaxAPDU('UPDATA_OK','04',APDU_b,2);
+    
+}
+
+function fnRunAPDU_C(A_id,A_value) {
+    var A_valueback =A_value;
+    var result = A_valueback.split(",");
+    lReturn = myScc.RunAPDU(result[1]);
+    if(lReturn!=0){
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        return;
+    }
+    lReturn = myScc.RunAPDU(result[2]);
+    if(lReturn!=0){
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        return;
+    }
+    lReturn = myScc.RunAPDU(result[3]);
+    if(lReturn!=0){
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        return;
+    }
+    lReturn = myScc.RunAPDU(result[4]);
+    if(lReturn!=0){
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        return;
+    }
+    fnGetSW();
+    fnGetRetData(A_id);
+    sRes = myScc.GetRetData();
+
+        ajax({
+            type:"POST",
+            url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es9plus/m2m/sendRes",
+            contentType:"application/x-www-form-urlencoded;",
+            async : false,
+            data: {'data': sRes},
+            beforeSend:function(){
+            },
+            success:function(msg){
+            
+                if(msg.responseText.indexOf("CTRL")==-1){ 
+                    alert("Failed to update SIM with selected profile");
+                }else{
+                    alert("SIM is updated successfully with selected profile");
+                }
+                hiddenLoading();
+
+            },
+            error:function(e){
+                alert("There are problems in download profile from server (3)");
+                hiddenLoading();
+            }
+        })
+
+}
+function fninputAPDU(A_id){
+    var inputvalue = document.getElementById(A_id).value;
+    if(!inputvalue){
+        alert("请输入指令")
+        return;
+    }
+    lReturn = myScc.RunAPDU(inputvalue);
+    if(lReturn!=0){
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        return;
+    }
+    sSW = myScc.GetSW();
+    fnGetRetData("GetRetData");
+}
+function fnGetICCID(){
+    if(fnListReaders() == "OK"){
+        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
+            fnGetATR();
+            fnRunAPDU('00a4040409676F74656C6C417070');
+            fnGetSW();
+            fnRunAPDU('80E2900002BF2D');
+            fnGetSW();
+            fnGetRetData('ICCID');
+            if(ICCID_val.length >= 22){
+                var I_length = ICCID_val.length / 22 ;
+                 var ICCID_list = []
+                for(var i = 0; i< I_length ;i++){
+                      ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
+                }
+                        fnCardOff();
+                        fnFreeReader();
+                        alert(ICCID_list);
+            }else{
+                        fnCardOff();
+                        fnFreeReader();
+            }
+        }
+    }
+}
+
+
+function fnAjaxAPDU_c1_c4(A_id,A_data,A_valueid,A_num) {
+ 
+    var data_value = A_valueid;
+    var A_value = '';
+    if(A_data == ''){
+        if(!A_num){
+            A_value = data_value;
+        }else{
+            A_value = data_value.substring(A_num);
+        }
+    }else{
+        if(!A_num){
+            A_value = A_data + data_value;
+        }else{
+            A_value = A_data + data_value.substring(A_num);
+        }
+
+    }
+    ajax({
+        type:"POST",
+        url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es9plus/m2m/sendRes",
+        contentType:"application/x-www-form-urlencoded;",
+        async : false,
+        data: {'data': A_value},
+        beforeSend:function(){
+        },
+        success:function(msg){
+
+             if(msg.status == 200){
+                APDU_c = msg.responseText;
+                fnRunAPDU_C('APDU_d',APDU_c);
+            }else{
+                alert("There are problems in download profile from server (3)");
+                hiddenLoading();
+            }
+
+            
+
+            
+        },
+        error:function(e){
+            alert("There are problems in download profile from server (1)");
+        }
+    })
+}
+
+function fnListReaders(){
+    var ChooseReaders = document.getElementById("ChooseReader");
+    ChooseReaders.innerHTML = '';
+    try {
+        s=new String(myScc.ListReaders());
+         }
+    catch(err){
+         alert("Please use IE browser, install and activate LPA plugin.");
+         hiddenLoading();
+         return;
+    }
+         cars=s.split("||");
+         if(cars.length==1){
+            alert("There is no SIM card reader found.");
+            hiddenLoading();
+            return;
+         } else{
+            for(var i = 0;i<cars.length-1;i++){
+                var objOption = document.createElement("OPTION");
+                objOption.text = cars[i];
+                objOption.value = cars[i];
+                ChooseReaders.options.add(objOption);
+            }
+         }
+        return "OK";
+}
+function fnSetReader(val){
+    lReturn = myScc.SetReader(val);
+    if(lReturn!=0){
+        alert("There are problems reading SIM card reader.");
+        hiddenLoading();
+        return false;
+    }
+    return true;
+}
+function fnConnect_Card(val) {
+    lReturn = myScc.SetReader(val);
+    if(lReturn!=0){
+        alert("There are problems reading SIM card reader.");
+        hiddenLoading();
+        return;
+    }
+    lReturn = myScc.CardOn();
+    if(lReturn!=0){
+        alert("There are problems connected to SIM card reader.");
+        hiddenLoading();
+        return;
+    }
+    return true;
+
+    
+}
+function fnCardOn(event) {
+    lReturn = myScc.CardOn();
+    if(lReturn!=0){
+        alert("There are problems connected to SIM card reader.");
+        hiddenLoading();
+        return;
+    }
+}
+function fnGetATR() {
+    sATR = myScc.GetATR();
+}
+function fnRunAPDU(val){
+    lReturn = myScc.RunAPDU(val);
+    if(lReturn!=0){
+        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        hiddenLoading();
+        return;
+    }
+}
+function fnGetSW() {
+    sSW = myScc.GetSW();
+
+    if(sSW!=9000){
+        if(sSW.substring(0,2)=="61" || sSW.substring(0,2)=="91"){
+            fnRunAPDU("00C00000"+sSW.substring(2));
+            fnGetSW();
+        }
+        if(sSW == "6A84"){
+            alert("Cannot download profile to SIM card. There are already 10 profiles in SIM card. ");
+            hiddenLoading();
+        }
+    }
+}
+function fnGetRetData(val) {
+    sRes = myScc.GetRetData();
+    if(val == 'EID'){
+        EID_val = sRes
+        return EID_val;
+    }
+    if(val == 'ICCID'){
+        ICCID_val = sRes
+        return ICCID_val;
+    } 
+    if(val == 'APDU_b'){
+        APDU_b = sRes
+        return APDU_b;
+    }
+    if(val == 'APDU_d'){
+        APDU_d = sRes
+        return APDU_d;
+    } 
+    if(val == 'provisioning_id'){
+        provisioning_id = sRes
+        return provisioning_id;
+    }  
+    
+}
+
+function fnGetRetData_value() {
+    sRes = myScc.GetRetData();
+    return sRes;
+}
+
+function fnCardOff(){
+    lReturn = myScc.CardOff();
+    if(lReturn!=0){
+        alert("There are problems ejecting SIM card / card reader");
+        hiddenLoading();
+        return;
+    }
+}
+function fnFreeReader(){
+    lReturn = myScc.FreeReader();
+
+    if(lReturn!=0){
+        alert("There are problems ejecting SIM card reader");
+        hiddenLoading();
+        return
+    }
+}
+
+function ajax(){
+    var ajaxData = {
+        type:arguments[0].type || "GET",
+        url:arguments[0].url || "",
+        async:arguments[0].async || "true",
+        data:arguments[0].data || null,
+        dataType:arguments[0].dataType || "text",
+        contentType:arguments[0].contentType || "application/x-www-form-urlencoded",
+        beforeSend:arguments[0].beforeSend || function(){},
+        success:arguments[0].success || function(){},
+        error:arguments[0].error || function(){}
+    }
+    ajaxData.beforeSend()
+    var xhr = createxmlHttpRequest();
+    try {
+        
+        xhr.open(ajaxData.type,ajaxData.url,ajaxData.async);
+         }
+    catch(err){
+         console.log(err); 
+         alert("There are problems in download profile from server (0).");
+         hiddenLoading();
+         return;
+    }
+    
+
+
+    
+   
+    xhr.setRequestHeader("Content-Type",ajaxData.contentType);
+    xhr.send(convertData(ajaxData.data));
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if(xhr.status == 200){
+                ajaxData.success(xhr)
+            }else{
+                ajaxData.error(xhr)
+            }
+        }
+    }
+}
+
+function createxmlHttpRequest() {     
+return new XMLHttpRequest()
+       
+   
+}
+
+function convertData(data){
+    if( typeof data === 'object' ){
+        var convertResult = "" ;
+        for(var c in data){
+            convertResult+= c + "=" + data[c] + "&";
+        }
+        convertResult=convertResult.substring(0,convertResult.length-1)
+        return convertResult;
+    }else{
+        return data;
+    }
+}
+function ChangeNums(arr){
+  var v_array = arr.split("");
+  var rs=new Array();
+  var value = "";
+  for(var i=0;i<v_array.length;i++){
+    if((i%2)!=0){
+    rs[i]=v_array[i-1];
+    }else{
+      rs[i]=v_array[i+1];
+    }
+  }
+  value=rs.join("");
+  return value;
+}
