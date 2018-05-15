@@ -256,9 +256,10 @@ function fnGetDP_iccid(){
             }),
             beforeSend:function(){
                 //some js code
-                // "orderId":"twtest_"+ data_val,
-                 // "iccid":document.getElementById("ChooseSIMCard").value
-                // "eid":EID_val+"",
+                "orderId":"twtest_"+ data_val,
+                "eid":EID_val+"",
+                "iccid":document.getElementById("ChooseSIMCard").value
+                
             },
             success:function(msg){
                 // console.log(msg.responseText.iccid + '----msg');
