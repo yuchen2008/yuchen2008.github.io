@@ -252,26 +252,16 @@ function fnGetDP_iccid(){
             async : false,
             dataType:"json",
             data: JSON.stringify({
-               
+               "orderId":"twtest_"+ data_val,
+                "eid":EID_val+"",
+                "iccid":document.getElementById("ChooseSIMCard").value
             }),
             beforeSend:function(){
                 //some js code
-                "orderId":"twtest_"+ data_val,
-                "eid":EID_val+"",
-                "iccid":document.getElementById("ChooseSIMCard").value
+                
                 
             },
             success:function(msg){
-                // console.log(msg.responseText.iccid + '----msg');
-                // console.log(msg.iccid + '----iccid');
-                // if()
-                // document.getElementById(A_id).innerHTML = msg.responseText;
-                // console.log(msg);
-                // console.log(JSON.stringify(msg));
-                console.log("--msg-1--");
-                console.log(typeof msg.responseText);
-                console.log(msg.responseText);
-
 
                 if(msg.responseText.indexOf("iccid")==-1){ 
                 //do something
