@@ -262,6 +262,7 @@ function fnGetDP_iccid(){
                 // console.log(msg.iccid + '----iccid');
                 // if()
                 // document.getElementById(A_id).innerHTML = msg.responseText;
+                console.log("--msg---"+msg);
                 if(msg.status == 200){
                     ajax({
                         type:"POST",
@@ -279,8 +280,9 @@ function fnGetDP_iccid(){
                         },
                         success:function(msg){
                             // document.getElementById(A_id).innerHTML = msg.responseText;
+                            console.log("--msg---"+msg);
                             if(msg.status == 200){
-                                fnAjaxAPDU('APDU_a','03',EID_val);
+                                // fnAjaxAPDU('APDU_a','03',EID_val);
                                 // console.log(APDU_a + '------APDU_000000a---data=03 + eid 返回 APDU,a');
                          
                             }else{
@@ -338,11 +340,6 @@ function fnRunAPDUBACK(A_id,A_value,A_num) {
 }
 
 function fnRunAPDU_C(A_id,A_value) {
-    // body...
-    // if(!A_value){
-    //     alert("请先执行上面的步骤");
-    //     return;
-    // }
     var A_valueback =A_value;
     var result = A_valueback.split(",");
     // console.log(A_valueback + '------A_valueback')
