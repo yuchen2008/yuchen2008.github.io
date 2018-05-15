@@ -20,9 +20,9 @@ function fnGetEid(){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070');
+            fnRunAPDU('00a4040409676F74656C6C417070',"_1");
             fnGetSW();
-             fnRunAPDU('001A000010');
+             fnRunAPDU('001A000010',"_2");
              // lReturn = myScc.RunAPDU('00150000569321E1F57E6036E0D05F3022951457C63044022067CBB0F75707A43E1043636DF342699FD6163F9CE3B7A4BEF45CB49E051D340602203BCFFEC7945EF359031224ACFEC8C124D193B687894CE8AD658CA8C658264D92');
             // console.log(lReturn + '----0015');
             // 获取命令返回状态字
@@ -55,10 +55,10 @@ function fnViewProvisioning(){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070');
+            fnRunAPDU('00a4040409676F74656C6C417070',"_3");
              // 获取命令返回状态字
             fnGetSW();
-            fnRunAPDU('00A9000000');
+            fnRunAPDU('00A9000000',"_4");
             // 获取命令返回状态字
             fnGetSW();
             // 获取EID
@@ -95,7 +95,7 @@ function fnDelProvisioning() {
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070');
+            fnRunAPDU('00a4040409676F74656C6C417070',"_5");
              // 获取命令返回状态字
             fnGetSW();
             if(document.getElementById("provisioning_select").value==""){
@@ -104,7 +104,7 @@ function fnDelProvisioning() {
             }
             var apdu_value = '00E290000CBF33'+document.getElementById("provisioning_select").value;
             console.log(document.getElementById("provisioning_select").value +'-----document.getElementById("provisioning_select").value');
-            fnRunAPDU('00E290000CBF33'+document.getElementById("provisioning_select").value);
+            fnRunAPDU('00E290000CBF33'+document.getElementById("provisioning_select").value,"_6");
             console.log(apdu_value+'---apdu_value');
             // 获取命令返回状态字
             fnGetSW();
@@ -122,10 +122,10 @@ function fnDelProvisioning() {
 }
 function fnCheckICCID(){
     // 执行apdu命令
-    fnRunAPDU('00a4040409676F74656C6C417070');
+    fnRunAPDU('00a4040409676F74656C6C417070',"_7");
      // 获取命令返回状态字
     fnGetSW();
-    fnRunAPDU('80E2900002BF2D');
+    fnRunAPDU('80E2900002BF2D',"_8");
     // 获取命令返回状态字
     fnGetSW();
     // 获取EID
@@ -213,7 +213,7 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
                 }
             }
             if(A_id == 'UPDATA_OK'){
-                if(msg.responseText.indexOf("UPDATA_OK")==-1){ 
+                if(msg.responseText !="UPDATA_OK"){ 
                     //do something
                     alert("There are problems in download profile from server (4)");
                     hiddenLoading();
@@ -333,7 +333,7 @@ function fnRunAPDUBACK(A_id,A_value,A_num) {
     lReturn = myScc.RunAPDU(A_valueback);
       // console.log("CardOn----------- err:"+lReturn);
     if(lReturn!=0){
-        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        alert("There are problems in communicating with SIM card（"+lReturn+"_9"+"）.");
         return;
     }
     // 获取命令返回状态字
@@ -351,22 +351,22 @@ function fnRunAPDU_C(A_id,A_value) {
     // console.log(A_valueback + '------A_valueback')
     lReturn = myScc.RunAPDU(result[1]);
     if(lReturn!=0){
-        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        alert("There are problems in communicating with SIM card（C1_"+lReturn+"）.");
         return;
     }
     lReturn = myScc.RunAPDU(result[2]);
     if(lReturn!=0){
-        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        alert("There are problems in communicating with SIM card（C2_"+lReturn+"）.");
         return;
     }
     lReturn = myScc.RunAPDU(result[3]);
     if(lReturn!=0){
-        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        alert("There are problems in communicating with SIM card（C3_"+lReturn+"）.");
         return;
     }
     lReturn = myScc.RunAPDU(result[4]);
     if(lReturn!=0){
-        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        alert("There are problems in communicating with SIM card（C4_"+lReturn+"）.");
         return;
     }
     // 获取命令返回状态字
@@ -419,7 +419,7 @@ function fninputAPDU(A_id){
     lReturn = myScc.RunAPDU(inputvalue);
     // document.getElementById("SetReader").innerHTML ="状态：0是成功----" + lReturn;
     if(lReturn!=0){
-        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        alert("There are problems in communicating with SIM card（"+lReturn+"_15"+"）.");
         return;
     }
     // console.log(lReturn + '-------lReturn ---------执行apdu命令');
@@ -438,10 +438,10 @@ function fnGetICCID(){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070');
+            fnRunAPDU('00a4040409676F74656C6C417070',"_10");
              // 获取命令返回状态字
             fnGetSW();
-            fnRunAPDU('80E2900002BF2D');
+            fnRunAPDU('80E2900002BF2D',"_11");
             // 获取命令返回状态字
             fnGetSW();
             // 获取EID
@@ -483,10 +483,10 @@ function fnGetICCID_select(){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070');
+            fnRunAPDU('00a4040409676F74656C6C417070',"_12");
              // 获取命令返回状态字
             fnGetSW();
-            fnRunAPDU('80E2900002BF2D');
+            fnRunAPDU('80E2900002BF2D',"_13");
             // 获取命令返回状态字
             fnGetSW();
             // 获取EID
@@ -661,10 +661,10 @@ function fnGetATR() {
     // console.log(sATR + '-------sATR ---------重置读卡器获取atr值')
 }
 //执行apdu命令
-function fnRunAPDU(val){
+function fnRunAPDU(val,err){
     lReturn = myScc.RunAPDU(val);
     if(lReturn!=0){
-        alert("There are problems in communicating with SIM card（"+lReturn+"）.");
+        alert("There are problems in communicating with SIM card（"+lReturn+err+"）.");
         hiddenLoading();
         return;
     }
@@ -675,7 +675,7 @@ function fnGetSW() {
     sSW = myScc.GetSW();
     if(sSW!=9000){
         if(sSW.substring(0,2)=="61" || sSW.substring(0,2)=="91"){
-            fnRunAPDU("00C00000"+sSW.substring(2));
+            fnRunAPDU("00C00000"+sSW.substring(2),"_14");
             fnGetSW();
         }
         if(sSW == "6A84"){
