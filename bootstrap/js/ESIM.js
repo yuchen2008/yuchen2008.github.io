@@ -262,7 +262,9 @@ function fnGetDP_iccid(){
                 // console.log(msg.iccid + '----iccid');
                 // if()
                 // document.getElementById(A_id).innerHTML = msg.responseText;
-                console.log("--msg---"+msg);
+                console.log(msg);
+                console.log(JSON.stringify(msg));
+                console.log("--msg-1--");
                 if(msg.status == 200){
                     ajax({
                         type:"POST",
@@ -280,7 +282,9 @@ function fnGetDP_iccid(){
                         },
                         success:function(msg){
                             // document.getElementById(A_id).innerHTML = msg.responseText;
-                            console.log("--msg---"+msg);
+                            console.log(msg);
+                            console.log(JSON.stringify(msg));
+                            console.log("--msg-1--")
                             if(msg.status == 200){
                                 // fnAjaxAPDU('APDU_a','03',EID_val);
                                 // console.log(APDU_a + '------APDU_000000a---data=03 + eid 返回 APDU,a');
