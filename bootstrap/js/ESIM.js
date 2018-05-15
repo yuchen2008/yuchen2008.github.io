@@ -250,12 +250,13 @@ function fnGetDP_iccid(){
             async : false,
             dataType:"json",
             data: JSON.stringify({
-                "orderId":"twtest_"+ data_val,
+                "orderId":"twtest_",
                 "eid":EID_val+"",
                 "iccid":document.getElementById("ChooseSIMCard").value
             }),
             beforeSend:function(){
                 //some js code
+                // "orderId":"twtest_"+ data_val,
             },
             success:function(msg){
                 // console.log(msg.responseText.iccid + '----msg');
