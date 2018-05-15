@@ -265,6 +265,11 @@ function fnGetDP_iccid(){
                 console.log(msg);
                 console.log(JSON.stringify(msg));
                 console.log("--msg-1--");
+                if(msg.responseText.header.functionExecutionStatus.status =="Failed"){
+                    alert(1);
+                }else{
+                    alert(2);
+                }
                 if(msg.status == 200){
                     ajax({
                         type:"POST",
