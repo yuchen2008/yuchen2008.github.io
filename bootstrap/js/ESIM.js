@@ -261,7 +261,7 @@ function fnGetDP_iccid(){
             },
             success:function(msg){
                 console.log(msg);
-                if(msg.responseText.indexOf("iccid")==-1){ 
+                if(msg.responseText.indexOf("Executed-Success")==-1){ 
                 //do something
                     alert("There are problems in download profile from server (1)");
                     hiddenLoading();
@@ -283,8 +283,8 @@ function fnGetDP_iccid(){
                         },
                         success:function(msg){
                             console.log(msg);
-                            if(msg.responseText.indexOf("iccid")==-1){ 
-                            //do something
+                            if(msg.responseText.indexOf("Executed-Success")==-1){ 
+                                //do something
                                 alert("There are problems in download profile from server (2)");
                                 hiddenLoading();
                             }else{
