@@ -198,10 +198,11 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
             // document.getElementById(A_id).innerHTML = msg.responseText;
             // console.log(msg.responseText+ '------msg.responseText');
             // console.log(A_id + '---A_id----')
-
+            console.log(msg);
+            console.log("---111---");
             if(A_id == 'APDU_a'){
                 if(msg.responseText.indexOf("APDU")==-1){ 
-                //do something
+                    //do something
                     alert("There are problems in download profile from server (3)");
                     hiddenLoading();
                 }else{
@@ -209,14 +210,16 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
                     // console.log(APDU_a + '---APDU_a--1--')
                     fnRunAPDUBACK('APDU_b',APDU_a,5);
                 }
-                // console.log(APDU_b +'----卡片 发 a 回 b');
             }
             if(A_id == 'UPDATA_OK'){
-                UPDATA_OK = msg.responseText;
-                // console.log(UPDATA_OK + '-------DP POST: data=04 + b(去掉前2字符) 回 UPDATA_OK');
-                // fnAjaxAPDU('APDU_c','05',APDU_b,2);
-                fnAjaxAPDU_c1_c4('APDU_c','05',APDU_b,2);
-                // console.log(APDU_c+'------DP POST: data=05 + b(去掉前2字符) 回 APDU,c1,c2,c3,c4');
+                if(msg.responseText.indexOf("UPDATA_OK")==-1){ 
+                    //do something
+                    alert("There are problems in download profile from server (4)");
+                    hiddenLoading();
+                }else{
+                    UPDATA_OK = msg.responseText;
+                    fnAjaxAPDU_c1_c4('APDU_c','05',APDU_b,2);
+                }
                  
             }
         
