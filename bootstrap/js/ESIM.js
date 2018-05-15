@@ -80,7 +80,7 @@ function fnViewProvisioning(){
                         fnCardOff();
                         // 将读卡器释放
                         fnFreeReader();
-                        alert(provisioning_list);
+                        alert("No Profile");
                 // alert(ICCID_val);
                 // return;
             }
@@ -99,7 +99,7 @@ function fnDelProvisioning() {
              // 获取命令返回状态字
             fnGetSW();
             if(document.getElementById("provisioning_select").value==""){
-                alert(document.getElementById("provisioning_select").value+'---');
+                alert('No Profile');
                 return;
             }
             var apdu_value = '00E290000CBF33'+document.getElementById("provisioning_select").value;
@@ -153,7 +153,7 @@ function fnCheckICCID(){
                 // fnCardOff();
                 // // 将读卡器释放
                 // fnFreeReader();
-        alert("No Data");
+        // alert("No Data");
         return "true";
     }
 }
