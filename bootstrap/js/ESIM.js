@@ -658,7 +658,7 @@ function fnCardOn(event) {
 //重置读卡器获取atr值
 function fnGetATR() {
     sATR = myScc.GetATR();
-    // console.log(sATR + '-------sATR ---------重置读卡器获取atr值')
+    console.log(sATR + '-------sATR ---------');
 }
 //执行apdu命令
 function fnRunAPDU(val,err){
@@ -680,10 +680,12 @@ function fnGetSW() {
             fnRunAPDU("00C00000"+sSW.substring(2),"_14");
             fnGetSW();
         }
-        if(sSW == "6A84"){
+        else if(sSW == "6A84"){
             alert("Cannot download profile to SIM card. There are already 10 profiles in SIM card. ");
             hiddenLoading();
             return;
+        }else{
+            alert();
         }
     }
 }
