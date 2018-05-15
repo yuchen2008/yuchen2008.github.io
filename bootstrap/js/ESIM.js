@@ -198,12 +198,17 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
             // document.getElementById(A_id).innerHTML = msg.responseText;
             // console.log(msg.responseText+ '------msg.responseText');
             // console.log(A_id + '---A_id----')
-            console.log(msg);
-            console.log("------");
+
             if(A_id == 'APDU_a'){
-                APDU_a = msg.responseText;
-                // console.log(APDU_a + '---APDU_a--1--')
-                // fnRunAPDUBACK('APDU_b',APDU_a,5);
+                if(msg.responseText.indexOf("APDU")==-1){ 
+                //do something
+                    alert("There are problems in download profile from server (3)");
+                    hiddenLoading();
+                }else{
+                    APDU_a = msg.responseText;
+                    // console.log(APDU_a + '---APDU_a--1--')
+                    fnRunAPDUBACK('APDU_b',APDU_a,5);
+                }
                 // console.log(APDU_b +'----卡片 发 a 回 b');
             }
             if(A_id == 'UPDATA_OK'){
