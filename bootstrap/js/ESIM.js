@@ -265,7 +265,8 @@ function fnGetDP_iccid(){
                 console.log(msg);
                 console.log(JSON.stringify(msg));
                 console.log("--msg-1--");
-                if(msg.responseText.header.functionExecutionStatus.status =="Failed"){
+                console.log(msg.responseText.iccid);
+                if(msg.responseText.iccid==""){
                     alert(1);
                 }else{
                     alert(2);
