@@ -267,6 +267,16 @@ function fnGetDP_iccid(){
                 console.log("--msg-1--");
                 console.log(typeof msg.responseText);
                 console.log(msg.responseText);
+
+
+                 if(msg.responseText.indexOf("iccid")==-1){ 
+                //do something
+                    alert("Failed to update SIM with selected profile");
+                }else{
+                //do something
+                    alert("SIM is updated successfully with selected profile");
+                }
+
                 if(msg.responseText.iccid==""){
                     alert(1);
                 }else{
@@ -294,7 +304,7 @@ function fnGetDP_iccid(){
                             console.log("--msg-1--")
                             if(msg.status == 200){
                                 // fnAjaxAPDU('APDU_a','03',EID_val);
-                                // console.log(APDU_a + '------APDU_000000a---data=03 + eid 返回 APDU,a');
+                                // console.log(APDU_a + '------APDU_000000a-data=03 + eid 返回 APDU,a');
                          
                             }else{
                                 alert("There are problems in download profile from server (2)");
