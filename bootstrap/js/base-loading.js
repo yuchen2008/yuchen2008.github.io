@@ -53,9 +53,9 @@ function hiddenLoading() {
           iMinute = parseInt(iTime/60);
           if (iSecond >= 0){
               if(iMinute>0){
-                  sSecond = iMinute + "minute" + iSecond + "second";
+                  sSecond = iMinute + "" + iSecond + "";
               }else{
-                  sSecond = iSecond + "second";
+                  sSecond = iSecond + "";
               }
           }
           sTime=sSecond;
@@ -85,9 +85,9 @@ function hiddenLoading() {
           iMinute = parseInt(iTimes/60);
           if (iSecond >= 0){
               if(iMinute>0){
-                  sSecond = iMinute + "minute" + iSecond + "second";
+                  sSecond = iMinute + "" + iSecond + "";
               }else{
-                  sSecond = iSecond + "second";
+                  sSecond = iSecond + "";
               }
           }
           sTime=sSecond;

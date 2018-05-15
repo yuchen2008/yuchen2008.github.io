@@ -112,7 +112,7 @@ function fnDelProvisioning() {
             fnGetRetData('provisioning_id');
 
             var delprovisioning = provisioning_id;
-            alert(delprovisioning);
+            // alert(delprovisioning);
             fnCardOff();
             // 将读卡器释放
             fnFreeReader();
