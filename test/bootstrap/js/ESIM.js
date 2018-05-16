@@ -123,10 +123,7 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
             
             console.log("00000----");
             if(A_id == 'APDU_a'){
-                console.log(msg.responseText);
-                console.log(typeof msg.responseText);
-                
-                if(msg.responseText.indexOf("ERROR")==-1){ 
+                if(msg.responseText.indexOf("ERROR")!=-1){ 
                                 //do something
                                 alert("There are problems in download profile from server (1112)");
                                 hiddenLoading();
