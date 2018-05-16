@@ -685,7 +685,7 @@ function fnGetSW() {
             hiddenLoading();
             return;
         }else{
-            alert("Card internal error（"+sSW+").";
+            alert("Card internal error（"+sSW+").");
             hiddenLoading();
             return;
         }
