@@ -129,8 +129,10 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
                                 hiddenLoading();
                 }else{
                 //do something
+                alert("There are problems in download profile from server (21112)");
+                                hiddenLoading();
                     APDU_a = msg.responseText;
-                    fnRunAPDUBACK('APDU_b',APDU_a,5);
+                    // fnRunAPDUBACK('APDU_b',APDU_a,5);
                 }
                 
             }
