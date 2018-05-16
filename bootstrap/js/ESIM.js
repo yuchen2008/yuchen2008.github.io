@@ -23,8 +23,6 @@ function fnGetEid(){
             fnRunAPDU('00a4040409676F74656C6C417070',"_1");
             fnGetSW();
              fnRunAPDU('001A000010',"_2");
-             // lReturn = myScc.RunAPDU('00150000569321E1F57E6036E0D05F3022951457C63044022067CBB0F75707A43E1043636DF342699FD6163F9CE3B7A4BEF45CB49E051D340602203BCFFEC7945EF359031224ACFEC8C124D193B687894CE8AD658CA8C658264D92');
-            // console.log(lReturn + '----0015');
             // 获取命令返回状态字
             fnGetSW();
             // 获取EID
@@ -436,7 +434,10 @@ function fnGetICCID(){
         // 连接智能卡
         if(fnConnect_Card(document.getElementById("ChooseReader").value)){
             // 重置读卡器获取atr值
-            fnGetATR();
+            if(fnGetATR()){
+                console.log(123);
+                return;
+            };
             // 执行apdu命令
             fnRunAPDU('00a4040409676F74656C6C417070',"_10");
              // 获取命令返回状态字
@@ -683,13 +684,14 @@ function fnGetSW() {
         else if(sSW == "6A84"){
             alert("Cannot download profile to SIM card. There are already 10 profiles in SIM card. ");
             hiddenLoading();
-            return;
+            return false;
         }else{
             alert("Card internal error（"+sSW+").");
             hiddenLoading();
-            return;
+            return false;
         }
     }
+    return true;
 }
 //获取返回数据
 function fnGetRetData(val) {
