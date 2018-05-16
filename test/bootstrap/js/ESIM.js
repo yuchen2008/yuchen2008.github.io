@@ -121,8 +121,16 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
         },
         success:function(msg){
             if(A_id == 'APDU_a'){
-                APDU_a = msg.responseText;
-                fnRunAPDUBACK('APDU_b',APDU_a,5);
+                if(msg.responseText.indexOf("ERROR")==-1){ 
+                                //do something
+                                alert("There are problems in download profile from server (1112)");
+                                hiddenLoading();
+                }else{
+                //do something
+                    APDU_a = msg.responseText;
+                    fnRunAPDUBACK('APDU_b',APDU_a,5);
+                }
+                
             }
             if(A_id == 'UPDATA_OK'){
                 UPDATA_OK = msg.responseText;
