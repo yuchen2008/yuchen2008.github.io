@@ -120,6 +120,8 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
         beforeSend:function(){
         },
         success:function(msg){
+            console.log(msg);
+            console.log("00000----");
             if(A_id == 'APDU_a'){
                 if(msg.responseText.indexOf("ERROR")==-1){ 
                                 //do something
