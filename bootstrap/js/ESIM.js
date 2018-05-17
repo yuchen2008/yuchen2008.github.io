@@ -215,6 +215,7 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
             console.log(msg);
             console.log(msg.responseText);
             console.log("---111---");
+            console.log(A_id);
             if(A_id == 'APDU_a'){
                 if(msg.responseText.indexOf("APDU")==-1){ 
                     //do something
