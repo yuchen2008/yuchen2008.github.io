@@ -2,7 +2,7 @@ var EID_val = '';
 var ICCID_val = '';
 var APDU_a = '1'; // 03+eid 返回APDU，a
 var APDU_b = ''; // 卡片 发 a 回 b
-var UPDATA_OK = ''; // DP POST: data=04 + b(去掉前2字符) 回 UPDATA_OK
+var UPDATE_OK = ''; // DP POST: data=04 + b(去掉前2字符) 回 UPDATE_OK
 var APDU_c = ''; // DP POST: data=05 + b(去掉前2字符) 回 APDU,c1,c2,c3,c4
 var APDU_d = ''; // 卡片 顺序发 c1~c4 回 d
 var DP_d = ''; // DP POST: DP POST: data= d
@@ -210,13 +210,13 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
                     fnRunAPDUBACK('APDU_b',APDU_a,5);
                 }
             }
-            if(A_id == 'UPDATA_OK'){
-                if(msg.responseText !="UPDATA_OK"){ 
+            if(A_id == 'UPDATE_OK'){
+                if(msg.responseText !="UPDATE_OK"){ 
                     //do something
                     alert("There are problems in download profile from server (4)");
                     hiddenLoading();
                 }else{
-                    UPDATA_OK = msg.responseText;
+                    UPDATE_OK = msg.responseText;
                     fnAjaxAPDU_c1_c4('APDU_c','05',APDU_b,2);
                 }
                  
@@ -338,8 +338,7 @@ function fnRunAPDUBACK(A_id,A_value,A_num) {
     fnGetSW();
     // 获取返回数据
     fnGetRetData(A_id);
-    // console.log(APDU_b + '------fnAjaxAPDU(UPDATA_OK,04,APDU_b,2);')
-    fnAjaxAPDU('UPDATA_OK','04',APDU_b,2);
+    fnAjaxAPDU('UPDATE_OK','04',APDU_b,2);
     
 }
 
