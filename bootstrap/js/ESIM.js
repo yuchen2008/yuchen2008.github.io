@@ -764,7 +764,7 @@ function ajax(){
     }
     ajaxData.beforeSend()
     var xhr = createxmlHttpRequest();
-    xhr.timeout = 60000;
+    //xhr.timeout = 60000;
     //xhr.responseType=ajaxData.dataType;
     try {
         // xhr.setRequestHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
