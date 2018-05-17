@@ -687,14 +687,14 @@ function fnGetSW() {
         else if(sSW == "6A84"){
             alert("Cannot download profile to SIM card. There are already 10 profiles in SIM card. ");
             hiddenLoading();
-            return false;
+            return true;
         }else{
             alert("Card internal error（"+sSW+").");
             hiddenLoading();
-            return false;
+            return true;
         }
     }
-    return true;
+    return false;
 }
 //获取返回数据
 function fnGetRetData(val) {
