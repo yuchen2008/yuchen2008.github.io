@@ -21,10 +21,14 @@ function fnGetEid(){
             fnGetATR();
             // 执行apdu命令
             fnRunAPDU('00a4040409676F74656C6C417070',"_1");
-            fnGetSW();
+            if(fnGetSW()){
+                return;
+            };
              fnRunAPDU('001A000010',"_2");
             // 获取命令返回状态字
-            fnGetSW();
+            if(fnGetSW()){
+                return;
+            };
             // 获取EID
             fnGetRetData('EID');
             // return EID_val;
@@ -55,10 +59,14 @@ function fnViewProvisioning(){
             // 执行apdu命令
             fnRunAPDU('00a4040409676F74656C6C417070',"_3");
              // 获取命令返回状态字
-            fnGetSW();
+            if(fnGetSW()){
+                return;
+            };
             fnRunAPDU('00A9000000',"_4");
             // 获取命令返回状态字
-            fnGetSW();
+            if(fnGetSW()){
+                return;
+            };
             // 获取EID
             fnGetRetData('provisioning_id');
             if(provisioning_id.length >= 20){
@@ -95,7 +103,9 @@ function fnDelProvisioning() {
             // 执行apdu命令
             fnRunAPDU('00a4040409676F74656C6C417070',"_5");
              // 获取命令返回状态字
-            fnGetSW();
+            if(fnGetSW()){
+                return;
+            };
             if(document.getElementById("provisioning_select").value==""){
                 alert('No Profile');
                 return;
@@ -105,7 +115,9 @@ function fnDelProvisioning() {
             fnRunAPDU('00E290000CBF33'+document.getElementById("provisioning_select").value,"_6");
             console.log(apdu_value+'---apdu_value');
             // 获取命令返回状态字
-            fnGetSW();
+            if(fnGetSW()){
+                return;
+            };
             // 获取EID
             fnGetRetData('provisioning_id');
 
@@ -122,10 +134,14 @@ function fnCheckICCID(){
     // 执行apdu命令
     fnRunAPDU('00a4040409676F74656C6C417070',"_7");
      // 获取命令返回状态字
-    fnGetSW();
+    if(fnGetSW()){
+                return;
+            };
     fnRunAPDU('80E2900002BF2D',"_8");
     // 获取命令返回状态字
-    fnGetSW();
+    if(fnGetSW()){
+                return;
+            };
     // 获取EID
     fnGetRetData('ICCID');
     if(ICCID_val.length >= 22){
@@ -335,7 +351,9 @@ function fnRunAPDUBACK(A_id,A_value,A_num) {
         return;
     }
     // 获取命令返回状态字
-    fnGetSW();
+    if(fnGetSW()){
+                return;
+            };
     // 获取返回数据
     fnGetRetData(A_id);
     fnAjaxAPDU('UPDATE_OK','04',APDU_b,2);
@@ -367,7 +385,9 @@ function fnRunAPDU_C(A_id,A_value) {
         return;
     }
     // 获取命令返回状态字
-    fnGetSW();
+    if(fnGetSW()){
+                return;
+            };
     // 获取返回数据
     fnGetRetData(A_id);
     sRes = myScc.GetRetData();
@@ -489,10 +509,14 @@ function fnGetICCID_select(){
             // 执行apdu命令
             fnRunAPDU('00a4040409676F74656C6C417070',"_12");
              // 获取命令返回状态字
-            fnGetSW();
+            if(fnGetSW()){
+                return;
+            };
             fnRunAPDU('80E2900002BF2D',"_13");
             // 获取命令返回状态字
-            fnGetSW();
+            if(fnGetSW()){
+                return;
+            };
             // 获取EID
             fnGetRetData('ICCID');
             if(ICCID_val.length >= 22){
