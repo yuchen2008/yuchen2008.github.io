@@ -151,8 +151,8 @@ function fnCheckICCID(){
               ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
               // console.log( typeof ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2)));
               if(document.getElementById("ChooseSIMCard").value ==ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2)) ){
-                alert("Same profile has been downloaded in the SIM card, cannot be download again.");
                 hiddenLoading();
+                alert("Same profile has been downloaded in the SIM card, cannot be download again.");
                 return "false";
               }
         }
@@ -218,8 +218,9 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
             if(A_id == 'APDU_a'){
                 if(msg.responseText.indexOf("APDU")==-1){ 
                     //do something
-                    alert("There are problems in download profile from server (3)");
                     hiddenLoading();
+                    alert("There are problems in download profile from server (3)");
+                    
                 }else{
                     APDU_a = msg.responseText;
                     // console.log(APDU_a + '---APDU_a--1--')
@@ -257,8 +258,8 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
             // console.log(msg.response+ '------msg.response');
         },
         error:function(e){
-            alert("There are problems in download profile from server (3)");
             hiddenLoading();
+            alert("There are problems in download profile from server (3)");
             // console.log("error--"+ e);
             // console.log("error-e-"+ JSON.stringify(e));
         }
@@ -286,8 +287,8 @@ function fnGetDP_iccid(){
                 console.log(msg);
                 if(msg.responseText.indexOf("Executed-Success")==-1){ 
                 //do something
-                    alert("There are problems in download profile from server (1)");
                     hiddenLoading();
+                    alert("There are problems in download profile from server (1)");
                 }else{
                 //do something
                    ajax({
@@ -308,16 +309,16 @@ function fnGetDP_iccid(){
                             console.log(msg);
                             if(msg.responseText.indexOf("Executed-Success")==-1){ 
                                 //do something
-                                alert("There are problems in download profile from server (2)");
                                 hiddenLoading();
+                                alert("There are problems in download profile from server (2)");
                             }else{
                             //do something
                                 fnAjaxAPDU('APDU_a','03',EID_val);
                             }
                         },
                         error:function(e){
-                            alert("There are problems in download profile from server (2.1)");
                             hiddenLoading();
+                            alert("There are problems in download profile from server (2.1)");
                             console.log("error" + "--" + e);
 
                         }
@@ -326,9 +327,8 @@ function fnGetDP_iccid(){
             },
             error:function(e){
                 // console.log("error" + "--" + e);
-                alert("There are problems in download profile from server (1.1)");
                 hiddenLoading();
-
+                alert("There are problems in download profile from server (1.1)");
             }
         })
 }
@@ -406,7 +406,7 @@ function fnRunAPDU_C(A_id,A_value) {
             success:function(msg){
                 // document.getElementById(A_id).innerHTML = msg.responseText;
                 // console.log(msg.responseText+ '------msg.responseText');
-            
+                hiddenLoading();
                 if(msg.responseText.indexOf("CTRL")==-1){ 
                 //do something
                     alert("Failed to update SIM with selected profile");
@@ -414,13 +414,11 @@ function fnRunAPDU_C(A_id,A_value) {
                 //do something
                     alert("SIM is updated successfully with selected profile");
                 }
-                hiddenLoading();
-
-                // console.log(msg.response+ '------msg.response');
             },
             error:function(e){
-                alert("There are problems in download profile from server (3)");
+
                 hiddenLoading();
+                alert("There are problems in download profile from server (3)");
             }
         })
 
@@ -598,8 +596,8 @@ function fnAjaxAPDU_c1_c4(A_id,A_data,A_valueid,A_num) {
                 APDU_c = msg.responseText;
                 fnRunAPDU_C('APDU_d',APDU_c);
             }else{
-                alert("There are problems in download profile from server (3)");
                 hiddenLoading();
+                alert("There are problems in download profile from server (3)");
             }
 
             
@@ -624,15 +622,15 @@ function fnListReaders(){
         s=new String(myScc.ListReaders());
          }
     catch(err){
-         // console.log(err); 
+         // console.log(err);
+         hiddenLoading(); 
          alert("Please use IE browser, install and activate LPA plugin.");
-         hiddenLoading();
          return;
     }
          cars=s.split("||");
          if(cars.length==1){
-            alert("There is no SIM card reader found.");
             hiddenLoading();
+            alert("There is no SIM card reader found.");
             return;
          } else{
             for(var i = 0;i<cars.length-1;i++){
@@ -649,8 +647,8 @@ function fnListReaders(){
 function fnSetReader(val){
     lReturn = myScc.SetReader(val);
     if(lReturn!=0){
-        alert("There are problems reading SIM card reader.");
         hiddenLoading();
+        alert("There are problems reading SIM card reader.");
         return false;
     }
     return true;
@@ -659,15 +657,14 @@ function fnConnect_Card(val) {
     // body...
     lReturn = myScc.SetReader(val);
     if(lReturn!=0){
-        // alert("CardOn err:"+"设置所使用的读卡器名称.state:"+lReturn + ".");
-        alert("There are problems reading SIM card reader.");
         hiddenLoading();
+        alert("There are problems reading SIM card reader.");
         return;
     }
     lReturn = myScc.CardOn();
     if(lReturn!=0){
-        alert("There are problems connected to SIM card reader.");
         hiddenLoading();
+        alert("There are problems connected to SIM card reader.");
         return;
     }
     return true;
@@ -678,8 +675,8 @@ function fnConnect_Card(val) {
 function fnCardOn(event) {
     lReturn = myScc.CardOn();
     if(lReturn!=0){
-        alert("There are problems connected to SIM card reader.");
         hiddenLoading();
+        alert("There are problems connected to SIM card reader.");
         return;
     }
 }
@@ -693,8 +690,8 @@ function fnRunAPDU(val,err){
     lReturn = myScc.RunAPDU(val);
     console.log("___lreturn__"+ lReturn);
     if(lReturn!=0){
-        alert("There are problems in communicating with SIM card（"+lReturn+err+"）.");
         hiddenLoading();
+        alert("There are problems in communicating with SIM card（"+lReturn+err+"）.");
         return;
     }
 }
@@ -709,12 +706,12 @@ function fnGetSW() {
             fnGetSW();
         }
         else if(sSW == "6A84"){
-            alert("Cannot download profile to SIM card. There are already 10 profiles in SIM card. ");
             hiddenLoading();
+            alert("Cannot download profile to SIM card. There are already 10 profiles in SIM card. ");
             return true;
         }else{
-            alert("Card internal error（"+sSW+").");
             hiddenLoading();
+            alert("Card internal error（"+sSW+").");
             return true;
         }
     }
@@ -756,8 +753,8 @@ function fnCardOff(){
     lReturn = myScc.CardOff();
     if(lReturn!=0){
         // console.log("CardOff return "+lReturn);
-        alert("There are problems ejecting SIM card / card reader");
         hiddenLoading();
+        alert("There are problems ejecting SIM card / card reader");
         return;
     }
 }
@@ -766,8 +763,8 @@ function fnFreeReader(){
 
     if(lReturn!=0){
         // console.log("FreeReader return "+lReturn);
-        alert("There are problems ejecting SIM card reader");
         hiddenLoading();
+        alert("There are problems ejecting SIM card reader");
         return
     }
     // console.log(lReturn + '-------lReturn ---------将读卡器释放');
@@ -800,8 +797,8 @@ function ajax(){
          }
     catch(err){
          console.log(err); 
-         alert("There are problems in download profile from server (0).");
          hiddenLoading();
+         alert("There are problems in download profile from server (0).");
          return;
     }
     
