@@ -813,7 +813,8 @@ function ajax(){
 
     xhr.setRequestHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
     xhr.setRequestHeader("Access-Control-Allow-Methods", "GET, PUT, POST");
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "http://c9dp.roam2free.com:8443");
+    // xhr.setRequestHeader("Access-Control-Allow-Origin", "https://c9dp.roam2free.com:8443");
+    xhr.setRequestHeader("Access-Control-Allow-Origin", "https://c9dp.roam2free.com");
     xhr.setRequestHeader("Access-Control-Max-Age","86400");
    
     xhr.setRequestHeader("Content-Type",ajaxData.contentType);
