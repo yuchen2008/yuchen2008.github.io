@@ -211,7 +211,7 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
                 }
             }
             if(A_id == 'UPDATE_OK'){
-                if(msg.responseText !="UPDATE_OK"){ 
+                if(msg.responseText.indexOf("UPDATE_OK")==-1){
                     //do something
                     alert("There are problems in download profile from server (4)");
                     hiddenLoading();
