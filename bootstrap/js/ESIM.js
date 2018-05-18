@@ -394,12 +394,11 @@ function fnRunAPDU_C(A_id,A_value) {
     })
 }
 function fninputAPDU(A_id){
-    var inputvalue = document.getElementById(A_id).value;
-    if(!inputvalue){
+    if(!A_id){
         alert("请输入指令")
         return;
     }
-    lReturn = myScc.RunAPDU(inputvalue);
+    lReturn = myScc.RunAPDU(A_id);
     // document.getElementById("SetReader").innerHTML ="状态：0是成功----" + lReturn;
     if(lReturn!=0){
         alert("There are problems in communicating with SIM card（"+lReturn+"_15"+"）.");
