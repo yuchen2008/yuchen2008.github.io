@@ -236,33 +236,18 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
                 }else{
                     UPDATE_OK = msg.responseText;
                     fnAjaxAPDU_c1_c4('APDU_c','05',APDU_b,2);
-                }
-                 
+                }   
             }
-        
-            if(A_id == 'APDU_d'){
-                 fnAjaxAPDU('DP_d','',APDU_c);
-                 // console.log(DP_d);
-            }
-
-            if(A_id=='DP_d'){
-    // console.log('----DP_d');
-                                // hiddenLoading();
-                                       // 断开卡片
-                                    // fnCardOff();
-                                    // 将读卡器释放
-                                    // fnFreeReader();
-                                //hiddenLoading();
-            }
-
-            
-            // console.log(msg.response+ '------msg.response');
         },
         error:function(e){
             hiddenLoading();
-            alert("There are problems in download profile from server (3)");
-            // console.log("error--"+ e);
-            // console.log("error-e-"+ JSON.stringify(e));
+            console.log(A_id);
+            if(A_id == 'APDU_a'){
+                alert("There are problems in download profile from server (3.1)");
+            }
+            if(A_id == 'UPDATE_OK'){
+                alert("There are problems in download profile from server (4.1)");
+            }
         }
     })
 }
@@ -392,39 +377,35 @@ function fnRunAPDU_C(A_id,A_value) {
     // 获取返回数据
     fnGetRetData(A_id);
     sRes = myScc.GetRetData();
-
-        ajax({
-            type:"POST",
-            url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es9plus/m2m/sendRes",
-            contentType:"application/x-www-form-urlencoded;",
-            // async : "true",
-            async : false,
-            //dataType:"json",
-            data: {'data': sRes},
-            beforeSend:function(){
-                //some js code
-            },
-            success:function(msg){
-                // document.getElementById(A_id).innerHTML = msg.responseText;
-                // console.log(msg.responseText+ '------msg.responseText');
-                hiddenLoading();
-                if(msg.responseText.indexOf("CTRL")==-1){ 
-                //do something
-                    alert("Failed to update SIM with selected profile");
-                }else{
-                //do something
-                    alert("SIM is updated successfully with selected profile");
-                }
-            },
-            error:function(e){
-
-                hiddenLoading();
-                alert("There are problems in download profile from server (3)");
+    ajax({
+        type:"POST",
+        url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es9plus/m2m/sendRes",
+        contentType:"application/x-www-form-urlencoded;",
+        // async : "true",
+        async : false,
+        //dataType:"json",
+        data: {'data': sRes},
+        beforeSend:function(){
+            //some js code
+        },
+        success:function(msg){
+            // document.getElementById(A_id).innerHTML = msg.responseText;
+            // console.log(msg.responseText+ '------msg.responseText');
+            hiddenLoading();
+            if(msg.responseText.indexOf("CTRL")==-1){ 
+            //do something
+                alert("Failed to update SIM with selected profile");
+            }else{
+            //do something
+                alert("SIM is updated successfully with selected profile");
             }
-        })
+        },
+        error:function(e){
 
-     // fnAjaxAPDU('DP_d','',APDU_c);
-     //             console.log(DP_d);
+            hiddenLoading();
+            alert("There are problems in download profile from server (6.1)");
+        }
+    })
 }
 function fninputAPDU(A_id){
     var inputvalue = document.getElementById(A_id).value;
@@ -594,24 +575,19 @@ function fnAjaxAPDU_c1_c4(A_id,A_data,A_valueid,A_num) {
             console.log(msg.responseText+ '------msg.responseText');
             console.log(msg.responseText);
             console.log(msg.responseText.length);
-             if(msg.status == 200){
+            if(msg.responseText.indexOf("ERROR")!=-1){ 
+                //do something
+                hiddenLoading();
+                alert("There are problems in download profile from server (5)");
+            }else{
+                //do something
                 APDU_c = msg.responseText;
                 fnRunAPDU_C('APDU_d',APDU_c);
-            }else{
-                hiddenLoading();
-                alert("There are problems in download profile from server (3)");
-            }
-
-            
-            // fnRunAPDU_C()
-
-            
-            // console.log(msg.response+ '------msg.response');
+            }    
         },
         error:function(e){
-            alert("There are problems in download profile from server (1)");
-            // console.log("error--"+ e);
-            // console.log("error-e-"+ JSON.stringify(e));
+            alert("There are problems in download profile from server (5.1)");
+            console.log("error--"+ e);
         }
     })
 }
