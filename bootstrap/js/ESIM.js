@@ -20,11 +20,15 @@ function fnGetEid(){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070',"_1");
+            if(fnRunAPDU('00a4040409676F74656C6C417070',"_1")){
+                return;
+            };
             if(fnGetSW()){
                 return;
             };
-             fnRunAPDU('001A000010',"_2");
+            if(fnRunAPDU('001A000010',"_2")){
+                return;
+            };
             // 获取命令返回状态字
             if(fnGetSW()){
                 return;
@@ -53,12 +57,16 @@ function fnViewProvisioning(){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070',"_3");
+            if(fnRunAPDU('00a4040409676F74656C6C417070',"_3")){
+                return;
+            };
              // 获取命令返回状态字
             if(fnGetSW()){
                 return;
             };
-            fnRunAPDU('00A9000000',"_4");
+            if(fnRunAPDU('00A9000000',"_4")){
+                return;
+            };
             // 获取命令返回状态字
             if(fnGetSW()){
                 return;
@@ -96,7 +104,9 @@ function fnDelProvisioning() {
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070',"_5");
+            if(fnRunAPDU('00a4040409676F74656C6C417070',"_5")){
+                return;
+            };
              // 获取命令返回状态字
             if(fnGetSW()){
                 return;
@@ -106,7 +116,9 @@ function fnDelProvisioning() {
                 return;
             }
             var apdu_value = '00E290000CBF33'+document.getElementById("provisioning_select").value;
-            fnRunAPDU('00E290000CBF33'+document.getElementById("provisioning_select").value,"_6");
+            if(fnRunAPDU('00E290000CBF33'+document.getElementById("provisioning_select").value,"_6")){
+                return;
+            };
             // 获取命令返回状态字
             if(fnGetSW()){
                 return;
@@ -125,12 +137,16 @@ function fnDelProvisioning() {
 }
 function fnCheckICCID(){
     // 执行apdu命令
-    fnRunAPDU('00a4040409676F74656C6C417070',"_7");
+    if(fnRunAPDU('00a4040409676F74656C6C417070',"_7")){
+        return;
+    };
      // 获取命令返回状态字
     if(fnGetSW()){
                 return;
             };
-    fnRunAPDU('80E2900002BF2D',"_8");
+    if(fnRunAPDU('80E2900002BF2D',"_8")){
+        return;
+    };
     // 获取命令返回状态字
     if(fnGetSW()){
                 return;
@@ -406,10 +422,14 @@ function fnGetICCID(){
                 return;
             };
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070',"_10");
-             // 获取命令返回状态字
-             fnGetSW();
-            fnRunAPDU('80E2900002BF2D',"_11");
+            if(fnRunAPDU('00a4040409676F74656C6C417070',"_10")){
+                return;
+            };
+            // 获取命令返回状态字
+            fnGetSW();
+            if(fnRunAPDU('80E2900002BF2D',"_11")){
+                return;
+            };
             // 获取命令返回状态字
             if(fnGetSW()){
                 return;
@@ -453,12 +473,16 @@ function fnGetICCID_select(){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070',"_12");
+            if(fnRunAPDU('00a4040409676F74656C6C417070',"_12")){
+                return;
+            };
              // 获取命令返回状态字
             if(fnGetSW()){
                 return;
             };
-            fnRunAPDU('80E2900002BF2D',"_13");
+            if(fnRunAPDU('80E2900002BF2D',"_13")){
+                return;
+            };
             // 获取命令返回状态字
             if(fnGetSW()){
                 return;
@@ -635,8 +659,9 @@ function fnRunAPDU(val,err){
     if(lReturn!=0){
         hiddenLoading();
         alert("There are problems in communicating with SIM card（"+lReturn+err+"）.");
-        return;
+        return true;
     }
+    return false;
 }
 //获取命令返回状态字
 function fnGetSW() {
@@ -644,7 +669,9 @@ function fnGetSW() {
     sSW = myScc.GetSW();
     if(sSW!=9000){
         if(sSW.substring(0,2)=="61" || sSW.substring(0,2)=="91"){
-            fnRunAPDU("00C00000"+sSW.substring(2),"_14");
+            if(fnRunAPDU("00C00000"+sSW.substring(2),"_14")){
+                return;
+            };
             fnGetSW();
         }
         else if(sSW == "6A84"){
