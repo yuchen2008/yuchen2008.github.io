@@ -31,12 +31,8 @@ function fnGetEid(){
             };
             // 获取EID
             fnGetRetData('EID');
-            // return EID_val;
-            // console.log(EID_val);
             showloading();
             var checkValue_ = fnCheckICCID();
-            // console.log(typeof checkValue_);
-            // console.log('==='+ checkValue_);
             if(checkValue_=="false"){
                 hiddenLoading();
                 return;
@@ -75,18 +71,17 @@ function fnViewProvisioning(){
                 for(var i = 0; i< I_length ;i++){
                       provisioning_list[i] = provisioning_id.substring(i*20,(i+1)*20).substring(2);
                 }
-                // console.log(provisioning_list + '-------')
                 // 断开卡片
-                        fnCardOff();
-                        // 将读卡器释放
-                        fnFreeReader();
+                fnCardOff();
+                // 将读卡器释放
+                fnFreeReader();
                 alert(provisioning_list);
             }else{
                 // 断开卡片
-                        fnCardOff();
-                        // 将读卡器释放
-                        fnFreeReader();
-                        alert("No Profile");
+                fnCardOff();
+                // 将读卡器释放
+                fnFreeReader();
+                alert("No Profile");
                 // alert(ICCID_val);
                 // return;
             }
@@ -111,9 +106,7 @@ function fnDelProvisioning() {
                 return;
             }
             var apdu_value = '00E290000CBF33'+document.getElementById("provisioning_select").value;
-            console.log(document.getElementById("provisioning_select").value +'-----document.getElementById("provisioning_select").value');
             fnRunAPDU('00E290000CBF33'+document.getElementById("provisioning_select").value,"_6");
-            console.log(apdu_value+'---apdu_value');
             // 获取命令返回状态字
             if(fnGetSW()){
                 return;
@@ -149,25 +142,14 @@ function fnCheckICCID(){
          var ICCID_list = []
         for(var i = 0; i< I_length ;i++){
               ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
-              // console.log( typeof ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2)));
               if(document.getElementById("ChooseSIMCard").value ==ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2)) ){
                 hiddenLoading();
                 alert("Same profile has been downloaded in the SIM card, cannot be download again.");
                 return "false";
               }
         }
-        // console.log(ICCID_list + '-------')
-        // 断开卡片
-                // fnCardOff();
-                // // 将读卡器释放
-                // fnFreeReader();
         return "true";
     }else{
-        // 断开卡片
-                // fnCardOff();
-                // // 将读卡器释放
-                // fnFreeReader();
-        // alert("No Data");
         return "true";
     }
 }
@@ -196,7 +178,6 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
         }
 
     }
-    // console.log(A_value + '-----A_value')
     ajax({
         type:"POST",
         url:"https://c9dp.roam2free.com:8443/roam2free-dp-service/gsma/rsp2/es9plus/m2m/sendRes",
@@ -209,13 +190,6 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
             //some js code
         },
         success:function(msg){
-            // document.getElementById(A_id).innerHTML = msg.responseText;
-            // console.log(msg.responseText+ '------msg.responseText');
-            // console.log(A_id + '---A_id----')
-            console.log(msg);
-            console.log(msg.responseText);
-            console.log("---111---");
-            console.log(A_id);
             if(A_id == 'APDU_a'){
                 if(msg.responseText.indexOf("APDU")==-1){ 
                     //do something
@@ -241,7 +215,6 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
         },
         error:function(e){
             hiddenLoading();
-            console.log(A_id);
             if(A_id == 'APDU_a'){
                 alert("There are problems in download profile from server (3.1)");
             }
@@ -270,7 +243,6 @@ function fnGetDP_iccid(){
                 //some js code      
             },
             success:function(msg){
-                console.log(msg);
                 if(msg.responseText.indexOf("Executed-Success")==-1){ 
                 //do something
                     hiddenLoading();
@@ -292,7 +264,6 @@ function fnGetDP_iccid(){
                             //some js code
                         },
                         success:function(msg){
-                            console.log(msg);
                             if(msg.responseText.indexOf("Executed-Success")==-1){ 
                                 //do something
                                 hiddenLoading();
@@ -312,7 +283,6 @@ function fnGetDP_iccid(){
                 }
             },
             error:function(e){
-                // console.log("error" + "--" + e);
                 hiddenLoading();
                 alert("There are problems in download profile from server (1.1)");
             }
@@ -419,9 +389,7 @@ function fninputAPDU(A_id){
         alert("There are problems in communicating with SIM card（"+lReturn+"_15"+"）.");
         return;
     }
-    // console.log(lReturn + '-------lReturn ---------执行apdu命令');
     sSW = myScc.GetSW();
-    // console.log( sSW + '----2');
     fnGetRetData("GetRetData");
 }
 
@@ -433,10 +401,7 @@ function fnGetICCID(){
         // 连接智能卡
         if(fnConnect_Card(document.getElementById("ChooseReader").value)){
             // 重置读卡器获取atr值
-            if(fnGetATR()){
-                console.log(123);
-                return;
-            };
+            fnGetATR();
             // 执行apdu命令
             fnRunAPDU('00a4040409676F74656C6C417070',"_10");
              // 获取命令返回状态字
@@ -666,7 +631,6 @@ function fnGetATR() {
 //执行apdu命令
 function fnRunAPDU(val,err){
     lReturn = myScc.RunAPDU(val);
-    console.log("___lreturn__"+ lReturn);
     if(lReturn!=0){
         hiddenLoading();
         alert("There are problems in communicating with SIM card（"+lReturn+err+"）.");
@@ -677,7 +641,6 @@ function fnRunAPDU(val,err){
 function fnGetSW() {
     //获取命令返回状态字
     sSW = myScc.GetSW();
-    console.log(sSW + "----sSW");
     if(sSW!=9000){
         if(sSW.substring(0,2)=="61" || sSW.substring(0,2)=="91"){
             fnRunAPDU("00C00000"+sSW.substring(2),"_14");
@@ -730,7 +693,6 @@ function fnGetRetData_value() {
 function fnCardOff(){
     lReturn = myScc.CardOff();
     if(lReturn!=0){
-        // console.log("CardOff return "+lReturn);
         hiddenLoading();
         alert("There are problems ejecting SIM card / card reader");
         return;
