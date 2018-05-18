@@ -591,8 +591,9 @@ function fnAjaxAPDU_c1_c4(A_id,A_data,A_valueid,A_num) {
         },
         success:function(msg){
             // document.getElementById(A_id).innerHTML = msg.responseText;
-            // console.log(msg.responseText+ '------msg.responseText');
-
+            console.log(msg.responseText+ '------msg.responseText');
+            console.log(msg.responseText);
+            console.log(msg.responseText.length);
              if(msg.status == 200){
                 APDU_c = msg.responseText;
                 fnRunAPDU_C('APDU_d',APDU_c);
