@@ -417,7 +417,6 @@ function fnGetICCID(){
         if(fnConnect_Card(document.getElementById("ChooseReader").value)){
             // 重置读卡器获取atr值
             if(fnGetATR()){
-                console.log(123);
                 return;
             };
             // 执行apdu命令
@@ -500,8 +499,6 @@ function fnGetICCID_select(){
                       provisioning_select.options.add(objOption);
                       // ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
                 }
-
-    console.log(document.getElementById("provisioning_select").value +'---1--("provisioning_select")');
                         // 断开卡片
                         fnCardOff();
                         // 将读卡器释放
@@ -512,12 +509,8 @@ function fnGetICCID_select(){
                         fnCardOff();
                         // 将读卡器释放
                         fnFreeReader();
-                        // alert(ICCID_list);
-                // alert(ICCID_val);
-                // return;
             }
 
-    console.log(document.getElementById("provisioning_select").value +'---2--("provisioning_select")');
         }
     }
 }
@@ -560,10 +553,6 @@ function fnAjaxAPDU_c1_c4(A_id,A_data,A_valueid,A_num) {
             //some js code
         },
         success:function(msg){
-            // document.getElementById(A_id).innerHTML = msg.responseText;
-            console.log(msg.responseText+ '------msg.responseText');
-            console.log(msg.responseText);
-            console.log(msg.responseText.length);
             if(msg.responseText.indexOf("ERROR")!=-1){ 
                 //do something
                 hiddenLoading();
