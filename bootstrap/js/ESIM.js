@@ -53,7 +53,7 @@ function fnViewProvisioning(){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070',"_3");
+            fnRunAPDU('00a4040409676F74656C6C417070',"_1");
              // 获取命令返回状态字
             if(fnGetSW()){
                 return;
@@ -403,7 +403,7 @@ function fnGetICCID(){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070',"_10");
+            fnRunAPDU('00a4040409676F74656C6C417070',"_1");
              // 获取命令返回状态字
             if(fnGetSW()){
                 return;
@@ -452,7 +452,7 @@ function fnGetICCID_select(){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070',"_12");
+            fnRunAPDU('00a4040409676F74656C6C417070',"_1");
              // 获取命令返回状态字
             if(fnGetSW()){
                 return;
