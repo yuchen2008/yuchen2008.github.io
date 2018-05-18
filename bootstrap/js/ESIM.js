@@ -424,7 +424,9 @@ function fnGetICCID(){
                 return;
             };
             // 获取命令返回状态字
-            fnGetSW();
+            if(fnGetSW()){
+                return;
+            };
             if(fnRunAPDU('80E2900002BF2D',"_11")){
                 return;
             };
