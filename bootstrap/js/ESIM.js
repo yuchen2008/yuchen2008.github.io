@@ -53,7 +53,7 @@ function fnViewProvisioning(){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070',"_1");
+            fnRunAPDU('00a4040409676F74656C6C417070',"_3");
              // 获取命令返回状态字
             if(fnGetSW()){
                 return;
@@ -401,13 +401,14 @@ function fnGetICCID(){
         // 连接智能卡
         if(fnConnect_Card(document.getElementById("ChooseReader").value)){
             // 重置读卡器获取atr值
-            fnGetATR();
-            // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070',"_1");
-             // 获取命令返回状态字
-            if(fnGetSW()){
+            if(fnGetATR()){
+                console.log(123);
                 return;
             };
+            // 执行apdu命令
+            fnRunAPDU('00a4040409676F74656C6C417070',"_10");
+             // 获取命令返回状态字
+             fnGetSW();
             fnRunAPDU('80E2900002BF2D',"_11");
             // 获取命令返回状态字
             if(fnGetSW()){
@@ -452,7 +453,7 @@ function fnGetICCID_select(){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
-            fnRunAPDU('00a4040409676F74656C6C417070',"_1");
+            fnRunAPDU('00a4040409676F74656C6C417070',"_12");
              // 获取命令返回状态字
             if(fnGetSW()){
                 return;
