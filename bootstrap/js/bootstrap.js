@@ -123,6 +123,13 @@
           that.$element
             .show()
 
+
+          if(that.$element.children().eq(0).height()<that.$element.height()){  
+            that.$element.children().eq(0).css({  
+              "margin-top":(that.$element.height()-that.$element.children().eq(0).height())/2+"px"  
+            })  
+          } 
+            
           if (transition) {
             that.$element[0].offsetWidth // force reflow
           }
