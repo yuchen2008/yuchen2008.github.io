@@ -520,7 +520,7 @@ function fnGetICCID_select(){
             }
 
         }
-    }else{$("#myModalbtn").click();}
+    }
 }
 
 
