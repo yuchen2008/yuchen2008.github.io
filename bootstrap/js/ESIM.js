@@ -85,7 +85,7 @@ function fnViewProvisioning(){
                 fnFreeReader();
                 //alert(provisioning_list);
 
-                sAlert("warning1","",provisioning_list);
+                sAlert("warning1",provisioning_list);
             }else{
                 // 断开卡片
                 fnCardOff();
@@ -133,7 +133,8 @@ function fnDelProvisioning() {
             fnCardOff();
             // 将读卡器释放
             fnFreeReader();
-            fnGetICCID_select();
+            // fnGetICCID_select();
+            $('#cancel_btn').click();
             }
         }
 }
@@ -450,7 +451,7 @@ function fnGetICCID(){
                         // 将读卡器释放
                         fnFreeReader();
                         // alert(ICCID_list);
-                        sAlert("warning2","",ICCID_list);
+                        sAlert("warning3","",ICCID_list);
 
             }else{
                         // 断开卡片

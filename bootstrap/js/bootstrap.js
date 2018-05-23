@@ -126,8 +126,9 @@
 
           if(that.$element.children().eq(0).height()<that.$element.height()){  
             that.$element.children().eq(0).css({  
-              "margin-top":(that.$element.height()-that.$element.children().eq(0).height())/2+"px"  
+              "margin-top":(that.$element.height()-that.$element.children().eq(0).height())/7+"px"  
             })  
+            
           } 
             
           if (transition) {

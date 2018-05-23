@@ -126,7 +126,12 @@
     select {
     line-height: 20px /9;
     }
-
+    .modal.fade.in {
+        top: 66%;
+    }  
+    .modal.fade.in.yezi {
+        top: 66%;
+    }
 /*    .modal.in .modal-dialog{-webkit-transform:translate(0,-50%);-ms-transform:translate(0,-50%);-o-transform:translate(0,-50%);transform:translate(0,-50%)}
     .modal-dialog{position:absolute;width:auto;margin:10px auto;left:0;right:0;top:50%}
     
@@ -212,8 +217,8 @@
 <a href="#myModal" id="myModalbtn" role="button" style="visibility: hidden;" class="btn" data-toggle="modal">hidden</a>
  
 <!-- Modal -->
-<!-- <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header" style="margin-top: 0 !important;">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Delete Profile</h3>
   </div>
@@ -230,10 +235,10 @@
   </div>
    
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-    <button class="btn btn-primary" onclick="fnDelProvisioning()">Confirm</button>
+    <button class="btn" id="cancel_btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <button class="btn btn-primary" onclick="fnDelProvisioning()">Confirm</button>    
   </div>
-</div> -->
+</div>
 
 
 
@@ -272,14 +277,11 @@
         })
         $('#provisioning').click(function(){
           RemainTimes("provisioning","View Provisioning");
-          // fnViewProvisioning();
-          sAlert("warning2","111111111111,1111111111111,11111111111,111111111111,1111111111,11111111111");
-          // fnGetProvisioning();
+          fnViewProvisioning();
         })
         $('#Delete_provisioning').click(function(){
           $("#myModalbtn").click();
           fnGetICCID_select();
-          // fnGetProvisioning();
         })
         
         
@@ -288,6 +290,8 @@
         
 
     });
+
+
 
 
   
