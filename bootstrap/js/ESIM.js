@@ -77,7 +77,7 @@ function fnViewProvisioning(){
                 var I_length = provisioning_id.length / 20 ;
                  var provisioning_list = []
                 for(var i = 0; i< I_length ;i++){
-                      provisioning_list[i] = provisioning_id.substring(i*20,(i+1)*20);
+                      provisioning_list[i] = ChangeNums(provisioning_id.substring(i*20,(i+1)*20));
                 }
                 // 断开卡片
                 fnCardOff();
