@@ -473,6 +473,7 @@ function fnGetICCID_select(){
     var provisioning_select = document.getElementById("provisioning_select");
     provisioning_select.innerHTML = '';
     if(fnListReaders() == "OK"){
+        $("#myModalbtn").click();
         // 连接智能卡
         if(fnConnect_Card(document.getElementById("ChooseReader").value)){
             // 重置读卡器获取atr值
