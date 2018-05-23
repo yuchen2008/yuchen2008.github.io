@@ -309,8 +309,8 @@ function Alertcode(id,strTitle, strContent) {
         $('#modal'+id).modal('show');
     }
 }
-function sAlert(id,strTitle, strContent) {
-    var str = '<div class="modal fade modalbg  bs-example-modal-sm" id=modal'+id+' ><div class="modal-dialog  modal-sm"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> <span class="modal-title" >' + strTitle + '</span> </div> <div class="modal-body">' + strContent + '</div> </div> </div> </div>';
+function sAlert(id, strContent) {
+    var str = '<div id=modal'+id+'  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-body"><form class="bs-docs-example form-horizontal"><div class="control-group"><p>' + strContent + '</p></div></form></div><div class="modal-footer" style="border: none;background: #fff;"><button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Confirm</button></div></div>';
 
     if(document.getElementById("divmodal"))
     {
