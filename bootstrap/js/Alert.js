@@ -310,7 +310,7 @@ function Alertcode(id,strTitle, strContent) {
     }
 }
 function sAlert(id, strContent) {
-    var str = '<div id=modal'+id+'  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-body"><form class="bs-docs-example form-horizontal"><div class="control-group"><p>' + strContent + '</p></div></form></div><div class="modal-footer" style="border: none;background: #fff;"><button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Confirm</button></div></div>';
+    var str = '<div id=modal'+id+'  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"><div class="modal-body">' + strContent + '</div><div class="modal-footer" style="border: none;background: #fff;"><button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Confirm</button></div></div>';
 
     if(document.getElementById("divmodal"))
     {
