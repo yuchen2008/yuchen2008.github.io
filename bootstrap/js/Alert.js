@@ -1,129 +1,129 @@
 ﻿
-// +function ($) {
-//     'use strict';
++function ($) {
+    'use strict';
 
-//     // MODAL CLASS DEFINITION
-//     // ======================
+    // MODAL CLASS DEFINITION
+    // ======================
 
-//     var Modal = function (element, options) {
-//         this.options        = options
-//         this.$body          = $(document.body)
-//         this.$element       = $(element)
-//         this.$backdrop      =
-//             this.isShown        = null
-//         this.scrollbarWidth = 0
+    var Modal = function (element, options) {
+        this.options        = options
+        this.$body          = $(document.body)
+        this.$element       = $(element)
+        this.$backdrop      =
+            this.isShown        = null
+        this.scrollbarWidth = 0
 
-//         if (this.options.remote) {
-//             this.$element
-//                 .find('.modal-content')
-//                 .load(this.options.remote, $.proxy(function () {
-//                     this.$element.trigger('loaded.bs.modal')
-//                 }, this))
-//         }
-//     }
+        if (this.options.remote) {
+            this.$element
+                .find('.modal-content')
+                .load(this.options.remote, $.proxy(function () {
+                    this.$element.trigger('loaded.bs.modal')
+                }, this))
+        }
+    }
 
-//     Modal.VERSION  = '3.3.0'
+    Modal.VERSION  = '3.3.0'
 
-//     Modal.TRANSITION_DURATION = 300
-//     Modal.BACKDROP_TRANSITION_DURATION = 150
+    Modal.TRANSITION_DURATION = 300
+    Modal.BACKDROP_TRANSITION_DURATION = 150
 
-//     Modal.DEFAULTS = {
-//         backdrop: true,
-//         keyboard: true,
-//         show: true
-//     }
+    Modal.DEFAULTS = {
+        backdrop: true,
+        keyboard: true,
+        show: true
+    }
 
-//     Modal.prototype.toggle = function (_relatedTarget) {
-//         return this.isShown ? this.hide() : this.show(_relatedTarget)
-//     }
+    Modal.prototype.toggle = function (_relatedTarget) {
+        return this.isShown ? this.hide() : this.show(_relatedTarget)
+    }
 
-//     Modal.prototype.show = function (_relatedTarget) {
-//         var that = this
-//         var e    = $.Event('show.bs.modal', { relatedTarget: _relatedTarget })
+    Modal.prototype.show = function (_relatedTarget) {
+        var that = this
+        var e    = $.Event('show.bs.modal', { relatedTarget: _relatedTarget })
 
-//         this.$element.trigger(e)
+        this.$element.trigger(e)
 
-//         if (this.isShown || e.isDefaultPrevented()) return
+        if (this.isShown || e.isDefaultPrevented()) return
 
-//         this.isShown = true
+        this.isShown = true
 
-//         this.checkScrollbar()
-//         this.$body.addClass('modal-open')
+        this.checkScrollbar()
+        this.$body.addClass('modal-open')
 
-//         this.setScrollbar()
-//         this.escape()
+        this.setScrollbar()
+        this.escape()
 
-//         this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
+        this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
 
-//         this.backdrop(function () {
-//             var transition = $.support.transition && that.$element.hasClass('fade')
+        this.backdrop(function () {
+            var transition = $.support.transition && that.$element.hasClass('fade')
 
-//             if (!that.$element.parent().length) {
-//                 that.$element.appendTo(that.$body) // don't move modals dom position
-//             }
+            if (!that.$element.parent().length) {
+                that.$element.appendTo(that.$body) // don't move modals dom position
+            }
 
-//             that.$element
-//                 .show()
-//                 .scrollTop(0)
+            that.$element
+                .show()
+                .scrollTop(0)
 
-//             if (transition) {
-//                 that.$element[0].offsetWidth // force reflow
-//             }
+            if (transition) {
+                that.$element[0].offsetWidth // force reflow
+            }
 
-//             that.$element
-//                 .addClass('in')
-//                 .attr('aria-hidden', false)
+            that.$element
+                .addClass('in')
+                .attr('aria-hidden', false)
 
-//             that.enforceFocus()
+            that.enforceFocus()
 
-//             var e = $.Event('shown.bs.modal', { relatedTarget: _relatedTarget })
+            var e = $.Event('shown.bs.modal', { relatedTarget: _relatedTarget })
 
-//             transition ?
-//                 that.$element.find('.modal-dialog') // wait for modal to slide in
-//                     .one('bsTransitionEnd', function () {
-//                         that.$element.trigger('focus').trigger(e)
-//                     })
-//                     .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
-//                 that.$element.trigger('focus').trigger(e)
-//         })
-//     }
+            transition ?
+                that.$element.find('.modal-dialog') // wait for modal to slide in
+                    .one('bsTransitionEnd', function () {
+                        that.$element.trigger('focus').trigger(e)
+                    })
+                    .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
+                that.$element.trigger('focus').trigger(e)
+        })
+    }
 
-//     Modal.prototype.hide = function (e) {
-//         if (e) e.preventDefault()
+    Modal.prototype.hide = function (e) {
+        if (e) e.preventDefault()
 
-//         e = $.Event('hide.bs.modal')
+        e = $.Event('hide.bs.modal')
 
-//         this.$element.trigger(e)
+        this.$element.trigger(e)
 
-//         if (!this.isShown || e.isDefaultPrevented()) return
+        if (!this.isShown || e.isDefaultPrevented()) return
 
-//         this.isShown = false
+        this.isShown = false
 
-//         this.escape()
+        this.escape()
 
-//         $(document).off('focusin.bs.modal')
+        $(document).off('focusin.bs.modal')
 
-//         this.$element
-//             .removeClass('in')
-//             .attr('aria-hidden', true)
-//             .off('click.dismiss.bs.modal')
+        this.$element
+            .removeClass('in')
+            .attr('aria-hidden', true)
+            .off('click.dismiss.bs.modal')
 
-//         $.support.transition && this.$element.hasClass('fade') ?
-//             this.$element
-//                 .one('bsTransitionEnd', $.proxy(this.hideModal, this))
-//                 .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
-//             this.hideModal()
-//     }
+        $.support.transition && this.$element.hasClass('fade') ?
+            this.$element
+                .one('bsTransitionEnd', $.proxy(this.hideModal, this))
+                .emulateTransitionEnd(Modal.TRANSITION_DURATION) :
+            this.hideModal()
+    }
 
-//     Modal.prototype.enforceFocus = function () {
-//         $(document)
-//             .off('focusin.bs.modal') // guard against infinite focus loop
-//             .on('focusin.bs.modal', $.proxy(function (e) {
-//                 if (this.$element[0] !== e.target && !this.$element.has(e.target).length) {
-//                     this.$element.trigger('focus')
-//                 }
-//             }, this))
-//     }
+    Modal.prototype.enforceFocus = function () {
+        $(document)
+            .off('focusin.bs.modal') // guard against infinite focus loop
+            .on('focusin.bs.modal', $.proxy(function (e) {
+                if (this.$element[0] !== e.target && !this.$element.has(e.target).length) {
+                    this.$element.trigger('focus')
+                }
+            }, this))
+    }
 
     Modal.prototype.escape = function () {
         if (this.isShown && this.options.keyboard) {
