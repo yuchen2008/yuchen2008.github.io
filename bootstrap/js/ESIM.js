@@ -451,7 +451,7 @@ function fnGetICCID(){
                         // 将读卡器释放
                         fnFreeReader();
                         // alert(ICCID_list);
-                        sAlert("warning3","",ICCID_list);
+                        sAlert("warning3",ICCID_list);
 
             }else{
                         // 断开卡片
