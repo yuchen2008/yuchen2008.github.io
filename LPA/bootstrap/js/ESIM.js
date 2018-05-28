@@ -1,3 +1,4 @@
+var ChooseReader_value = '';
 var EID_val = '';
 var ICCID_val = '';
 var APDU_a = '1'; // 03+eid 返回APDU，a
@@ -9,14 +10,17 @@ var DP_d = ''; // DP POST: DP POST: data= d
 var provisioning_id = ''; // fnViewProvisioning
 var view_provisioning = '';
 
-function fnGetEid(){
-    
+function fnDownload(iccidvalue,readervalue){
     // 获取系统中所安装读卡器名称
     // fnListReaders();
     // 设置所使用的读卡器名称
-    if(fnListReaders() == "OK"){
+    if(iccidvalue.length!=20){
+        alert("Please enter the correct SIMCard");
+        return;
+    }
+    if(fnListReaders(readervalue) == "OK"){
         // 连接智能卡
-        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
+        if(fnConnect_Card(ChooseReader_value)){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
@@ -36,24 +40,23 @@ function fnGetEid(){
             // 获取EID
             fnGetRetData('EID');
             showloading();
-            var checkValue_ = fnCheckICCID();
+            var checkValue_ = fnCheckICCID(iccidvalue);
             if(checkValue_=="false"){
                 hiddenLoading();
                 return;
             }else{
-               fnGetDP_iccid();
+               fnGetDP_iccid(iccidvalue);
             }   
         }
     }
 }
 
 // 获取ViewProvisioning
-function fnViewProvisioning(){
+function fnViewProvisioning(num){
     // 获取系统中所安装读卡器名称
-    // fnListReaders();
-    if(fnListReaders() == "OK"){
+    if(fnListReaders(num) == "OK"){
         // 连接智能卡
-        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
+        if(fnConnect_Card(ChooseReader_value)){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
@@ -77,13 +80,15 @@ function fnViewProvisioning(){
                 var I_length = provisioning_id.length / 20 ;
                  var provisioning_list = []
                 for(var i = 0; i< I_length ;i++){
-                      provisioning_list[i] = provisioning_id.substring(i*20,(i+1)*20).substring(2);
+                      provisioning_list[i] = ChangeNums(provisioning_id.substring(i*20,(i+1)*20));
                 }
                 // 断开卡片
                 fnCardOff();
                 // 将读卡器释放
                 fnFreeReader();
-                alert(provisioning_list);
+                //alert(provisioning_list);
+
+                sAlert("warning1",provisioning_list);
             }else{
                 // 断开卡片
                 fnCardOff();
@@ -97,10 +102,14 @@ function fnViewProvisioning(){
     }
 }
 //provisioning
-function fnDelProvisioning() {
-     if(fnListReaders() == "OK"){
+function fnDeleteProfile(delvalue,readervalue) {
+    if(delvalue.length!=20){
+        alert("Please enter the correct SIMCard");
+        return;
+    }
+     if(fnListReaders(readervalue) == "OK"){
         // 连接智能卡
-        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
+        if(fnConnect_Card(ChooseReader_value)){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
@@ -111,12 +120,13 @@ function fnDelProvisioning() {
             if(fnGetSW()){
                 return;
             };
-            if(document.getElementById("provisioning_select").value==""){
+            if(delvalue==""){
                 alert('No Profile');
                 return;
             }
-            var apdu_value = '00E290000CBF33'+document.getElementById("provisioning_select").value;
-            if(fnRunAPDU('00E290000CBF33'+document.getElementById("provisioning_select").value,"_6")){
+
+            var apdu_value = '00E290000CBF33'+ChangeNums(delvalue);
+            if(fnRunAPDU('00E290000CBF33'+ChangeNums(delvalue),"_6")){
                 return;
             };
             // 获取命令返回状态字
@@ -131,11 +141,12 @@ function fnDelProvisioning() {
             fnCardOff();
             // 将读卡器释放
             fnFreeReader();
-            fnGetICCID_select();
+            // fnGetICCID_select();
+            // $('#cancel_btn').click();
             }
         }
 }
-function fnCheckICCID(){
+function fnCheckICCID(iccidvalue){
     // 执行apdu命令
     if(fnRunAPDU('00a4040409676F74656C6C417070',"_7")){
         return;
@@ -158,7 +169,7 @@ function fnCheckICCID(){
          var ICCID_list = []
         for(var i = 0; i< I_length ;i++){
               ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
-              if(document.getElementById("ChooseSIMCard").value ==ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2)) ){
+              if(iccidvalue ==ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2)) ){
                 hiddenLoading();
                 alert("Same profile has been downloaded in the SIM card, cannot be download again.");
                 return "false";
@@ -241,7 +252,7 @@ function fnAjaxAPDU(A_id,A_data,A_valueid,A_num) {
     })
 }
 
-function fnGetDP_iccid(){
+function fnGetDP_iccid(iccidvalue){
     var data_val = new Date().getTime();
    
     ajax({
@@ -253,7 +264,7 @@ function fnGetDP_iccid(){
             data: JSON.stringify({
                "orderId":"twtest_"+ data_val,
                 "eid":EID_val+"",
-                "iccid":document.getElementById("ChooseSIMCard").value
+                "iccid":iccidvalue
             }),
             beforeSend:function(){
                 //some js code      
@@ -273,7 +284,7 @@ function fnGetDP_iccid(){
                         //dataType:"json",
                         data: JSON.stringify({
                             'eid':EID_val,
-                            'iccid':document.getElementById('ChooseSIMCard').value,
+                            'iccid':iccidvalue,
                             'releaseFlag': true 
                         }),
                         beforeSend:function(){
@@ -409,12 +420,11 @@ function fninputAPDU(A_id){
 }
 
 // 获取iccid
-function fnGetICCID(){
+function fnViewProfile(){
     // 获取系统中所安装读卡器名称
-    // fnListReaders();
-    if(fnListReaders() == "OK"){
+    if(fnListReaders('0') == "OK"){
         // 连接智能卡
-        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
+        if(fnConnect_Card(ChooseReader_value)){
             // 重置读卡器获取atr值
             if(fnGetATR()){
                 return;
@@ -447,7 +457,9 @@ function fnGetICCID(){
                         fnCardOff();
                         // 将读卡器释放
                         fnFreeReader();
-                        alert(ICCID_list);
+                        // alert(ICCID_list);
+                        sAlert("warning3",ICCID_list);
+
             }else{
                         // 断开卡片
                         fnCardOff();
@@ -462,14 +474,12 @@ function fnGetICCID(){
 }
 
 // 获取iccid-modal
-function fnGetICCID_select(){
+function fnShowICCID(readervalue){
     // 获取系统中所安装读卡器名称
-    // fnListReaders();
-    var provisioning_select = document.getElementById("provisioning_select");
-    provisioning_select.innerHTML = '';
-    if(fnListReaders() == "OK"){
+    if(fnListReaders(readervalue) == "OK"){
+        $("#myModalbtn").click();
         // 连接智能卡
-        if(fnConnect_Card(document.getElementById("ChooseReader").value)){
+        if(fnConnect_Card(ChooseReader_value)){
             // 重置读卡器获取atr值
             fnGetATR();
             // 执行apdu命令
@@ -495,10 +505,12 @@ function fnGetICCID_select(){
                 
                 // for(var i = 0; i< I_length ;i++){
                 for(var i = I_length-1; i>= 0 ;i--){
-                      var objOption = document.createElement("OPTION");
-                      objOption.text = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
-                      objOption.value = ICCID_val.substring(i*22,(i+1)*22).substring(2);
-                      provisioning_select.options.add(objOption);
+                        console.log(ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2))+'\n');
+
+                      // var objOption = document.createElement("OPTION");
+                      // objOption.text = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
+                      // objOption.value = ICCID_val.substring(i*22,(i+1)*22).substring(2);
+                      // provisioning_select.options.add(objOption);
                       // ICCID_list[i] = ChangeNums(ICCID_val.substring(i*22,(i+1)*22).substring(2));
                 }
                         // 断开卡片
@@ -572,10 +584,12 @@ function fnAjaxAPDU_c1_c4(A_id,A_data,A_valueid,A_num) {
     })
 }
 
-function fnListReaders(){
+function fnListReaders(ChooseReader){
+    var num = 0;
+   if(ChooseReader != null ||ChooseReader != "" || ChooseReader != undefined ){
+        num = parseInt(ChooseReader);
+    }
     //此处为获取系统中所安装读卡器名称的借口
-    var ChooseReaders = document.getElementById("ChooseReader");
-    ChooseReaders.innerHTML = '';
     try {
         s=new String(myScc.ListReaders());
          }
@@ -585,21 +599,22 @@ function fnListReaders(){
          alert("Please use IE browser, install and activate LPA plugin.");
          return;
     }
-         cars=s.split("||");
+         cars=s.split("||"); 
          if(cars.length==1){
             hiddenLoading();
             alert("There is no SIM card reader found.");
             return;
          } else{
-            for(var i = 0;i<cars.length-1;i++){
-                var objOption = document.createElement("OPTION");
-                objOption.text = cars[i];
-                objOption.value = cars[i];
-                ChooseReaders.options.add(objOption);
-            }
+             if(num<cars.length-1){
+                 ChooseReader_value = cars[num]; 
+                 return "OK";
+             }else{
+                hiddenLoading();
+                alert("There is no SIM card reader found(1).");
+                return;
+            
+             }
          }
-         // console.log(ChooseReaders.value);
-        return "OK";
 }
 //设置所使用的读卡器名称
 function fnSetReader(val){
